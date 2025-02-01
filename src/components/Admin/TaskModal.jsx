@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { motion, AnimatePresence } from "framer-motion"; // ✅ Importando animação
+import { motion, AnimatePresence } from "framer-motion";
 
 function TaskModal({ isOpen, onClose, task, onSave, onDelete, isCreating }) {
   const [editedTask, setEditedTask] = useState({
@@ -9,39 +9,40 @@ function TaskModal({ isOpen, onClose, task, onSave, onDelete, isCreating }) {
   });
 
   useEffect(() => {
-    if (task && !isCreating) {
-      setEditedTask(task);
-    } else {
-      setEditedTask({ name: "", description: "", reward: 0 }); // Reset para nova tarefa
+    if (isOpen) {
+      if (isCreating) {
+        setEditedTask({ name: "", description: "", reward: 0 }); // 🔄 Reset para criação
+      } else if (task) {
+        setEditedTask(task); // 🔄 Define os dados ao editar
+      }
     }
-  }, [task, isCreating]);
+  }, [isOpen, isCreating, task]);
+
+  // ✅ Reseta os campos ao fechar
+  const handleClose = () => {
+    setEditedTask({ name: "", description: "", reward: 0 }); // 🔄 Reset do estado
+    onClose();
+  };
 
   return (
     <AnimatePresence>
       {isOpen && (
         <motion.div
           className="fixed inset-0 flex items-center justify-center z-50"
-          onClick={onClose}
-          initial={{ opacity: 0 }} // ✅ Começa invisível
-          animate={{ opacity: 1 }} // ✅ Fica visível suavemente
-          exit={{ opacity: 0 }} // ✅ Some suavemente
+          onClick={handleClose} // 🔄 Fecha ao clicar fora e reseta
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
         >
-          {/* Fundo escuro com opacidade animada */}
-          <motion.div
-            className="absolute inset-0"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-          ></motion.div>
+          <motion.div className="absolute inset-0 bg-opacity-30"></motion.div>
 
-          {/* Conteúdo da modal animado */}
           <motion.div
             className="relative bg-gray-800 p-6 rounded shadow-lg text-white w-96 z-50"
-            onClick={(e) => e.stopPropagation()} // Impede clique dentro de fechar
-            initial={{ y: -50, opacity: 0 }} // ✅ Começa mais acima e invisível
-            animate={{ y: 0, opacity: 1 }} // ✅ Desce suavemente e aparece
-            exit={{ y: -50, opacity: 0 }} // ✅ Sobe suavemente ao fechar
-            transition={{ duration: 0.3, ease: "easeOut" }} // ✅ Suaviza a animação
+            onClick={(e) => e.stopPropagation()} // 🔄 Impede que clique dentro feche
+            initial={{ y: -50, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            exit={{ y: -50, opacity: 0 }}
+            transition={{ duration: 0.3, ease: "easeOut" }}
           >
             <h2 className="text-xl font-semibold mb-4">
               {isCreating
@@ -56,6 +57,7 @@ function TaskModal({ isOpen, onClose, task, onSave, onDelete, isCreating }) {
                 onSubmit={(e) => {
                   e.preventDefault();
                   onSave(editedTask);
+                  handleClose(); // 🔄 Fecha após salvar
                 }}
               >
                 <input
@@ -91,7 +93,7 @@ function TaskModal({ isOpen, onClose, task, onSave, onDelete, isCreating }) {
                       reward: Number(e.target.value),
                     })
                   }
-                  className="p-2 w-full bg-gray-700 rounded mb-4"
+                  className="p-2 w-full bg-gray-700 rounded mb-4 outline-none"
                 />
                 <div className="flex justify-between">
                   <button
@@ -102,7 +104,7 @@ function TaskModal({ isOpen, onClose, task, onSave, onDelete, isCreating }) {
                   </button>
                   <button
                     type="button"
-                    onClick={onClose}
+                    onClick={handleClose}
                     className="bg-gray-500 cursor-pointer px-4 py-2 rounded"
                   >
                     Cancelar
@@ -110,7 +112,6 @@ function TaskModal({ isOpen, onClose, task, onSave, onDelete, isCreating }) {
                 </div>
               </form>
             ) : (
-              // Confirmação de exclusão
               <div>
                 <p className="mb-4">
                   Tem certeza que deseja excluir esta tarefa?
@@ -123,7 +124,7 @@ function TaskModal({ isOpen, onClose, task, onSave, onDelete, isCreating }) {
                     Excluir
                   </button>
                   <button
-                    onClick={onClose}
+                    onClick={handleClose}
                     className="bg-gray-500 px-4 py-2 rounded"
                   >
                     Cancelar
