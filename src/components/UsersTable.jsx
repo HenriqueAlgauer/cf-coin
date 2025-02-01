@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { getUsers } from "../api/api";
 import { useEffect, useState } from "react";
 
@@ -14,7 +15,15 @@ function UsersTable() {
 
   return (
     <>
-      <h1 className="text-white text-2xl mb-4">Lista de Usuários</h1>
+      <div className="flex justify-between items-end">
+        <h1 className="text-white text-2xl">Lista de Usuários</h1>
+        <Link
+          className="bg-green-400 text-white font-semibold px-4 py-2 rounded"
+          to="/users"
+        >
+          Usuários
+        </Link>
+      </div>
       <div className="bg-gray-800 p-4 rounded shadow">
         <table className="w-full text-white">
           <thead>

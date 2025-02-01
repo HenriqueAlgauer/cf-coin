@@ -7,9 +7,9 @@ function Profile() {
   return (
     <>
       {userRole === "ADMIN" ? <AdminMenu /> : <Menu />}
-      <p>Hello</p>
-      <p>Hello</p>
-      <p>Hello</p>
+      <input type="text" name="name" placeholder="NOME" />
+      <input type="email" name="email" placeholder="EMAIL" />
+      <input type="email" name="email" placeholder="EMAIL" />
     </>
   );
 }

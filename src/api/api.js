@@ -41,3 +41,29 @@ export async function getUsers() {
     return [];
   }
 }
+
+export async function getTasks() {
+  try {
+    const response = await fetch(`${API_BASE_URL}/tasks`);
+    if (!response.ok) {
+      throw new Error("Erro ao buscar as tarefas.");
+    }
+    return await response.json();
+  } catch (error) {
+    console.error(error);
+    return [];
+  }
+}
+
+export async function getPendingRequests() {
+  try {
+    const response = await fetch(`${API_BASE_URL}/coins/pending`);
+    if (!response.ok) {
+      throw new Error("Erro ao buscar solicitações pendentes.");
+    }
+    return await response.json();
+  } catch (error) {
+    console.error(error);
+    return [];
+  }
+}
