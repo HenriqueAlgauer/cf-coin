@@ -16,7 +16,7 @@ function UsersTable() {
   return (
     <>
       <div className="flex justify-between items-end">
-        <h1 className="text-white text-2xl">Lista de Usuários</h1>
+        <h2 className="text-white text-2xl">Lista de Usuários</h2>
         <Link
           className="bg-green-400 text-white font-semibold px-4 py-2 rounded"
           to="/users"

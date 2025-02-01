@@ -18,6 +18,11 @@ function AdminMenu() {
           </Link>
         </li>
         <li>
+          <Link className="text-green-400 font-medium" to="/tarefas">
+            Tarefas
+          </Link>
+        </li>
+        <li>
           <Link to="/profile">
             <img className="w-8" src="./src/assets/user.svg" alt="" />
           </Link>
