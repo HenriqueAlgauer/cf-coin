@@ -1,7 +1,7 @@
 import { useState } from "react";
-import { createUser } from "../api/api";
+import { createUser } from "../../api/api";
 
-function Signup() {
+function Register() {
   const [form, setForm] = useState({
     name: "",
     email: "",
@@ -64,4 +64,4 @@ function Signup() {
   );
 }
 
-export default Signup;
+export default Register;

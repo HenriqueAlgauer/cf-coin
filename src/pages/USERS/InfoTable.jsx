@@ -1,5 +1,5 @@
-import Menu from "../components/Menu";
-import TableRow from "../components/TableRow";
+import Menu from "../../components/Menu";
+import TableRow from "../../components/TableRow";
 
 function InfoTable() {
   return (

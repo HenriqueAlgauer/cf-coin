@@ -14,10 +14,19 @@ function Login() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      // eslint-disable-next-line no-unused-vars
       const response = await loginUser(form);
-      localStorage.setItem("isAuthenticated", "true"); // Marca como logado
-      navigate("/"); // Redireciona para a Home
+
+      const lembrar = document.querySelector('input[name="lembrar"]').checked;
+
+      if (lembrar) {
+        localStorage.setItem("isAuthenticated", "true");
+        localStorage.setItem("userRole", response.user.role);
+      } else {
+        sessionStorage.setItem("isAuthenticated", "true");
+        sessionStorage.setItem("userRole", response.user.role);
+      }
+
+      navigate("/"); // Redireciona para a rota protegida
     } catch (error) {
       setMessage("Login inválido.");
       throw error;
@@ -58,10 +67,10 @@ function Login() {
               required
             />
           </div>
-          {/* <label htmlFor="lembrar" className="flex w-full items-center gap-2 ">
+          <label htmlFor="lembrar" className="flex w-full items-center gap-2 ">
             <input name="lembrar" type="checkbox" />
             <p>Lembrar-me</p>
-          </label> */}
+          </label>
           <button
             className="cursor-pointer shadow bg-green-400 px-8 py-2 rounded"
             type="submit"
