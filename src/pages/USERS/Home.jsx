@@ -1,16 +1,6 @@
-import { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
 import Menu from "../../components/Menu";
 
 function Home() {
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    const isAuthenticated = localStorage.getItem("isAuthenticated");
-    if (!isAuthenticated) {
-      navigate("/login"); // Redireciona para login se não estiver logado
-    }
-  }, [navigate]);
   return (
     <>
       <div className="w-screen h-screen bg-gray-900">

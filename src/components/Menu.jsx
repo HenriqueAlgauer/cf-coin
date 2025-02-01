@@ -13,7 +13,7 @@ function Menu() {
           </Link>
         </li>
         <li>
-          <Link className="text-green-400 font-medium" href="#">
+          <Link className="text-green-400 font-medium" to="/solicitacao">
             Solicitações
           </Link>
         </li>
