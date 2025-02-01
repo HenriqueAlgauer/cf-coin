@@ -58,10 +58,10 @@ function Login() {
               required
             />
           </div>
-          <label htmlFor="lembrar" className="flex w-full items-center gap-2 ">
+          {/* <label htmlFor="lembrar" className="flex w-full items-center gap-2 ">
             <input name="lembrar" type="checkbox" />
             <p>Lembrar-me</p>
-          </label>
+          </label> */}
           <button
             className="cursor-pointer shadow bg-green-400 px-8 py-2 rounded"
             type="submit"
