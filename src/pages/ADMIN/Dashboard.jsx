@@ -1,9 +1,7 @@
-import AdminMenu from "../../components/AdminMenu";
-import PendingRequests from "../../components/PendingRequests";
-import TasksList from "../../components/TaskList";
-// import { getUsers } from "../../api/api";
-// import { useEffect, useState } from "react";
-import UsersTable from "../../components/UsersTable";
+import AdminMenu from "../../components/Admin/AdminMenu";
+import PendingRequests from "../../components/Admin/PendingRequests";
+import TasksListResume from "../../components/Admin/TaskListResume";
+import UsersTable from "../../components/Admin/UsersTable";
 
 function Dashboard() {
   return (
@@ -15,7 +13,7 @@ function Dashboard() {
         </div>
         <div className="p-8 w-[30%] flex flex-col gap-4">
           <UsersTable />
-          <TasksList />
+          <TasksListResume />
         </div>
       </div>
     </div>

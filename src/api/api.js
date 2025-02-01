@@ -67,3 +67,46 @@ export async function getPendingRequests() {
     return [];
   }
 }
+
+export async function getTaskById(taskId) {
+  try {
+    const response = await fetch(`http://localhost:3000/tasks/${taskId}`);
+    if (!response.ok) {
+      throw new Error("Erro ao buscar a tarefa.");
+    }
+    return await response.json();
+  } catch (error) {
+    console.error(error);
+    return null;
+  }
+}
+
+export async function updateTask(taskId, updatedTask) {
+  try {
+    const response = await fetch(`http://localhost:3000/tasks/${taskId}`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(updatedTask),
+    });
+    if (!response.ok) {
+      throw new Error("Erro ao atualizar a tarefa.");
+    }
+    return await response.json();
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+export async function deleteTask(taskId) {
+  try {
+    const response = await fetch(`${API_BASE_URL}/tasks/${taskId}`, {
+      method: "DELETE",
+    });
+    if (!response.ok) {
+      throw new Error("Erro ao deletar a tarefa.");
+    }
+    return await response.json();
+  } catch (error) {
+    console.error(error);
+  }
+}

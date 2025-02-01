@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { getUsers } from "../api/api";
+import { getUsers } from "../../api/api";
 import { useEffect, useState } from "react";
 
 function UsersTable() {

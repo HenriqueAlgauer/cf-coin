@@ -1,4 +1,4 @@
-import AdminMenu from "../components/AdminMenu";
+import AdminMenu from "../components/Admin/AdminMenu";
 import Menu from "../components/Menu";
 
 function Profile() {

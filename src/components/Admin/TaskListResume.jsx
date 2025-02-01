@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
-import { getTasks } from "../api/api";
+import { getTasks } from "../../api/api";
 import { Link } from "react-router-dom";
 
-function TasksList() {
+function TasksListResume() {
   const [tasks, setTasks] = useState([]);
 
   useEffect(() => {
@@ -45,4 +45,4 @@ function TasksList() {
   );
 }
 
-export default TasksList;
+export default TasksListResume;

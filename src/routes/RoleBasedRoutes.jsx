@@ -8,6 +8,7 @@ import Register from "../pages/ADMIN/Register";
 import Solicitacoes from "../pages/ADMIN/Solicitacoes";
 import Dashboard from "../pages/ADMIN/Dashboard";
 import Users from "../pages/ADMIN/Users";
+import Tarefas from "../pages/ADMIN/Tarefas";
 
 function RoleBasedRoutes() {
   const userRole =
@@ -22,6 +23,7 @@ function RoleBasedRoutes() {
         <Route path="/profile" element={<Profile />} />
         <Route path="/register" element={<Register />} />
         <Route path="/solicitacoes" element={<Solicitacoes />} />
+        <Route path="/tarefas" element={<Tarefas />} />
       </Routes>
     );
   } else if (userRole === "USER") {

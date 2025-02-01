@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { getPendingRequests } from "../api/api";
+import { getPendingRequests } from "../../api/api";
 import { Link } from "react-router-dom";
 
 function PendingRequests() {
