@@ -24,7 +24,7 @@ function TasksListResume() {
           Tarefas
         </Link>
       </div>
-      <div className="p-4 bg-gray-800 max-h-[300px] overflow-auto rounded shadow scrollbar-custom text-white">
+      <div className="p-4 bg-gray-800 max-h-[300px] overflow-y-auto rounded shadow scrollbar-custom text-white">
         {tasks.length > 0 ? (
           <ul className="space-y-2">
             {tasks.map((task) => (

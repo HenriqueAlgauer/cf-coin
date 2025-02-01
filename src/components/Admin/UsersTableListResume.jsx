@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import { getUsers } from "../../api/api";
 import { useEffect, useState } from "react";
 
-function UsersTableList() {
+function UsersTableListResume() {
   const [users, setUsers] = useState([]);
 
   useEffect(() => {
@@ -24,7 +24,7 @@ function UsersTableList() {
           Usuários
         </Link>
       </div>
-      <div className="bg-gray-800 p-4 rounded shadow">
+      <div className="bg-gray-800 max-h-[300px] overflow-y-auto scrollbar-custom p-4 rounded shadow">
         <table className="w-full text-white overflow-auto">
           <thead>
             <tr className="border-b border-gray-600">
@@ -54,4 +54,4 @@ function UsersTableList() {
   );
 }
 
-export default UsersTableList;
+export default UsersTableListResume;

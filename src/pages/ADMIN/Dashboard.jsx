@@ -1,7 +1,7 @@
 import AdminMenu from "../../components/Admin/AdminMenu";
 import PendingRequests from "../../components/Admin/PendingRequests";
 import TasksListResume from "../../components/Admin/TaskListResume";
-import UsersTableList from "../../components/Admin/UsersTableList";
+import UsersTableListResume from "../../components/Admin/UsersTableListResume";
 
 function Dashboard() {
   return (
@@ -12,7 +12,7 @@ function Dashboard() {
           <PendingRequests />
         </div>
         <div className="p-8 w-[30%] flex flex-col gap-4">
-          <UsersTableList />
+          <UsersTableListResume />
           <TasksListResume />
         </div>
       </div>
