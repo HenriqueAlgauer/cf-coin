@@ -28,3 +28,16 @@ export async function loginUser(credentials) {
 
   return response.json();
 }
+
+export async function getUsers() {
+  try {
+    const response = await fetch(`${API_BASE_URL}/users`);
+    if (!response.ok) {
+      throw new Error("Erro ao buscar usuários");
+    }
+    return await response.json();
+  } catch (error) {
+    console.error(error);
+    return [];
+  }
+}

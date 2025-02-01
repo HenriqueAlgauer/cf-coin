@@ -1,6 +1,6 @@
 import { Navigate, Route, Routes } from "react-router-dom";
 import Home from "../pages/USERS/Home";
-import Profile from "../pages/USERS/Profile";
+import Profile from "../pages/Profile";
 import InfoTable from "../pages/USERS/InfoTable";
 import Solicitacao from "../pages/USERS/Solicitacao";
 
@@ -19,6 +19,7 @@ function RoleBasedRoutes() {
         <Route path="/" element={<Navigate to="/dashboard" />} />
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/users" element={<Users />} />
+        <Route path="/profile" element={<Profile />} />
         <Route path="/register" element={<Register />} />
         <Route path="/solicitacoes" element={<Solicitacoes />} />
       </Routes>
