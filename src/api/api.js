@@ -1,20 +1,6 @@
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL; // Para React + Vite
 // const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL; // Para Next.js
 
-export async function createUser(userData) {
-  const response = await fetch(`${API_BASE_URL}/users`, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(userData),
-  });
-
-  if (!response.ok) {
-    throw new Error("Erro ao criar usuário");
-  }
-
-  return response.json();
-}
-
 export async function loginUser(credentials) {
   const response = await fetch(`${API_BASE_URL}/login`, {
     method: "POST",
@@ -29,6 +15,26 @@ export async function loginUser(credentials) {
   return response.json();
 }
 
+export async function createUser(userData) {
+  try {
+    const response = await fetch(`${API_BASE_URL}/users`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(userData),
+    });
+
+    if (!response.ok) {
+      throw new Error("Erro ao criar o usuário.");
+    }
+
+    return await response.json();
+  } catch (error) {
+    console.error(error);
+  }
+}
+
 export async function getUsers() {
   try {
     const response = await fetch(`${API_BASE_URL}/users`);
@@ -39,6 +45,42 @@ export async function getUsers() {
   } catch (error) {
     console.error(error);
     return [];
+  }
+}
+
+export async function updateUser(userId, updatedData) {
+  try {
+    const response = await fetch(`${API_BASE_URL}/users/${userId}`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(updatedData),
+    });
+
+    if (!response.ok) {
+      throw new Error("Erro ao atualizar o usuário.");
+    }
+
+    return await response.json();
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+export async function deleteUser(userId) {
+  try {
+    const response = await fetch(`${API_BASE_URL}/users/${userId}`, {
+      method: "DELETE",
+    });
+
+    if (!response.ok) {
+      throw new Error("Erro ao deletar o usuário.");
+    }
+
+    return await response.json();
+  } catch (error) {
+    console.error(error);
   }
 }
 
