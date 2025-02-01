@@ -6,7 +6,7 @@ function Tarefas() {
     <>
       <div className="w-screen h-screen bg-gray-900">
         <AdminMenu />
-        <div className="w-[80%] mx-auto flex">
+        <div className="w-[60%] mx-auto flex">
           <div className="w-full pt-8">
             <TaskList />
           </div>

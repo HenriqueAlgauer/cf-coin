@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion"; // ✅ Importando animação
 
-function TaskModal({ isOpen, onClose, task, onSave, onDelete }) {
+function TaskModal({ isOpen, onClose, task, onSave, onDelete, isCreating }) {
   const [editedTask, setEditedTask] = useState({
     name: "",
     description: "",
@@ -9,10 +9,12 @@ function TaskModal({ isOpen, onClose, task, onSave, onDelete }) {
   });
 
   useEffect(() => {
-    if (task) {
+    if (task && !isCreating) {
       setEditedTask(task);
+    } else {
+      setEditedTask({ name: "", description: "", reward: 0 }); // Reset para nova tarefa
     }
-  }, [task]);
+  }, [task, isCreating]);
 
   return (
     <AnimatePresence>
@@ -42,11 +44,14 @@ function TaskModal({ isOpen, onClose, task, onSave, onDelete }) {
             transition={{ duration: 0.3, ease: "easeOut" }} // ✅ Suaviza a animação
           >
             <h2 className="text-xl font-semibold mb-4">
-              {task ? "Editar Tarefa" : "Excluir Tarefa"}
+              {isCreating
+                ? "Criar Nova Tarefa"
+                : task
+                ? "Editar Tarefa"
+                : "Excluir Tarefa"}
             </h2>
 
-            {task ? (
-              // Formulário de edição
+            {isCreating || task ? (
               <form
                 onSubmit={(e) => {
                   e.preventDefault();
@@ -61,7 +66,7 @@ function TaskModal({ isOpen, onClose, task, onSave, onDelete }) {
                   onChange={(e) =>
                     setEditedTask({ ...editedTask, name: e.target.value })
                   }
-                  className="p-2 w-full bg-gray-700 rounded mb-2"
+                  className="p-2 w-full bg-gray-700 rounded mb-2 outline-none"
                 />
                 <textarea
                   name="description"
@@ -73,7 +78,7 @@ function TaskModal({ isOpen, onClose, task, onSave, onDelete }) {
                       description: e.target.value,
                     })
                   }
-                  className="p-2 w-full bg-gray-700 rounded mb-2"
+                  className="p-2 w-full bg-gray-700 rounded mb-2 outline-none resize-none overflow-auto"
                 />
                 <input
                   type="number"
@@ -91,14 +96,14 @@ function TaskModal({ isOpen, onClose, task, onSave, onDelete }) {
                 <div className="flex justify-between">
                   <button
                     type="submit"
-                    className="bg-green-500 px-4 py-2 rounded"
+                    className="bg-green-400 cursor-pointer px-4 py-2 rounded"
                   >
-                    Salvar
+                    {isCreating ? "Criar" : "Salvar"}
                   </button>
                   <button
                     type="button"
                     onClick={onClose}
-                    className="bg-gray-500 px-4 py-2 rounded"
+                    className="bg-gray-500 cursor-pointer px-4 py-2 rounded"
                   >
                     Cancelar
                   </button>

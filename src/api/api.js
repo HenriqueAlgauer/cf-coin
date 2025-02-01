@@ -68,9 +68,29 @@ export async function getPendingRequests() {
   }
 }
 
+export async function createTask(taskData) {
+  try {
+    const response = await fetch(`${API_BASE_URL}/tasks`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(taskData),
+    });
+
+    if (!response.ok) {
+      throw new Error("Erro ao criar a tarefa.");
+    }
+
+    return await response.json();
+  } catch (error) {
+    console.error("Erro ao criar tarefa:", error);
+  }
+}
+
 export async function getTaskById(taskId) {
   try {
-    const response = await fetch(`http://localhost:3000/tasks/${taskId}`);
+    const response = await fetch(`${API_BASE_URL}/tasks/${taskId}`);
     if (!response.ok) {
       throw new Error("Erro ao buscar a tarefa.");
     }
@@ -83,7 +103,7 @@ export async function getTaskById(taskId) {
 
 export async function updateTask(taskId, updatedTask) {
   try {
-    const response = await fetch(`http://localhost:3000/tasks/${taskId}`, {
+    const response = await fetch(`${API_BASE_URL}/tasks/${taskId}`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(updatedTask),
