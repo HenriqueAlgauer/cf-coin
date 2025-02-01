@@ -1,1 +1,17 @@
 @import "tailwindcss";
+/* @import "./typography.css"; */
+
+@layer utilities {
+  .scrollbar-custom::-webkit-scrollbar {
+    width: 6px; /* Largura da scrollbar */
+  }
+
+  .scrollbar-custom::-webkit-scrollbar-thumb {
+    background-color: #22c55e; /* Cor do polegar */
+    border-radius: 4px;
+  }
+
+  .scrollbar-custom::-webkit-scrollbar-track {
+    background-color: #374151; /* Cor do fundo */
+  }
+}

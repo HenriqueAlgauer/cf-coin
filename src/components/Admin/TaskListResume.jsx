@@ -24,14 +24,14 @@ function TasksListResume() {
           Tarefas
         </Link>
       </div>
-      <div className="p-4 bg-gray-800 rounded shadow text-white">
+      <div className="p-4 bg-gray-800 max-h-[300px] overflow-auto rounded shadow scrollbar-custom text-white">
         {tasks.length > 0 ? (
           <ul className="space-y-2">
             {tasks.map((task) => (
               <li key={task.id} className="border-b border-gray-700 pb-2">
                 <h3 className="text-lg font-medium">{task.name}</h3>
                 <p className="text-sm text-gray-400">{task.description}</p>
-                <p className="text-green-400 font-bold">
+                <p className="text-amber-300 font-bold">
                   Moedas: {task.reward}
                 </p>
               </li>

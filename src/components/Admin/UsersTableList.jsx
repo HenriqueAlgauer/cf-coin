@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import { getUsers } from "../../api/api";
 import { useEffect, useState } from "react";
 
-function UsersTable() {
+function UsersTableList() {
   const [users, setUsers] = useState([]);
 
   useEffect(() => {
@@ -25,7 +25,7 @@ function UsersTable() {
         </Link>
       </div>
       <div className="bg-gray-800 p-4 rounded shadow">
-        <table className="w-full text-white">
+        <table className="w-full text-white overflow-auto">
           <thead>
             <tr className="border-b border-gray-600">
               <th className="text-left p-2">Nome</th>
@@ -54,4 +54,4 @@ function UsersTable() {
   );
 }
 
-export default UsersTable;
+export default UsersTableList;

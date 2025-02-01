@@ -78,7 +78,7 @@ function TaskList() {
                 key={task.id}
                 className="border-b border-gray-700 pb-2 flex justify-between items-center"
               >
-                <div className="flex justify-between min-w-[50%]">
+                <div className="flex justify-between min-w-[40%]">
                   <div>
                     <h3 className="text-lg font-medium">{task.name}</h3>
                     <p className="text-sm text-gray-400 ">{task.description}</p>
