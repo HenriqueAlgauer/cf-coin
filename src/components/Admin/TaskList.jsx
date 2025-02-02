@@ -41,15 +41,23 @@ function TaskList() {
   };
 
   // ✅ Função para salvar alterações na tarefa
-  const handleSave = async (task) => {
-    if (isCreating) {
-      const newTask = await createTask(task);
-      setTasks([...tasks, newTask]); // Adiciona a nova tarefa na lista
-    } else {
-      await updateTask(task.id, task);
-      setTasks(tasks.map((t) => (t.id === task.id ? task : t)));
+  const handleSave = async (taskData) => {
+    try {
+      if (isCreating) {
+        const newTask = await createTask(taskData);
+        if (newTask) {
+          setTasks([...tasks, newTask]); // Adiciona a nova tarefa se for criada com sucesso
+        }
+      } else {
+        await updateTask(taskData.id, taskData);
+        setTasks(
+          tasks.map((task) => (task.id === taskData.id ? taskData : task))
+        );
+      }
+      setIsModalOpen(false); // Fecha a modal
+    } catch (error) {
+      console.error("Erro ao salvar a tarefa:", error);
     }
-    setIsModalOpen(false);
   };
 
   // ✅ Função para excluir uma tarefa

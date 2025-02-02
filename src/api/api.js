@@ -116,7 +116,7 @@ export async function createTask(taskData) {
 
     return await response.json();
   } catch (error) {
-    console.error("Erro ao criar tarefa:", error);
+    console.error(error);
   }
 }
 

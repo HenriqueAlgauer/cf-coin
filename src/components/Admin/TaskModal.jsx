@@ -6,12 +6,18 @@ function TaskModal({ isOpen, onClose, task, onSave, onDelete, isCreating }) {
     name: "",
     description: "",
     reward: 0,
+    visibility: "AMBOS", // ✅ Novo campo para armazenar o tipo da tarefa
   });
 
   useEffect(() => {
     if (isOpen) {
       if (isCreating) {
-        setEditedTask({ name: "", description: "", reward: 0 }); // 🔄 Reset para criação
+        setEditedTask({
+          name: "",
+          description: "",
+          reward: 0,
+          visibility: "AMBOS",
+        }); // 🔄 Reset para criação
       } else if (task) {
         setEditedTask(task); // 🔄 Define os dados ao editar
       }
@@ -20,7 +26,12 @@ function TaskModal({ isOpen, onClose, task, onSave, onDelete, isCreating }) {
 
   // ✅ Reseta os campos ao fechar
   const handleClose = () => {
-    setEditedTask({ name: "", description: "", reward: 0 }); // 🔄 Reset do estado
+    setEditedTask({
+      name: "",
+      description: "",
+      reward: 0,
+      visibility: "AMBOS",
+    }); // 🔄 Reset do estado
     onClose();
   };
 
@@ -95,6 +106,17 @@ function TaskModal({ isOpen, onClose, task, onSave, onDelete, isCreating }) {
                   }
                   className="p-2 w-full bg-gray-700 rounded mb-4 outline-none"
                 />
+                <select
+                  value={editedTask.visibility}
+                  onChange={(e) =>
+                    setEditedTask({ ...editedTask, visibility: e.target.value })
+                  }
+                  className="p-2 w-full bg-gray-700 rounded mb-4 outline-none"
+                >
+                  <option value="ADMIN">ADMIN</option>
+                  <option value="USER">USER</option>
+                  <option value="AMBOS">AMBOS</option>
+                </select>
                 <div className="flex justify-between">
                   <button
                     type="submit"
