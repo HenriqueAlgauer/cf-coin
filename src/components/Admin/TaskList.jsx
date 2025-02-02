@@ -69,7 +69,7 @@ function TaskList() {
 
   return (
     <>
-      <div className="flex text-white  items-center justify-between mb-4">
+      <div className="flex text-white items-center justify-between mb-4">
         <h2 className="text-2xl">Tarefas Disponíveis</h2>
         <button
           onClick={handleCreate}
@@ -78,6 +78,7 @@ function TaskList() {
           Adicionar Tarefa
         </button>
       </div>
+
       <div className="p-4 bg-gray-800 rounded shadow text-white">
         {tasks.length > 0 ? (
           <ul className="space-y-2">
@@ -86,10 +87,13 @@ function TaskList() {
                 key={task.id}
                 className="border-b border-gray-700 pb-2 flex justify-between items-center"
               >
-                <div className="flex justify-between min-w-[40%]">
+                <div className="flex justify-between min-w-[50%]">
                   <div>
                     <h3 className="text-lg font-medium">{task.name}</h3>
-                    <p className="text-sm text-gray-400 ">{task.description}</p>
+                    <p className="text-sm text-gray-400">{task.description}</p>
+                    <p className="text-blue-300 font-bold">
+                      Visível para: {task.visibility}
+                    </p>
                   </div>
                   <div>
                     <p className="text-amber-300 font-bold">
