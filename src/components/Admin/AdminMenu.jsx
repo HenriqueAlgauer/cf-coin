@@ -8,6 +8,11 @@ function AdminMenu() {
       </Link>
       <ul className="flex gap-8 items-center">
         <li>
+          <Link className="text-green-400 font-medium" to="/dashboard">
+            Dashboard
+          </Link>
+        </li>
+        <li>
           <Link className="text-green-400 font-medium" to="/solicitacoes">
             Solicitações
           </Link>
