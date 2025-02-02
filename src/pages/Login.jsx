@@ -21,12 +21,14 @@ function Login() {
       if (lembrar) {
         localStorage.setItem("isAuthenticated", "true");
         localStorage.setItem("userRole", response.user.role);
+        localStorage.setItem("userId", response.user.id); // ✅ Salva userId
       } else {
         sessionStorage.setItem("isAuthenticated", "true");
         sessionStorage.setItem("userRole", response.user.role);
+        sessionStorage.setItem("userId", response.user.id); // ✅ Salva userId
       }
 
-      navigate("/"); // Redireciona para a rota protegida
+      navigate("/dashboard"); // ✅ Redireciona corretamente
     } catch (error) {
       setMessage("Login inválido.");
       throw error;
