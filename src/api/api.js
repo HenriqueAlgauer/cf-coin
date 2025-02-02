@@ -133,6 +133,19 @@ export async function getTaskById(taskId) {
   }
 }
 
+export async function getUserTasks() {
+  try {
+    const response = await fetch(`${API_BASE_URL}/tasks/user`);
+    if (!response.ok) {
+      throw new Error("Erro ao buscar tarefas disponíveis.");
+    }
+    return await response.json();
+  } catch (error) {
+    console.error(error);
+    return [];
+  }
+}
+
 export async function updateTask(taskId, updatedTask) {
   try {
     const response = await fetch(`${API_BASE_URL}/tasks/${taskId}`, {
@@ -225,5 +238,91 @@ export async function rejectCoin(coinId) {
     return await response.json();
   } catch (error) {
     console.error(error);
+  }
+}
+
+export async function createCoin(coinData) {
+  try {
+    const response = await fetch(`${API_BASE_URL}/coins`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(coinData),
+    });
+
+    if (!response.ok) {
+      throw new Error("Erro ao criar solicitação de Coin.");
+    }
+
+    return await response.json();
+  } catch (error) {
+    console.error("Erro ao criar Coin:", error);
+  }
+}
+
+export async function getUserCoins(userId) {
+  if (!userId) {
+    console.error("Erro: userId não foi fornecido.");
+    return [];
+  }
+
+  try {
+    const response = await fetch(`${API_BASE_URL}/coins/user/${userId}`);
+
+    if (!response.ok) {
+      throw new Error("Erro ao buscar as moedas do usuário.");
+    }
+
+    return await response.json();
+  } catch (error) {
+    console.error(error);
+    return [];
+  }
+}
+
+// ✅ Atualizar apenas a mensagem de uma solicitação
+export async function updateCoin(coinId, newMessage) {
+  try {
+    if (!coinId) {
+      throw new Error("ID da Coin não foi fornecido.");
+    }
+
+    const response = await fetch(`${API_BASE_URL}/coins/${coinId}`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ message: newMessage }),
+    });
+
+    if (!response.ok) {
+      throw new Error("Erro ao atualizar a mensagem.");
+    }
+
+    return await response.json();
+  } catch (error) {
+    console.error("Erro ao atualizar a solicitação:", error);
+  }
+}
+
+// ✅ Excluir uma solicitação de Coin
+export async function deleteCoin(coinId) {
+  try {
+    if (!coinId) {
+      throw new Error("ID da Coin não foi fornecido.");
+    }
+
+    const response = await fetch(`${API_BASE_URL}/coins/${coinId}`, {
+      method: "DELETE",
+    });
+
+    if (!response.ok) {
+      throw new Error("Erro ao excluir a solicitação.");
+    }
+
+    return await response.json();
+  } catch (error) {
+    console.error("Erro ao excluir a solicitação:", error);
   }
 }
