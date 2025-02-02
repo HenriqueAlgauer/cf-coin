@@ -12,8 +12,14 @@ function UserRequests() {
   const [requests, setRequests] = useState([]);
   const [tasks, setTasks] = useState([]);
   const [selectedRequest, setSelectedRequest] = useState(null);
-  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  // Controles de modais
+  const [isModalOpen, setIsModalOpen] = useState(false); // criar/editar
   const [isCreating, setIsCreating] = useState(false);
+
+  // Exclusão
+  const [isConfirmDeleteOpen, setIsConfirmDeleteOpen] = useState(false);
+
   const userId =
     localStorage.getItem("userId") || sessionStorage.getItem("userId");
 
@@ -27,36 +33,51 @@ function UserRequests() {
     fetchData();
   }, [userId]);
 
+  // Abre modal de Edição
   const handleEdit = (request) => {
     setSelectedRequest({ ...request });
     setIsCreating(false);
     setIsModalOpen(true);
   };
 
-  const handleDelete = async (coinId) => {
-    await deleteCoin(coinId);
-    setRequests(requests.filter((req) => req.id !== coinId));
-  };
-
+  // Abre modal de Criação
   const handleCreate = () => {
     setSelectedRequest(null);
     setIsCreating(true);
     setIsModalOpen(true);
   };
 
+  // Abre modal de exclusão
+  const openDeleteModal = (request) => {
+    setSelectedRequest(request);
+    setIsConfirmDeleteOpen(true);
+  };
+
+  // Executa deleção
+  const handleDelete = async () => {
+    if (selectedRequest) {
+      await deleteCoin(selectedRequest.id);
+      setRequests((prev) =>
+        prev.filter((req) => req.id !== selectedRequest.id)
+      );
+    }
+    setIsConfirmDeleteOpen(false);
+    setSelectedRequest(null);
+  };
+
+  // Salva criação ou edição
   const handleSave = async (data) => {
     if (isCreating) {
       const newRequest = await createCoin(data);
-      setRequests([...requests, newRequest]);
+      setRequests((prev) => [...prev, newRequest]);
     } else {
       if (!data.id) {
         console.error("Erro: ID da Coin não foi fornecido.");
         return;
       }
-
-      await updateCoin(data.id, data.message); // ✅ Passando ID e mensagem corretamente
-      setRequests(
-        requests.map((req) =>
+      await updateCoin(data.id, data.message);
+      setRequests((prev) =>
+        prev.map((req) =>
           req.id === data.id ? { ...req, message: data.message } : req
         )
       );
@@ -98,7 +119,7 @@ function UserRequests() {
                 </button>
                 <button
                   className="bg-red-600 px-3 py-1 rounded text-white"
-                  onClick={() => handleDelete(request.id)}
+                  onClick={() => openDeleteModal(request)}
                 >
                   Excluir
                 </button>
@@ -111,12 +132,16 @@ function UserRequests() {
       )}
 
       <UserRequestModal
+        // Criação/Edição
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
         onSave={handleSave}
-        request={selectedRequest}
         isCreating={isCreating}
+        request={selectedRequest}
         tasks={tasks}
+        isConfirmDeleteOpen={isConfirmDeleteOpen}
+        onDelete={handleDelete}
+        onCancelDelete={() => setIsConfirmDeleteOpen(false)}
       />
     </div>
   );
