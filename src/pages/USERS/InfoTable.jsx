@@ -1,13 +1,15 @@
 import Menu from "../../components/Menu";
-import TableRow from "../../components/TableRow";
+// import TableRow from "../../components/TableRow";
+import TaskListResume from "../../components/Admin/TaskListResume";
 
 function InfoTable() {
   return (
-    <div className="flex flex-col bg-gray-900 gap-[80px] h-screen ">
+    <div className="flex flex-col bg-gray-900 gap-[80px] h-screen">
       <Menu />
       <main className="flex flex-col items-center ">
         <div className="w-[70%] flex flex-col gap-4 ">
-          <TableRow name="VALE UM CORDÃO DE CRACHÁ" coin="9" />
+          <TaskListResume />
+          {/* <TableRow name="VALE UM CORDÃO DE CRACHÁ" coin="9" />
           <TableRow name="1 VALE-REFEIÇÃO" coin="18" />
           <TableRow name="CURSO UDEMY DE ATÉ R$50" coin="22" />
           <TableRow name="TROCAR MOUSE OU TECLADO" coin="34" />
@@ -25,7 +27,7 @@ function InfoTable() {
           <TableRow
             name="VALE UM JANTAR BATEL GRILL + CARTA DE RECONHECIMENTO"
             coin="100"
-          />
+          /> */}
         </div>
       </main>
     </div>

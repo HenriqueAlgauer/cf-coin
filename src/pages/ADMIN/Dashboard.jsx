@@ -13,7 +13,7 @@ function Dashboard() {
         </div>
         <div className="p-8 w-[30%] flex flex-col gap-4">
           <UsersTableListResume />
-          <TasksListResume />
+          <TasksListResume variant="resumo" />
         </div>
       </div>
     </div>
