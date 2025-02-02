@@ -15,6 +15,7 @@ function PendingRequestsModal({
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
+          onClick={onCancel}
         >
           <motion.div
             className="bg-gray-800 p-6 rounded shadow-lg text-white w-96"
@@ -22,6 +23,7 @@ function PendingRequestsModal({
             animate={{ y: 0, opacity: 1 }}
             exit={{ y: -50, opacity: 0 }}
             transition={{ duration: 0.3, ease: "easeOut" }}
+            onClick={(e) => e.stopPropagation()}
           >
             <h2 className="text-xl font-semibold mb-4 text-center">
               {actionType === "approve"

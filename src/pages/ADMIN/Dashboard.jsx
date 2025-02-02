@@ -9,7 +9,7 @@ function Dashboard() {
       <AdminMenu />
       <div className="w-[80%] mx-auto flex">
         <div className="w-[70%] pt-8">
-          <PendingRequests />
+          <PendingRequests variant="simples" />
         </div>
         <div className="p-8 w-[30%] flex flex-col gap-4">
           <UsersTableListResume />

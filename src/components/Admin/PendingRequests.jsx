@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { getPendingRequests, approveCoin, rejectCoin } from "../../api/api";
 import PendingRequestsModal from "../Admin/PendingRequestsModal"; // ✅ Importação
 
-function PendingRequests() {
+function PendingRequests({ variant = "default" }) {
   const [requests, setRequests] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedRequest, setSelectedRequest] = useState(null);
@@ -49,7 +49,8 @@ function PendingRequests() {
           <ul className="space-y-2">
             {requests.map((request) => (
               <li key={request.id} className="border-b border-gray-700 pb-2">
-                <div className="flex items-center justify-between">
+                <div className="flex flex-col gap-2">
+                  {/* ✅ Nome e Tarefa */}
                   <div>
                     <p>
                       <span className="font-bold text-green-400">
@@ -62,22 +63,33 @@ function PendingRequests() {
                       Departamento: {request.user.department}
                     </p>
                   </div>
-                  <p className="text-amber-300 font-bold">
-                    CF Coins: {request.amount}
+
+                  {/* ✅ Exibe a Mensagem do Usuário */}
+                  <p className="text-gray-300 italic bg-gray-700 p-2 rounded">
+                    {request.message ? request.message : "Nenhuma mensagem"}
                   </p>
-                  <div className="flex gap-2 mt-2">
-                    <button
-                      className="bg-green-400 px-4 py-1 rounded text-white"
-                      onClick={() => openModal(request, "approve")}
-                    >
-                      Aprovar
-                    </button>
-                    <button
-                      className="bg-red-600 px-4 py-1 rounded text-white"
-                      onClick={() => openModal(request, "reject")}
-                    >
-                      Rejeitar
-                    </button>
+
+                  {/* ✅ CF Coins e Botões */}
+                  <div className="flex justify-between items-center">
+                    <p className="text-amber-300 font-bold">
+                      CF Coins: {request.amount}
+                    </p>
+                    {variant !== "simples" && (
+                      <div className="flex gap-2">
+                        <button
+                          className="bg-green-400 px-4 py-1 rounded text-white"
+                          onClick={() => openModal(request, "approve")}
+                        >
+                          Aprovar
+                        </button>
+                        <button
+                          className="bg-red-600 px-4 py-1 rounded text-white"
+                          onClick={() => openModal(request, "reject")}
+                        >
+                          Rejeitar
+                        </button>
+                      </div>
+                    )}
                   </div>
                 </div>
               </li>
