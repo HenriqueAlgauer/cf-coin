@@ -1,5 +1,5 @@
 import AdminMenu from "../../components/Admin/AdminMenu";
-import PrizeListResume from "../../components/PrizeListResume";
+import PrizeList from "../../components/Admin/PrizeList";
 
 function Prizes() {
   return (
@@ -8,7 +8,7 @@ function Prizes() {
         <AdminMenu />
         <div className="w-[60%] mx-auto flex">
           <div className="w-full pt-8">
-            <PrizeListResume />
+            <PrizeList />
           </div>
         </div>
       </div>

@@ -378,3 +378,61 @@ export async function getPrizes() {
     return [];
   }
 }
+
+export async function createPrize(prizeData) {
+  try {
+    const response = await fetch(`${API_BASE_URL}/prizes`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(prizeData),
+    });
+
+    if (!response.ok) {
+      throw new Error("Erro ao criar o prêmio.");
+    }
+
+    return await response.json();
+  } catch (error) {
+    console.error("Erro ao criar prêmio:", error);
+  }
+}
+
+// ✅ Atualizar um prêmio existente
+export async function updatePrize(prizeId, updatedData) {
+  try {
+    const response = await fetch(`${API_BASE_URL}/prizes/${prizeId}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(updatedData),
+    });
+
+    if (!response.ok) {
+      throw new Error("Erro ao atualizar o prêmio.");
+    }
+
+    return await response.json();
+  } catch (error) {
+    console.error("Erro ao atualizar prêmio:", error);
+  }
+}
+
+// ✅ Excluir um prêmio
+export async function deletePrize(prizeId) {
+  try {
+    const response = await fetch(`${API_BASE_URL}/prizes/${prizeId}`, {
+      method: "DELETE",
+    });
+
+    if (!response.ok) {
+      throw new Error("Erro ao excluir o prêmio.");
+    }
+
+    return await response.json();
+  } catch (error) {
+    console.error("Erro ao excluir prêmio:", error);
+  }
+}
