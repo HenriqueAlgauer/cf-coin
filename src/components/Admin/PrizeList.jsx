@@ -62,8 +62,8 @@ function PrizeList() {
   };
 
   return (
-    <div className="p-4 bg-gray-800 rounded shadow text-white">
-      <div className="flex justify-between mb-4">
+    <>
+      <div className="flex text-white justify-between items-end mb-4">
         <h2 className="text-2xl">Prêmios Disponíveis</h2>
         <button
           className="bg-green-500 px-4 py-2 rounded"
@@ -72,98 +72,101 @@ function PrizeList() {
           Novo Prêmio
         </button>
       </div>
+      <div className="p-4 bg-gray-800 rounded shadow text-white">
+        <div className="flex justify-between mb-4"></div>
 
-      {prizes.length > 0 ? (
-        <ul className="space-y-2">
-          {prizes.map((prize) => (
-            <li
-              key={prize.id}
-              className="border-b border-gray-700 pb-2 flex justify-between items-center"
-            >
-              <div>
-                <h3 className="text-green-400 font-bold">{prize.name}</h3>
-                <p className="text-gray-400">{prize.description}</p>
-                <p className="text-amber-300 font-bold">
-                  Custo: {prize.cost} CF Coins
-                </p>
-              </div>
-              <div className="flex gap-2">
-                <button
-                  className="bg-blue-500 px-3 py-1 rounded text-white"
-                  onClick={() => handleEdit(prize)}
-                >
-                  Editar
-                </button>
-                <button
-                  className="bg-red-500 px-3 py-1 rounded text-white"
-                  onClick={() => openDeleteModal(prize)}
-                >
-                  Excluir
-                </button>
-              </div>
-            </li>
-          ))}
-        </ul>
-      ) : (
-        <p className="text-gray-400">Nenhum prêmio cadastrado.</p>
-      )}
-
-      {/* Modal de Criação/Edição */}
-      <PrizeModal
-        isOpen={isModalOpen}
-        onClose={() => setIsModalOpen(false)}
-        onSave={handleSave}
-        prize={selectedPrize}
-        isCreating={isCreating}
-      />
-
-      {/* Modal de Confirmação de Exclusão */}
-      <AnimatePresence>
-        {isConfirmDeleteOpen && (
-          <motion.div
-            className="fixed inset-0 flex items-center justify-center z-50"
-            onClick={() => setIsConfirmDeleteOpen(false)}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-          >
-            <motion.div
-              className="bg-gray-800 p-6 rounded shadow-lg text-white w-96"
-              onClick={(e) => e.stopPropagation()}
-              initial={{ y: -50, opacity: 0 }}
-              animate={{ y: 0, opacity: 1 }}
-              exit={{ y: -50, opacity: 0 }}
-              transition={{ duration: 0.3, ease: "easeOut" }}
-            >
-              <h2 className="text-xl font-semibold text-center mb-4">
-                Confirmar Exclusão
-              </h2>
-              <p className="text-gray-300 text-center">
-                Tem certeza que deseja excluir o prêmio{" "}
-                <span className="text-red-400 font-bold">
-                  {selectedPrize?.name}
-                </span>
-                ?
-              </p>
-              <div className="flex justify-between mt-4">
-                <button
-                  className="bg-red-500 px-4 py-2 rounded"
-                  onClick={handleDelete}
-                >
-                  Excluir
-                </button>
-                <button
-                  className="bg-gray-500 px-4 py-2 rounded"
-                  onClick={() => setIsConfirmDeleteOpen(false)}
-                >
-                  Cancelar
-                </button>
-              </div>
-            </motion.div>
-          </motion.div>
+        {prizes.length > 0 ? (
+          <ul className="space-y-2">
+            {prizes.map((prize) => (
+              <li
+                key={prize.id}
+                className="border-b border-gray-700 pb-2 flex justify-between items-center"
+              >
+                <div>
+                  <h3 className="text-green-400 font-bold">{prize.name}</h3>
+                  <p className="text-gray-400">{prize.description}</p>
+                  <p className="text-amber-300 font-bold">
+                    Custo: {prize.cost} CF Coins
+                  </p>
+                </div>
+                <div className="flex gap-2">
+                  <button
+                    className="bg-blue-500 px-3 py-1 rounded text-white"
+                    onClick={() => handleEdit(prize)}
+                  >
+                    Editar
+                  </button>
+                  <button
+                    className="bg-red-500 px-3 py-1 rounded text-white"
+                    onClick={() => openDeleteModal(prize)}
+                  >
+                    Excluir
+                  </button>
+                </div>
+              </li>
+            ))}
+          </ul>
+        ) : (
+          <p className="text-gray-400">Nenhum prêmio cadastrado.</p>
         )}
-      </AnimatePresence>
-    </div>
+
+        {/* Modal de Criação/Edição */}
+        <PrizeModal
+          isOpen={isModalOpen}
+          onClose={() => setIsModalOpen(false)}
+          onSave={handleSave}
+          prize={selectedPrize}
+          isCreating={isCreating}
+        />
+
+        {/* Modal de Confirmação de Exclusão */}
+        <AnimatePresence>
+          {isConfirmDeleteOpen && (
+            <motion.div
+              className="fixed inset-0 flex items-center justify-center z-50"
+              onClick={() => setIsConfirmDeleteOpen(false)}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+            >
+              <motion.div
+                className="bg-gray-800 p-6 rounded shadow-lg text-white w-96"
+                onClick={(e) => e.stopPropagation()}
+                initial={{ y: -50, opacity: 0 }}
+                animate={{ y: 0, opacity: 1 }}
+                exit={{ y: -50, opacity: 0 }}
+                transition={{ duration: 0.3, ease: "easeOut" }}
+              >
+                <h2 className="text-xl font-semibold text-center mb-4">
+                  Confirmar Exclusão
+                </h2>
+                <p className="text-gray-300 text-center">
+                  Tem certeza que deseja excluir o prêmio{" "}
+                  <span className="text-red-400 font-bold">
+                    {selectedPrize?.name}
+                  </span>
+                  ?
+                </p>
+                <div className="flex justify-between mt-4">
+                  <button
+                    className="bg-red-500 px-4 py-2 rounded"
+                    onClick={handleDelete}
+                  >
+                    Excluir
+                  </button>
+                  <button
+                    className="bg-gray-500 px-4 py-2 rounded"
+                    onClick={() => setIsConfirmDeleteOpen(false)}
+                  >
+                    Cancelar
+                  </button>
+                </div>
+              </motion.div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </div>
+    </>
   );
 }
 
