@@ -91,6 +91,17 @@ function UserModal({ isOpen, onClose, user, onSave, onDelete, isCreating }) {
                   }
                   className="p-2 w-full bg-gray-700 rounded mb-2 outline-none"
                 />
+                {isCreating && (
+                  <input
+                    type="password"
+                    placeholder="Senha"
+                    value={editedUser.password || ""}
+                    onChange={(e) =>
+                      setEditedUser({ ...editedUser, password: e.target.value })
+                    }
+                    className="p-2 w-full bg-gray-700 rounded mb-2 outline-none"
+                  />
+                )}
                 <select
                   value={editedUser.department}
                   onChange={(e) =>
