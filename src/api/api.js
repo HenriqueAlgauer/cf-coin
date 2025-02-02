@@ -69,6 +69,39 @@ export async function updateUser(userId, updatedData) {
   }
 }
 
+export async function updateUserEmail(userId, newEmail) {
+  try {
+    const response = await fetch(`${API_BASE_URL}/users/${userId}/email`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ email: newEmail }), // Envia apenas o email
+    });
+
+    if (!response.ok) {
+      throw new Error("Erro ao atualizar o email.");
+    }
+
+    return await response.json();
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+export async function getUserProfile(userId) {
+  try {
+    const response = await fetch(`${API_BASE_URL}/users/${userId}`);
+    if (!response.ok) {
+      throw new Error("Erro ao buscar perfil do usuário.");
+    }
+    return await response.json();
+  } catch (error) {
+    console.error(error);
+    return null;
+  }
+}
+
 export async function deleteUser(userId) {
   try {
     const response = await fetch(`${API_BASE_URL}/users/${userId}`, {

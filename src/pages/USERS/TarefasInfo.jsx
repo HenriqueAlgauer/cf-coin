@@ -2,7 +2,7 @@ import Menu from "../../components/Menu";
 // import TableRow from "../../components/TableRow";
 import TaskListResume from "../../components/Admin/TaskListResume";
 
-function InfoTable() {
+function TarefasInfo() {
   return (
     <div className="flex flex-col bg-gray-900 gap-[80px] h-screen">
       <Menu />
@@ -15,4 +15,4 @@ function InfoTable() {
   );
 }
 
-export default InfoTable;
+export default TarefasInfo;

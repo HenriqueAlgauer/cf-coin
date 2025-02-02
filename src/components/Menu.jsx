@@ -20,7 +20,7 @@ function Menu() {
       <ul className="flex gap-8 items-center">
         <li>
           <Link className="text-green-400 font-medium" to="/info">
-            Tabela de prêmios
+            Tabela de Pontos
           </Link>
         </li>
         <li>
