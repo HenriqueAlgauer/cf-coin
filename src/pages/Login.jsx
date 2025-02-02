@@ -28,7 +28,7 @@ function Login() {
         sessionStorage.setItem("userId", response.user.id); // ✅ Salva userId
       }
 
-      navigate("/dashboard"); // ✅ Redireciona corretamente
+      navigate("/"); // ✅ Redireciona corretamente
     } catch (error) {
       setMessage("Login inválido.");
       throw error;
