@@ -363,3 +363,18 @@ export async function deleteCoin(coinId) {
     console.error("Erro ao excluir a solicitação:", error);
   }
 }
+
+// PRIZES
+
+export async function getPrizes() {
+  try {
+    const response = await fetch(`${API_BASE_URL}/prizes`);
+    if (!response.ok) {
+      throw new Error("Erro ao buscar os prêmios.");
+    }
+    return await response.json();
+  } catch (error) {
+    console.error(error);
+    return [];
+  }
+}
