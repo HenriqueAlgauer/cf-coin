@@ -276,6 +276,10 @@ export async function rejectCoin(coinId) {
 
 export async function createCoin(coinData) {
   try {
+    if (!coinData.userId || isNaN(coinData.userId)) {
+      throw new Error("userId não foi fornecido ou é inválido.");
+    }
+
     const response = await fetch(`${API_BASE_URL}/coins`, {
       method: "POST",
       headers: {

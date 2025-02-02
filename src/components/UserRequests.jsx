@@ -60,14 +60,29 @@ function UserRequests() {
   };
 
   const handleSave = async (data) => {
+    const userId =
+      Number(localStorage.getItem("userId")) ||
+      Number(sessionStorage.getItem("userId")) ||
+      0;
+
+    if (!userId) {
+      console.error("Erro: userId não foi fornecido.");
+      return;
+    }
+
+    const requestData = { ...data, userId }; // ✅ Garante que userId é passado corretamente
+
     if (isCreating) {
-      const newRequest = await createCoin(data);
-      setRequests((prev) => [...prev, newRequest]);
+      const newRequest = await createCoin(requestData);
+      if (newRequest) {
+        setRequests((prev) => [...prev, newRequest]);
+      }
     } else {
       if (!data.id) {
         console.error("Erro: ID da Coin não foi fornecido.");
         return;
       }
+
       await updateCoin(data.id, data.message);
       setRequests((prev) =>
         prev.map((req) =>
@@ -75,6 +90,7 @@ function UserRequests() {
         )
       );
     }
+
     setIsModalOpen(false);
   };
 

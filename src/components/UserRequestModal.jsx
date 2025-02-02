@@ -16,7 +16,10 @@ function UserRequestModal({
   onCancelDelete,
 }) {
   const [formData, setFormData] = useState({
-    userId: Number(sessionStorage.getItem("userId")),
+    userId:
+      Number(localStorage.getItem("userId")) ||
+      Number(sessionStorage.getItem("userId")) ||
+      0, // ✅ Garante que seja um número válido
     taskId: "",
     message: "",
     amount: 0,
@@ -24,11 +27,12 @@ function UserRequestModal({
 
   useEffect(() => {
     if (isOpen && !isConfirmDeleteOpen) {
-      // Se estamos abrindo a modal de criar/editar,
-      // atualizamos o formData conforme o modo (criação ou edição)
       if (isCreating) {
         setFormData({
-          userId: Number(sessionStorage.getItem("userId")),
+          userId:
+            Number(localStorage.getItem("userId")) ||
+            Number(sessionStorage.getItem("userId")) ||
+            0,
           taskId: "",
           message: "",
           amount: 0,
@@ -36,10 +40,10 @@ function UserRequestModal({
       } else if (request) {
         setFormData({
           id: request.id,
-          userId: request.userId,
-          taskId: request.task.id,
+          userId: request.userId || 0,
+          taskId: request.task?.id || "",
           message: request.message || "",
-          amount: request.amount,
+          amount: request.amount || 0,
         });
       }
     }
