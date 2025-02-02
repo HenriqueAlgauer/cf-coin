@@ -13,11 +13,9 @@ function UserRequests() {
   const [tasks, setTasks] = useState([]);
   const [selectedRequest, setSelectedRequest] = useState(null);
 
-  // Controles de modais
   const [isModalOpen, setIsModalOpen] = useState(false); // criar/editar
   const [isCreating, setIsCreating] = useState(false);
 
-  // Exclusão
   const [isConfirmDeleteOpen, setIsConfirmDeleteOpen] = useState(false);
 
   const userId =
@@ -33,27 +31,23 @@ function UserRequests() {
     fetchData();
   }, [userId]);
 
-  // Abre modal de Edição
   const handleEdit = (request) => {
     setSelectedRequest({ ...request });
     setIsCreating(false);
     setIsModalOpen(true);
   };
 
-  // Abre modal de Criação
   const handleCreate = () => {
     setSelectedRequest(null);
     setIsCreating(true);
     setIsModalOpen(true);
   };
 
-  // Abre modal de exclusão
   const openDeleteModal = (request) => {
     setSelectedRequest(request);
     setIsConfirmDeleteOpen(true);
   };
 
-  // Executa deleção
   const handleDelete = async () => {
     if (selectedRequest) {
       await deleteCoin(selectedRequest.id);
@@ -65,7 +59,6 @@ function UserRequests() {
     setSelectedRequest(null);
   };
 
-  // Salva criação ou edição
   const handleSave = async (data) => {
     if (isCreating) {
       const newRequest = await createCoin(data);
@@ -132,7 +125,6 @@ function UserRequests() {
       )}
 
       <UserRequestModal
-        // Criação/Edição
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
         onSave={handleSave}
