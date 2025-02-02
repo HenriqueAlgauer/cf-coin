@@ -1,14 +1,14 @@
 import AdminMenu from "../../components/Admin/AdminMenu";
-import TaskList from "../../components/Admin/TaskList";
+import PrizeListResume from "../../components/PrizeListResume";
 
-function Tarefas() {
+function Prizes() {
   return (
     <>
       <div className="w-screen min-h-screen bg-gray-900">
         <AdminMenu />
         <div className="w-[60%] mx-auto flex">
           <div className="w-full pt-8">
-            <TaskList />
+            <PrizeListResume />
           </div>
         </div>
       </div>
@@ -16,4 +16,4 @@ function Tarefas() {
   );
 }
 
-export default Tarefas;
+export default Prizes;

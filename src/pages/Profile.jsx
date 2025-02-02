@@ -27,7 +27,7 @@ function Profile() {
   }, [userId]);
 
   return (
-    <div className="flex flex-col bg-gray-900 gap-[80px] h-screen">
+    <div className="flex flex-col bg-gray-900 gap-[80px] min-h-screen">
       {userRole === "ADMIN" ? <AdminMenu /> : <Menu />}
       <main className="flex flex-col items-center">
         <div className="w-[70%] bg-gray-800 p-6 rounded shadow text-white">

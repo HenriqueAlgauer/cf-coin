@@ -5,7 +5,7 @@ function Home() {
   const userId = Number(sessionStorage.getItem("userId"));
   return (
     <>
-      <div className="w-screen h-screen bg-gray-900">
+      <div className="w-screen min-h-screen bg-gray-900">
         <Menu />
         <main className="flex flex-col gap-24 w-[70%] mx-auto text-white pt-[80px]">
           <div className="flex justify-center text-xl font-semibold">
