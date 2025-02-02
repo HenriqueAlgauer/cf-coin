@@ -5,7 +5,7 @@ import UsersTableListResume from "../../components/Admin/UsersTableListResume";
 
 function Dashboard() {
   return (
-    <div className="w-screen h-screen bg-gray-900">
+    <div className="w-screen min-h-screen bg-gray-900">
       <AdminMenu />
       <div className="w-[80%] mx-auto flex">
         <div className="w-[70%] pt-8">

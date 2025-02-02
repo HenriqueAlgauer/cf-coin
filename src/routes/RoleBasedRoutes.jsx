@@ -4,11 +4,11 @@ import Profile from "../pages/Profile";
 import TarefasInfo from "../pages/USERS/TarefasInfo";
 import Solicitacao from "../pages/USERS/Solicitacao";
 
-import Register from "../pages/ADMIN/Register";
 import Solicitacoes from "../pages/ADMIN/Solicitacoes";
 import Dashboard from "../pages/ADMIN/Dashboard";
 import Users from "../pages/ADMIN/Users";
 import Tarefas from "../pages/ADMIN/Tarefas";
+import Prizes from "../pages/ADMIN/Prizes";
 
 function RoleBasedRoutes() {
   const userRole =
@@ -21,9 +21,9 @@ function RoleBasedRoutes() {
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/users" element={<Users />} />
         <Route path="/profile" element={<Profile />} />
-        <Route path="/register" element={<Register />} />
         <Route path="/solicitacoes" element={<Solicitacoes />} />
         <Route path="/tarefas" element={<Tarefas />} />
+        <Route path="/premios" element={<Prizes />} />
       </Routes>
     );
   } else if (userRole === "USER") {
