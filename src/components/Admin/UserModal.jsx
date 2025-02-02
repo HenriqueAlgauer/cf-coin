@@ -47,7 +47,7 @@ function UserModal({ isOpen, onClose, user, onSave, onDelete, isCreating }) {
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
         >
-          <motion.div className="absolute inset-0 bg-black bg-opacity-30"></motion.div>
+          <motion.div className="absolute inset-0 bg-opacity-30"></motion.div>
 
           <motion.div
             className="relative bg-gray-800 p-6 rounded shadow-lg text-white w-96 z-50"
@@ -58,10 +58,14 @@ function UserModal({ isOpen, onClose, user, onSave, onDelete, isCreating }) {
             transition={{ duration: 0.3, ease: "easeOut" }}
           >
             <h2 className="text-xl font-semibold mb-4">
-              {user ? "Editar Usuário" : "Excluir Usuário"}
+              {isCreating
+                ? "Criar Usuário"
+                : user
+                ? "Editar Usuário"
+                : "Excluir Usuário"}
             </h2>
 
-            {user ? (
+            {isCreating || user ? (
               <form
                 onSubmit={(e) => {
                   e.preventDefault();
@@ -108,22 +112,40 @@ function UserModal({ isOpen, onClose, user, onSave, onDelete, isCreating }) {
                   <option value="USER">USER</option>
                   <option value="ADMIN">ADMIN</option>
                 </select>
-                <button
-                  type="submit"
-                  className="bg-green-400 px-4 py-2 rounded"
-                >
-                  Salvar
-                </button>
+                <div className="flex justify-between mt-2">
+                  <button
+                    type="submit"
+                    className="bg-green-400 px-4 py-2 rounded cursor-pointer"
+                  >
+                    {isCreating ? "Criar" : "Salvar"}
+                  </button>
+                  <button
+                    type="button"
+                    onClick={handleClose}
+                    className="bg-gray-500 px-4 py-2 rounded ml-2 cursor-pointer"
+                  >
+                    Cancelar
+                  </button>
+                </div>
               </form>
             ) : (
               <div>
                 <p>Tem certeza que deseja excluir este usuário?</p>
-                <button
-                  onClick={onDelete}
-                  className="bg-red-500 px-4 py-2 rounded"
-                >
-                  Excluir
-                </button>
+                <div className="flex justify-between mt-2">
+                  <button
+                    onClick={onDelete}
+                    className="bg-red-500 px-4 py-2 rounded cursor-pointer"
+                  >
+                    Excluir
+                  </button>
+                  <button
+                    type="button"
+                    onClick={handleClose}
+                    className="bg-gray-500 px-4 py-2 rounded ml-2 cursor-pointer"
+                  >
+                    Cancelar
+                  </button>
+                </div>
               </div>
             )}
           </motion.div>

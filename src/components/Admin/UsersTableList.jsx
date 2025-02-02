@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { getUsers, deleteUser, updateUser } from "../../api/api";
+import { getUsers, deleteUser, updateUser, createUser } from "../../api/api";
 import UserModal from "./UserModal";
 
 function UsersTableList() {
@@ -7,6 +7,7 @@ function UsersTableList() {
   const [selectedUser, setSelectedUser] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isDeleteMode, setIsDeleteMode] = useState(false);
+  const [isCreating, setIsCreating] = useState(false); // ✅ Novo estado para criação
 
   useEffect(() => {
     async function fetchUsers() {
@@ -16,10 +17,19 @@ function UsersTableList() {
     fetchUsers();
   }, []);
 
+  // ✅ Função para abrir a modal de criação
+  const handleCreateUser = () => {
+    setSelectedUser(null); // Reseta o usuário selecionado
+    setIsDeleteMode(false);
+    setIsCreating(true); // Define que é criação
+    setIsModalOpen(true);
+  };
+
   // ✅ Função para abrir a modal de edição
   const handleEdit = (user) => {
     setSelectedUser(user);
     setIsDeleteMode(false);
+    setIsCreating(false);
     setIsModalOpen(true);
   };
 
@@ -27,15 +37,21 @@ function UsersTableList() {
   const handleDeleteModal = (user) => {
     setSelectedUser(user);
     setIsDeleteMode(true);
+    setIsCreating(false);
     setIsModalOpen(true);
   };
 
-  // ✅ Função para salvar alterações no usuário
-  const handleSave = async (updatedUser) => {
-    await updateUser(updatedUser.id, updatedUser);
-    setUsers(
-      users.map((user) => (user.id === updatedUser.id ? updatedUser : user))
-    );
+  // ✅ Função para salvar um novo usuário ou editar
+  const handleSave = async (userData) => {
+    if (isCreating) {
+      const newUser = await createUser(userData);
+      setUsers([...users, newUser]);
+    } else {
+      await updateUser(userData.id, userData);
+      setUsers(
+        users.map((user) => (user.id === userData.id ? userData : user))
+      );
+    }
     setIsModalOpen(false);
   };
 
@@ -50,7 +66,10 @@ function UsersTableList() {
     <>
       <div className="flex text-white items-center justify-between mb-4">
         <h2 className="text-2xl">Lista de Usuários</h2>
-        <button className="bg-green-400 p-2 rounded cursor-pointer">
+        <button
+          onClick={handleCreateUser} // ✅ Abre a modal de criação
+          className="bg-green-400 p-2 rounded cursor-pointer"
+        >
           Adicionar Usuário
         </button>
       </div>
@@ -79,13 +98,13 @@ function UsersTableList() {
                   <td className="p-2 text-right">
                     <button
                       onClick={() => handleEdit(user)}
-                      className="bg-blue-500 px-3 py-1 rounded text-white"
+                      className="bg-blue-600 px-3 py-1 rounded cursor-pointer text-white"
                     >
                       Editar
                     </button>
                     <button
                       onClick={() => handleDeleteModal(user)}
-                      className="bg-red-500 px-3 py-1 ml-2 rounded text-white"
+                      className="bg-red-500 px-3 py-1 ml-2 rounded cursor-pointer text-white"
                     >
                       Excluir
                     </button>
@@ -103,12 +122,12 @@ function UsersTableList() {
         </table>
       </div>
 
-      {/* Modal para editar/excluir usuário */}
+      {/* Modal para criação, edição e exclusão de usuário */}
       <UserModal
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
         user={isDeleteMode ? null : selectedUser}
-        isCreating={false}
+        isCreating={isCreating}
         onSave={handleSave}
         onDelete={handleDelete}
       />
