@@ -2,6 +2,16 @@
 /* @import "./typography.css"; */
 
 @layer utilities {
+  ::-webkit-scrollbar {
+    width: 6px; /* Largura da scrollbar */
+  }
+  ::-webkit-scrollbar-thumb {
+    background-color: #22c55e; /* Cor do polegar */
+    border-radius: 4px;
+  }
+  ::-webkit-scrollbar-track {
+    background-color: #374151; /* Cor do fundo */
+  }
   .scrollbar-custom::-webkit-scrollbar {
     width: 6px; /* Largura da scrollbar */
   }
