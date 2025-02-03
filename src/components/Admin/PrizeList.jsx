@@ -73,7 +73,7 @@ function PrizeList() {
         </button>
       </div>
       <div className="p-4 bg-gray-800 rounded shadow text-white">
-        <div className="flex justify-between mb-4"></div>
+        <div className="flex justify-between"></div>
 
         {prizes.length > 0 ? (
           <ul className="space-y-2">
@@ -82,12 +82,21 @@ function PrizeList() {
                 key={prize.id}
                 className="border-b border-gray-700 pb-2 flex justify-between items-center"
               >
-                <div>
-                  <h3 className="text-green-400 font-bold">{prize.name}</h3>
-                  <p className="text-gray-400">{prize.description}</p>
-                  <p className="text-amber-300 font-bold">
-                    Custo: {prize.cost} CF Coins
-                  </p>
+                <div className="flex min-w-[60%] justify-between">
+                  <div>
+                    <h3 className="text-green-400 font-bold">{prize.name}</h3>
+                    <p className="text-gray-400">{prize.description}</p>
+                  </div>
+                  <div className="flex gap-1 items-center pr-2">
+                    <p className="text-amber-300 font-bold font-mono">
+                      {prize.cost}
+                    </p>
+                    <img
+                      className="w-6"
+                      src="./src/assets/coin.png"
+                      alt="moeda"
+                    />
+                  </div>
                 </div>
                 <div className="flex gap-2">
                   <button

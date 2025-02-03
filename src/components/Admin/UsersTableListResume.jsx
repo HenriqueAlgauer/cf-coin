@@ -36,8 +36,21 @@ function UsersTableListResume() {
             {users.length > 0 ? (
               users.map((user) => (
                 <tr key={user.id} className="border-b border-gray-700">
-                  <td className="p-2">{user.name}</td>
-                  <td className="p-2 text-right">{user.coins}</td>
+                  <td className="p-2">
+                    <p className="font-semibold">{user.name}</p>
+                  </td>
+                  <td className="p-2 text-right">
+                    <div className="flex justify-end items-center gap-2">
+                      <img
+                        className="w-6"
+                        src="./src/assets/coin.png"
+                        alt="moeda"
+                      />
+                      <p className="text-amber-300 text-xl font-mono font-semibold">
+                        {user.coins}
+                      </p>
+                    </div>
+                  </td>
                 </tr>
               ))
             ) : (

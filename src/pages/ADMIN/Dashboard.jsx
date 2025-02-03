@@ -5,13 +5,13 @@ import UsersTableListResume from "../../components/Admin/UsersTableListResume";
 
 function Dashboard() {
   return (
-    <div className="w-screen min-h-screen bg-gray-900">
+    <div className="max-w-screen min-h-screen bg-gray-900">
       <AdminMenu />
-      <div className="w-[80%] mx-auto flex">
-        <div className="w-[70%] pt-8">
+      <div className="w-[80%] mx-auto flex pb-8">
+        <div className="w-[65%] pt-8">
           <PendingRequests variant="simples" />
         </div>
-        <div className="p-8 w-[30%] flex flex-col gap-4">
+        <div className="p-8 w-[35%] flex flex-col gap-4">
           <UsersTableListResume />
           <TasksListResume variant="resumo" />
         </div>
