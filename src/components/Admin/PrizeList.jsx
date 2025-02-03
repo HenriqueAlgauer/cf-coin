@@ -88,14 +88,14 @@ function PrizeList() {
                     <p className="text-gray-400">{prize.description}</p>
                   </div>
                   <div className="flex gap-1 items-center pr-2">
-                    <p className="text-amber-300 font-bold font-mono">
-                      {prize.cost}
-                    </p>
                     <img
                       className="w-6"
                       src="./src/assets/coin.png"
                       alt="moeda"
                     />
+                    <p className="text-amber-300 font-bold font-mono">
+                      {prize.cost}
+                    </p>
                   </div>
                 </div>
                 <div className="flex gap-2">

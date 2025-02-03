@@ -87,7 +87,7 @@ function TaskList() {
                 key={task.id}
                 className="border-b border-gray-700 pb-2 flex justify-between items-center"
               >
-                <div className="flex justify-between min-w-[50%]">
+                <div className="flex justify-between min-w-[60%]">
                   <div>
                     <h3 className="text-lg font-medium">{task.name}</h3>
                     <p className="text-sm text-gray-400">{task.description}</p>
@@ -95,9 +95,14 @@ function TaskList() {
                       Visível para: {task.visibility}
                     </p>
                   </div>
-                  <div>
-                    <p className="text-amber-300 font-bold">
-                      CF Coins: {task.reward}
+                  <div className="flex items-center gap-2">
+                    <img
+                      className="w-6"
+                      src="./src/assets/coin.png"
+                      alt="moeda"
+                    />
+                    <p className="text-amber-300 font-bold font-mono">
+                      {task.reward}
                     </p>
                   </div>
                 </div>
