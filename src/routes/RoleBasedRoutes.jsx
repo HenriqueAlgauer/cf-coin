@@ -4,7 +4,7 @@ import Profile from "../pages/Profile";
 import TarefasInfo from "../pages/USERS/TarefasInfo";
 import Solicitacao from "../pages/USERS/Solicitacao";
 
-import Solicitacoes from "../pages/ADMIN/Solicitacoes";
+import CoinRequests from "../pages/ADMIN/CoinRequests";
 import Dashboard from "../pages/ADMIN/Dashboard";
 import Users from "../pages/ADMIN/Users";
 import Tarefas from "../pages/ADMIN/Tarefas";
@@ -22,7 +22,7 @@ function RoleBasedRoutes() {
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/users" element={<Users />} />
         <Route path="/profile" element={<Profile />} />
-        <Route path="/solicitacoes" element={<Solicitacoes />} />
+        <Route path="/coins" element={<CoinRequests />} />
         <Route path="/tarefas" element={<Tarefas />} />
         <Route path="/premios" element={<Prizes />} />
       </Routes>

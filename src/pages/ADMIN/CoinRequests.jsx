@@ -1,7 +1,7 @@
 import AdminMenu from "../../components/Admin/AdminMenu";
 import PendingRequests from "../../components/Admin/PendingRequests";
 
-function Solicitacoes() {
+function CoinRequests() {
   return (
     <>
       <div className="max-w-screen min-h-screen bg-gray-900">
@@ -16,4 +16,4 @@ function Solicitacoes() {
   );
 }
 
-export default Solicitacoes;
+export default CoinRequests;

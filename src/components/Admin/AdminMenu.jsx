@@ -24,8 +24,8 @@ function AdminMenu() {
           </Link>
         </li>
         <li>
-          <Link className="text-green-400 font-medium" to="/solicitacoes">
-            Solicitações
+          <Link className="text-green-400 font-medium" to="/coins">
+            Coins
           </Link>
         </li>
         <li>
