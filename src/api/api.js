@@ -436,3 +436,34 @@ export async function deletePrize(prizeId) {
     console.error("Erro ao excluir prêmio:", error);
   }
 }
+
+export async function requestPrize(userId, prizeId) {
+  try {
+    const response = await fetch(`${API_BASE_URL}/prize-redemptions`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ userId, prizeId }),
+    });
+
+    if (!response.ok) {
+      const errorData = await response.json();
+
+      if (response.status === 403) {
+        return {
+          error: "Você não tem CF Coins suficientes para resgatar este prêmio.",
+        };
+      }
+
+      return {
+        error: errorData.error || "Erro ao solicitar resgate de prêmio.",
+      };
+    }
+
+    return await response.json();
+  } catch (error) {
+    console.error("Erro ao solicitar prêmio:", error.message);
+    return { error: "Erro inesperado ao processar o resgate." };
+  }
+}
