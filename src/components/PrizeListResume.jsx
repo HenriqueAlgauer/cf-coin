@@ -4,85 +4,58 @@ import { getPrizes, requestPrize, getUserProfile } from "../api/api";
 
 function PrizeListResume() {
   const [prizes, setPrizes] = useState([]);
+  const [user, setUser] = useState(null);
   const [selectedPrize, setSelectedPrize] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
+
+  const userId =
+    localStorage.getItem("userId") || sessionStorage.getItem("userId");
 
   useEffect(() => {
     async function fetchPrizes() {
       const data = await getPrizes();
       setPrizes(data);
-    }
-    fetchPrizes();
-  }, []);
 
-  const [userCoins, setUserCoins] = useState(0);
-
-  useEffect(() => {
-    async function fetchUserData() {
-      const userId = Number(
-        localStorage.getItem("userId") || sessionStorage.getItem("userId")
-      );
-
-      if (!userId) return;
-
-      const userData = await getUserProfile(userId); // 🔹 Certifique-se que essa função retorna user.coins
-      if (userData) {
-        setUserCoins(userData.coins);
+      if (userId) {
+        const userData = await getUserProfile(userId);
+        setUser(userData);
       }
     }
+    fetchPrizes();
+  }, [userId]);
 
-    fetchUserData();
-  }, []);
-
-  // ✅ Abre a Modal passando o prêmio selecionado
   const openModal = (prize) => {
-    setSelectedPrize(prize);
-    setIsModalOpen(true);
+    if (user && user.coins >= prize.cost) {
+      setSelectedPrize(prize);
+      setErrorMessage(""); // Limpa erros antigos
+      setIsModalOpen(true);
+    } else {
+      setErrorMessage("Saldo insuficiente para resgatar este prêmio.");
+    }
   };
 
-  // ✅ Fecha a Modal
   const closeModal = () => {
     setIsModalOpen(false);
     setSelectedPrize(null);
     setErrorMessage("");
   };
 
-  // ✅ Confirma a solicitação do prêmio
-  const [errorMessage, setErrorMessage] = useState(""); // Estado para erro
-
   const handleRequest = async () => {
-    if (!selectedPrize) return;
+    if (!selectedPrize || !user) return;
 
-    const userId = Number(
-      localStorage.getItem("userId") || sessionStorage.getItem("userId")
-    );
-    const prizeId = Number(selectedPrize?.id);
-
-    if (!userId || !prizeId) {
-      console.error("Erro: userId ou prizeId não encontrados.", {
-        userId,
-        prizeId,
-      });
-      return;
+    try {
+      await requestPrize(user.id, selectedPrize.id);
+      // Atualizar saldo do usuário após a solicitação
+      setUser((prevUser) => ({
+        ...prevUser,
+        coins: prevUser.coins - selectedPrize.cost,
+      }));
+      closeModal();
+    } catch (error) {
+      console.error("Erro ao processar o pedido de resgate:", error);
+      setErrorMessage("Erro ao solicitar o resgate do prêmio.");
     }
-
-    if (userCoins < selectedPrize.cost) {
-      setErrorMessage(
-        "Você não tem CF Coins suficientes para resgatar este prêmio."
-      );
-      return;
-    }
-
-    const result = await requestPrize(userId, prizeId);
-
-    if (result.error) {
-      setErrorMessage(result.error);
-      return;
-    }
-
-    // ✅ Sucesso: fecha a modal e limpa erro
-    setErrorMessage("");
-    closeModal();
   };
 
   return (
@@ -101,8 +74,15 @@ function PrizeListResume() {
                   Custo: {prize.cost} CF Coins
                 </p>
                 <button
-                  className="bg-blue-500 px-3 py-1 rounded text-white"
-                  onClick={() => openModal(prize)} // ✅ Abre a modal de confirmação
+                  className={`px-3 py-1 rounded text-white ${
+                    user && user.coins >= prize.cost
+                      ? "bg-blue-500"
+                      : "bg-gray-500 cursor-not-allowed"
+                  }`}
+                  onClick={() =>
+                    user && user.coins >= prize.cost && openModal(prize)
+                  }
+                  disabled={!user || user.coins < prize.cost}
                 >
                   Solicitar
                 </button>
@@ -114,11 +94,10 @@ function PrizeListResume() {
         )}
       </div>
 
-      {/* ✅ Modal de Confirmação (AGORA INTEGRADA AQUI) */}
       <AnimatePresence>
         {isModalOpen && (
           <motion.div
-            className="fixed inset-0 flex items-center justify-center z-50 "
+            className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50"
             onClick={closeModal}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -149,13 +128,13 @@ function PrizeListResume() {
               <div className="flex justify-between mt-4">
                 <button
                   className="bg-green-500 px-4 py-2 rounded"
-                  onClick={handleRequest} // ✅ Confirma o resgate
+                  onClick={handleRequest}
                 >
                   Confirmar
                 </button>
                 <button
                   className="bg-gray-500 px-4 py-2 rounded"
-                  onClick={closeModal} // ❌ Fecha a modal sem confirmar
+                  onClick={closeModal}
                 >
                   Cancelar
                 </button>

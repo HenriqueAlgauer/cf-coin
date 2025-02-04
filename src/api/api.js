@@ -441,30 +441,19 @@ export async function requestPrize(userId, prizeId) {
   try {
     const response = await fetch(`${API_BASE_URL}/prize-redemptions`, {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ userId, prizeId }),
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ userId, prizeId }), // Envia os dados corretamente
     });
 
     if (!response.ok) {
-      const errorData = await response.json();
-
-      if (response.status === 403) {
-        return {
-          error: "Você não tem CF Coins suficientes para resgatar este prêmio.",
-        };
-      }
-
-      return {
-        error: errorData.error || "Erro ao solicitar resgate de prêmio.",
-      };
+      const errorText = await response.json();
+      throw new Error(errorText.error || "Erro ao solicitar resgate.");
     }
 
     return await response.json();
   } catch (error) {
-    console.error("Erro ao solicitar prêmio:", error.message);
-    return { error: "Erro inesperado ao processar o resgate." };
+    console.error("Erro ao solicitar prêmio:", error);
+    throw error;
   }
 }
 
@@ -480,14 +469,23 @@ export async function getPendingPrizeRequests() {
 
 export async function approvePrizeRequest(requestId) {
   try {
+    console.log("Aprovando resgate com ID:", requestId);
+
     const response = await fetch(
       `${API_BASE_URL}/prize-redemptions/${requestId}/approve`,
       {
         method: "PATCH",
         headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({}), // <-- Adiciona um body vazio
       }
     );
-    if (!response.ok) throw new Error("Erro ao aprovar o resgate.");
+
+    if (!response.ok) {
+      const errorText = await response.text();
+      console.error("Erro ao aprovar o resgate:", errorText);
+      throw new Error(errorText);
+    }
+
     return await response.json();
   } catch (error) {
     console.error(error);
@@ -496,14 +494,23 @@ export async function approvePrizeRequest(requestId) {
 
 export async function rejectPrizeRequest(requestId) {
   try {
+    console.log("Rejeitando resgate com ID:", requestId);
+
     const response = await fetch(
       `${API_BASE_URL}/prize-redemptions/${requestId}/reject`,
       {
         method: "PATCH",
         headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({}), // <-- Adiciona um body vazio
       }
     );
-    if (!response.ok) throw new Error("Erro ao rejeitar o resgate.");
+
+    if (!response.ok) {
+      const errorText = await response.text();
+      console.error("Erro ao rejeitar o resgate:", errorText);
+      throw new Error(errorText);
+    }
+
     return await response.json();
   } catch (error) {
     console.error(error);
