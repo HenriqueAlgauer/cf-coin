@@ -44,6 +44,14 @@ function AdminMenu() {
           </Link>
         </li>
         <li>
+          <Link
+            className="text-green-400 font-medium"
+            to="/premios-solicitacoes"
+          >
+            Solicitações Prêmios
+          </Link>
+        </li>
+        <li>
           <Link to="/profile">
             <img className="w-8" src="./src/assets/user.svg" alt="" />
           </Link>

@@ -467,3 +467,45 @@ export async function requestPrize(userId, prizeId) {
     return { error: "Erro inesperado ao processar o resgate." };
   }
 }
+
+export async function getPendingPrizeRequests() {
+  try {
+    const response = await fetch(`${API_BASE_URL}/prize-redemptions/pending`);
+    if (!response.ok) throw new Error("Erro ao buscar solicitações pendentes.");
+    return await response.json();
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+export async function approvePrizeRequest(requestId) {
+  try {
+    const response = await fetch(
+      `${API_BASE_URL}/prize-redemptions/${requestId}/approve`,
+      {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+      }
+    );
+    if (!response.ok) throw new Error("Erro ao aprovar o resgate.");
+    return await response.json();
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+export async function rejectPrizeRequest(requestId) {
+  try {
+    const response = await fetch(
+      `${API_BASE_URL}/prize-redemptions/${requestId}/reject`,
+      {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+      }
+    );
+    if (!response.ok) throw new Error("Erro ao rejeitar o resgate.");
+    return await response.json();
+  } catch (error) {
+    console.error(error);
+  }
+}

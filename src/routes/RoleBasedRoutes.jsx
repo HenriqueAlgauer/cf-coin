@@ -10,6 +10,7 @@ import Users from "../pages/ADMIN/Users";
 import Tarefas from "../pages/ADMIN/Tarefas";
 import Prizes from "../pages/ADMIN/Prizes";
 import Premios from "../pages/USERS/Premios";
+import PrizeRequests from "../pages/ADMIN/PrizeRequests";
 
 function RoleBasedRoutes() {
   const userRole =
@@ -25,6 +26,7 @@ function RoleBasedRoutes() {
         <Route path="/coins" element={<CoinRequests />} />
         <Route path="/tarefas" element={<Tarefas />} />
         <Route path="/premios" element={<Prizes />} />
+        <Route path="/premios-solicitacoes" element={<PrizeRequests />} />
       </Routes>
     );
   } else if (userRole === "USER") {
