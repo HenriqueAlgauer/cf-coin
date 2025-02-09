@@ -271,21 +271,29 @@ export async function approveCoin(coinId) {
 
 export async function rejectCoin(coinId) {
   try {
+    const adminId =
+      localStorage.getItem("userId") || sessionStorage.getItem("userId");
+
+    if (!adminId) {
+      throw new Error("Usuário não autenticado.");
+    }
+
     const response = await fetch(`${API_BASE_URL}/coins/${coinId}/reject`, {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ adminId: localStorage.getItem("userId") }),
+      body: JSON.stringify({ adminId: Number(adminId) }), // 🔹 Garante que `adminId` é um número
     });
 
     if (!response.ok) {
-      throw new Error("Erro ao rejeitar a solicitação.");
+      const errorData = await response.json();
+      throw new Error(errorData.error || "Erro ao rejeitar a solicitação.");
     }
 
     return await response.json();
   } catch (error) {
-    console.error(error);
+    console.error("Erro ao rejeitar a Coin:", error.message);
   }
 }
 

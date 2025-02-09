@@ -29,14 +29,20 @@ function PendingRequests({ variant = "default" }) {
   };
 
   const handleConfirm = async () => {
-    if (actionType === "approve") {
-      await approveCoin(selectedRequest.id);
-    } else {
-      await rejectCoin(selectedRequest.id);
-    }
+    if (!selectedRequest) return;
 
-    setRequests(requests.filter((req) => req.id !== selectedRequest.id)); // Remove da lista
-    closeModal();
+    try {
+      if (actionType === "approve") {
+        await approveCoin(selectedRequest.id);
+      } else {
+        await rejectCoin(selectedRequest.id);
+      }
+
+      setRequests(requests.filter((req) => req.id !== selectedRequest.id)); // Remove da lista
+      closeModal();
+    } catch (error) {
+      console.error("Erro ao processar a solicitação:", error.message);
+    }
   };
 
   return (
