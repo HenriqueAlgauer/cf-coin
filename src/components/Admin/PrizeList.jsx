@@ -68,7 +68,7 @@ function PrizeList() {
       <div className="flex text-white justify-between items-end mb-4">
         <h2 className="text-2xl">Prêmios Disponíveis</h2>
         <button
-          className="bg-green-500 px-4 py-2 rounded"
+          className="bg-green-400 px-4 py-2 rounded"
           onClick={handleCreate}
         >
           Novo Prêmio
