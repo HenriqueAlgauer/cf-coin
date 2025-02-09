@@ -1,4 +1,4 @@
-function ButtonDiv({ editar, exculir }) {
+function EditarExcluirButton({ editar, exculir }) {
   return (
     <div className="col-span-1 flex justify-end gap-2">
       <button
@@ -17,4 +17,4 @@ function ButtonDiv({ editar, exculir }) {
   );
 }
 
-export default ButtonDiv;
+export default EditarExcluirButton;

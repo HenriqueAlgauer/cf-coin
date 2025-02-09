@@ -7,7 +7,7 @@ function Dashboard() {
   return (
     <div className="max-w-screen min-h-screen bg-gray-900">
       <AdminMenu />
-      <div className="w-[80%] mx-auto flex pb-8">
+      <div className="w-[85%] mx-auto flex pb-8">
         <div className="w-[65%] pt-8">
           <PendingRequests variant="simples" />
         </div>

@@ -8,7 +8,7 @@ import {
 } from "../api/api";
 import UserRequestModal from "./UserRequestModal";
 import Coin from "./Coin";
-import ButtonDiv from "./ButtonDiv";
+import EditarExcluirButton from "./EditarExcluirButton";
 
 function UserRequests() {
   const [requests, setRequests] = useState([]);
@@ -120,7 +120,7 @@ function UserRequests() {
                   </div>
                   <Coin amount={request.amount} />
                 </div>
-                <ButtonDiv
+                <EditarExcluirButton
                   editar={() => handleEdit(request)}
                   exculir={() => openDeleteModal(request)}
                 />

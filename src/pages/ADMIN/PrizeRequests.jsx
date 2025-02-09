@@ -4,9 +4,9 @@ import PrizeRequestList from "../../components/Admin/PrizeRequestList";
 function PrizeRequests() {
   return (
     <>
-      <div className="w-screen min-h-screen bg-gray-900">
+      <div className="page-div">
         <AdminMenu />
-        <div className="w-[60%] mx-auto flex">
+        <div className="table-container">
           <div className="w-full pt-8">
             <PrizeRequestList />
           </div>

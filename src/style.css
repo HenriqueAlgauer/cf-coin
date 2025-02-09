@@ -27,7 +27,7 @@
 }
 
 .page-div {
-  @apply w-screen min-h-screen bg-gray-900;
+  @apply max-w-screen min-h-screen bg-gray-900;
 }
 
 .table-container {
