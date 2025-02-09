@@ -95,63 +95,76 @@ function UserRequests() {
   };
 
   return (
-    <div className="p-4 bg-gray-800 rounded shadow text-white">
-      <div className="flex justify-between mb-4">
+    <>
+      <div className="flex justify-between mb-6 text-white items-end">
         <h2 className="text-2xl">Minhas Solicitações</h2>
         <button className="bg-green-400 p-2 rounded" onClick={handleCreate}>
           Nova Solicitação
         </button>
       </div>
+      <div className="p-4 bg-gray-800 rounded shadow text-white">
+        {requests.length > 0 ? (
+          <ul className="space-y-2">
+            {requests.map((request) => (
+              // preciso transformar essa <li> em um grid
+              <li
+                key={request.id}
+                className="border-b border-gray-700 pb-2 grid grid-cols-6 items-center gap-4"
+              >
+                {/* Preciso que isso tenha 5/6 do grid */}
+                <div className="col-span-5 flex justify-between gap-4">
+                  <div className="w-[80%] ">
+                    <p className="font-bold text-green-400">
+                      {request.task?.name}
+                    </p>
+                    <p className="text-gray-400 max-h-[80px] overflow-auto">
+                      {request.message || "Sem mensagem"}
+                    </p>
+                  </div>
+                  <div className="flex items-center gap-2  w-[20%]">
+                    <img
+                      className="w-6"
+                      src="./src/assets/coin.png"
+                      alt="moeda"
+                    />
+                    <p className="text-amber-300 font-bold">{request.amount}</p>
+                  </div>
+                </div>
+                {/* isso aqui tem 1/6 */}
+                <div className="col-span-1 flex justify-end gap-2">
+                  <button
+                    className="bg-blue-600 px-3 py-1 rounded text-white"
+                    onClick={() => handleEdit(request)}
+                  >
+                    Editar
+                  </button>
+                  <button
+                    className="bg-red-600 px-3 py-1 rounded text-white"
+                    onClick={() => openDeleteModal(request)}
+                  >
+                    Excluir
+                  </button>
+                </div>
+              </li>
+            ))}
+          </ul>
+        ) : (
+          <p className="text-gray-400">Nenhuma solicitação encontrada.</p>
+        )}
 
-      {requests.length > 0 ? (
-        <ul className="space-y-2">
-          {requests.map((request) => (
-            <li
-              key={request.id}
-              className="border-b border-gray-700 pb-2 flex justify-between items-center"
-            >
-              <div>
-                <p className="font-bold text-green-400">{request.task?.name}</p>
-                <p className="text-gray-400">
-                  {request.message || "Sem mensagem"}
-                </p>
-                <p className="text-amber-300 font-bold">
-                  CF Coins: {request.amount}
-                </p>
-              </div>
-              <div className="flex gap-2">
-                <button
-                  className="bg-blue-600 px-3 py-1 rounded text-white"
-                  onClick={() => handleEdit(request)}
-                >
-                  Editar
-                </button>
-                <button
-                  className="bg-red-600 px-3 py-1 rounded text-white"
-                  onClick={() => openDeleteModal(request)}
-                >
-                  Excluir
-                </button>
-              </div>
-            </li>
-          ))}
-        </ul>
-      ) : (
-        <p className="text-gray-400">Nenhuma solicitação encontrada.</p>
-      )}
-
-      <UserRequestModal
-        isOpen={isModalOpen}
-        onClose={() => setIsModalOpen(false)}
-        onSave={handleSave}
-        isCreating={isCreating}
-        request={selectedRequest}
-        tasks={tasks}
-        isConfirmDeleteOpen={isConfirmDeleteOpen}
-        onDelete={handleDelete}
-        onCancelDelete={() => setIsConfirmDeleteOpen(false)}
-      />
-    </div>
+        <UserRequestModal
+          isOpen={isModalOpen}
+          onClose={() => setIsModalOpen(false)}
+          onSave={handleSave}
+          isCreating={isCreating}
+          request={selectedRequest}
+          tasks={tasks}
+          isConfirmDeleteOpen={isConfirmDeleteOpen}
+          onDelete={handleDelete}
+          onCancelDelete={() => setIsConfirmDeleteOpen(false)}
+        />
+      </div>
+    </>
   );
 }
 

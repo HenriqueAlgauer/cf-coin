@@ -60,19 +60,24 @@ function PrizeListResume() {
 
   return (
     <>
-      <div className="text-white flex justify-between mb-6">
-        <h2 className="text-2xl">Prêmios Disponíveis</h2>
+      <div className="text-white flex justify-between mb-6 items-end">
+        <h2 className="text-2xl pt-2">Prêmios Disponíveis</h2>
       </div>
       <div className="p-4 bg-gray-800 rounded shadow text-white">
         {prizes.length > 0 ? (
           <ul className="space-y-2">
             {prizes.map((prize) => (
-              <li key={prize.id} className="border-b border-gray-700 pb-2">
-                <h3 className="text-green-400 font-bold">{prize.name}</h3>
-                <p className="text-gray-400">{prize.description}</p>
-                <p className="text-amber-300 font-bold">
-                  Custo: {prize.cost} CF Coins
-                </p>
+              <li
+                key={prize.id}
+                className="border-b border-gray-700 pb-2 flex justify-between items-center"
+              >
+                <div>
+                  <h3 className="text-green-400 font-bold">{prize.name}</h3>
+                  <p className="text-gray-400">{prize.description}</p>
+                  <p className="text-amber-300 font-bold">
+                    Custo: {prize.cost} CF Coins
+                  </p>
+                </div>
                 <button
                   className={`px-3 py-1 rounded text-white ${
                     user && user.coins >= prize.cost

@@ -3,13 +3,13 @@ import UserRequests from "../../components/UserRequests";
 
 function Solicitacao() {
   return (
-    <div className="flex flex-col bg-gray-900 gap-[80px] min-h-screen">
+    <div className="w-screen min-h-screen bg-gray-900">
       <Menu />
-      <main className="flex flex-col items-center ">
-        <div className="w-[70%] flex flex-col gap-4 ">
+      <div className="w-[60%] mx-auto flex">
+        <div className="w-full pt-8">
           <UserRequests />
         </div>
-      </main>
+      </div>
     </div>
   );
 }
