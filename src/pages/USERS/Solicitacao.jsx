@@ -3,9 +3,9 @@ import UserRequests from "../../components/UserRequests";
 
 function Solicitacao() {
   return (
-    <div className="w-screen min-h-screen bg-gray-900">
+    <div className="page-div">
       <Menu />
-      <div className="w-[60%] mx-auto flex">
+      <div className="table-container">
         <div className="w-full pt-8">
           <UserRequests />
         </div>

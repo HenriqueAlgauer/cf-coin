@@ -25,3 +25,15 @@
     background-color: #374151; /* Cor do fundo */
   }
 }
+
+.page-div {
+  @apply w-screen min-h-screen bg-gray-900;
+}
+
+.table-container {
+  @apply w-[90%] mx-auto flex lg:w-[80%] xl:w-[70%] 2xl:w-[60%];
+}
+
+.li-table {
+  @apply border-b border-gray-700 pb-2 grid grid-cols-6 items-center gap-4;
+}

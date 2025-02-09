@@ -7,6 +7,8 @@ import {
   getUserTasks,
 } from "../api/api";
 import UserRequestModal from "./UserRequestModal";
+import Coin from "./Coin";
+import ButtonDiv from "./ButtonDiv";
 
 function UserRequests() {
   const [requests, setRequests] = useState([]);
@@ -106,12 +108,7 @@ function UserRequests() {
         {requests.length > 0 ? (
           <ul className="space-y-2">
             {requests.map((request) => (
-              // preciso transformar essa <li> em um grid
-              <li
-                key={request.id}
-                className="border-b border-gray-700 pb-2 grid grid-cols-6 items-center gap-4"
-              >
-                {/* Preciso que isso tenha 5/6 do grid */}
+              <li key={request.id} className="li-table">
                 <div className="col-span-5 flex justify-between gap-4">
                   <div className="w-[80%] ">
                     <p className="font-bold text-green-400">
@@ -121,30 +118,12 @@ function UserRequests() {
                       {request.message || "Sem mensagem"}
                     </p>
                   </div>
-                  <div className="flex items-center gap-2  w-[20%]">
-                    <img
-                      className="w-6"
-                      src="./src/assets/coin.png"
-                      alt="moeda"
-                    />
-                    <p className="text-amber-300 font-bold">{request.amount}</p>
-                  </div>
+                  <Coin amount={request.amount} />
                 </div>
-                {/* isso aqui tem 1/6 */}
-                <div className="col-span-1 flex justify-end gap-2">
-                  <button
-                    className="bg-blue-600 px-3 py-1 rounded text-white"
-                    onClick={() => handleEdit(request)}
-                  >
-                    Editar
-                  </button>
-                  <button
-                    className="bg-red-600 px-3 py-1 rounded text-white"
-                    onClick={() => openDeleteModal(request)}
-                  >
-                    Excluir
-                  </button>
-                </div>
+                <ButtonDiv
+                  editar={() => handleEdit(request)}
+                  exculir={() => openDeleteModal(request)}
+                />
               </li>
             ))}
           </ul>
