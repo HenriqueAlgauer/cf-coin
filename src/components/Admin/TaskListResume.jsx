@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { getTasks } from "../../api/api";
 import { Link } from "react-router-dom";
+import Coin from "../Coin";
 
 function TasksListResume({ variant }) {
   const [tasks, setTasks] = useState([]);
@@ -30,10 +31,7 @@ function TasksListResume({ variant }) {
           </Link>
         </div>
       ) : (
-        <div>
-          {/* <h3>Lista</h3>
-          <button></button> */}
-        </div>
+        <div></div>
       )}
       <div className={containerClasses}>
         {tasks.length > 0 ? (
@@ -47,16 +45,7 @@ function TasksListResume({ variant }) {
                   <h3 className="text-lg font-medium">{task.name}</h3>
                   <p className="text-sm text-gray-400">{task.description}</p>
                 </div>
-                <div className="flex w-[10%] gap-2 items-center justify-end pr-2">
-                  <img
-                    className="w-6"
-                    src="./src/assets/coin.png"
-                    alt="moeda"
-                  />
-                  <p className="text-amber-300 text-xl font-mono font-semibold">
-                    {task.reward}
-                  </p>
-                </div>
+                <Coin variant="end" amount={task.reward} />
               </li>
             ))}
           </ul>

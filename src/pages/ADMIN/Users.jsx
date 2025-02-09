@@ -4,9 +4,9 @@ import UsersTableList from "../../components/Admin/UsersTableList";
 function Users() {
   return (
     <>
-      <div className="w-screen min-h-screen bg-gray-900">
+      <div className="page-div">
         <AdminMenu />
-        <div className="w-[60%] mx-auto flex">
+        <div className="table-container">
           <div className="w-full pt-8">
             <UsersTableList />
           </div>

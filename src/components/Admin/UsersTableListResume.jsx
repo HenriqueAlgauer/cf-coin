@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { getUsers } from "../../api/api";
 import { useEffect, useState } from "react";
+import Coin from "../Coin";
 
 function UsersTableListResume() {
   const [users, setUsers] = useState([]);
@@ -39,17 +40,8 @@ function UsersTableListResume() {
                   <td className="p-2">
                     <p className="font-semibold">{user.name}</p>
                   </td>
-                  <td className="p-2 text-right">
-                    <div className="flex justify-end items-center gap-2">
-                      <img
-                        className="w-6"
-                        src="./src/assets/coin.png"
-                        alt="moeda"
-                      />
-                      <p className="text-amber-300 text-xl font-mono font-semibold">
-                        {user.coins}
-                      </p>
-                    </div>
+                  <td className="p-2 flex justify-end ">
+                    <Coin variant="end" amount={user.coins} />
                   </td>
                 </tr>
               ))

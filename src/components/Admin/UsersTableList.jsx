@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import { getUsers, deleteUser, updateUser, createUser } from "../../api/api";
 import UserModal from "./UserModal";
+import Coin from "../Coin";
+import EditarExcluirButton from "../EditarExcluirButton";
 
 function UsersTableList() {
   const [users, setUsers] = useState([]);
@@ -64,7 +66,7 @@ function UsersTableList() {
 
   return (
     <>
-      <div className="flex text-white items-center justify-between mb-4">
+      <div className="flex text-white items-center justify-between mb-6">
         <h2 className="text-2xl">Lista de Usuários</h2>
         <button
           onClick={handleCreateUser} // ✅ Abre a modal de criação
@@ -81,7 +83,7 @@ function UsersTableList() {
               <th className="p-2">Nome</th>
               <th className="p-2">Email</th>
               <th className="p-2">Departamento</th>
-              <th className="p-2">Cargo</th>
+              {/* <th className="p-2">Cargo</th> */}
               <th className="p-2 text-right">Moedas</th>
               <th className="p-2 text-right">Ações</th>
             </tr>
@@ -93,21 +95,15 @@ function UsersTableList() {
                   <td className="p-2">{user.name}</td>
                   <td className="p-2">{user.email}</td>
                   <td className="p-2">{user.department}</td>
-                  <td className="p-2">{user.role}</td>
-                  <td className="p-2 text-right">{user.coins}</td>
+                  {/* <td className="p-2">{user.role}</td> */}
+                  <td className="p-2 flex justify-center">
+                    <Coin amount={user.coins} />
+                  </td>
                   <td className="p-2 text-right">
-                    <button
-                      onClick={() => handleEdit(user)}
-                      className="bg-blue-600 px-3 py-1 rounded cursor-pointer text-white"
-                    >
-                      Editar
-                    </button>
-                    <button
-                      onClick={() => handleDeleteModal(user)}
-                      className="bg-red-500 px-3 py-1 ml-2 rounded cursor-pointer text-white"
-                    >
-                      Excluir
-                    </button>
+                    <EditarExcluirButton
+                      editar={() => handleEdit(user)}
+                      exculir={() => handleDeleteModal(user)}
+                    />
                   </td>
                 </tr>
               ))
