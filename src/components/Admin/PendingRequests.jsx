@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { getPendingRequests, approveCoin, rejectCoin } from "../../api/api";
 import PendingRequestsModal from "../Admin/PendingRequestsModal"; // ✅ Importação
+import Coin from "../Coin";
 
 function PendingRequests({ variant = "default" }) {
   const [requests, setRequests] = useState([]);
@@ -51,8 +52,8 @@ function PendingRequests({ variant = "default" }) {
               <li key={request.id} className="border-b border-gray-700 pb-2">
                 <div className="flex flex-col gap-2">
                   {/* ✅ Nome e Tarefa */}
-                  <div className="flex justify-between">
-                    <div>
+                  <div className="flex justify-between ">
+                    <div className=" w-full">
                       <p>
                         <span className="font-bold text-green-400">
                           {request.user.name}{" "}
@@ -64,16 +65,7 @@ function PendingRequests({ variant = "default" }) {
                         Departamento: {request.user.department}
                       </p>
                     </div>
-                    <div className="flex w-[10%] gap-2 items-center justify-end pr-2">
-                      <img
-                        className="w-6"
-                        src="./src/assets/coin.png"
-                        alt="moeda"
-                      />
-                      <p className="text-amber-300 font-bold font-mono">
-                        {request.amount}
-                      </p>
-                    </div>
+                    <Coin variant="end" amount={request.amount} />
                   </div>
 
                   {/* ✅ Exibe a Mensagem do Usuário */}

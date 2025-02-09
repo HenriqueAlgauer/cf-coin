@@ -4,9 +4,9 @@ import PendingRequests from "../../components/Admin/PendingRequests";
 function CoinRequests() {
   return (
     <>
-      <div className="max-w-screen min-h-screen bg-gray-900">
+      <div className="page-div">
         <AdminMenu />
-        <div className="w-[60%] mx-auto flex">
+        <div className="table-container">
           <div className="w-full pt-8">
             <PendingRequests />
           </div>
