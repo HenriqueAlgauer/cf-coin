@@ -20,19 +20,19 @@ function TasksListResume({ variant }) {
 
   return (
     <>
-      {variant === "resumo" ? (
-        <div className="flex justify-between items-end">
-          <h2 className="text-white text-2xl">Tarefas Disponíveis</h2>
+      <div className="text-white flex justify-between mb-6 items-end">
+        <h2 className="text-white text-2xl">Tarefas Disponíveis</h2>
+        {variant === "resumo" ? (
           <Link
             className="bg-green-400 text-white font-semibold px-4 py-2 rounded"
             to="/tarefas"
           >
             Tarefas
           </Link>
-        </div>
-      ) : (
-        <div></div>
-      )}
+        ) : (
+          <div></div>
+        )}
+      </div>
       <div className={containerClasses}>
         {tasks.length > 0 ? (
           <ul className="space-y-2">

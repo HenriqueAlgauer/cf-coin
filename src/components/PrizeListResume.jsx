@@ -11,6 +11,7 @@ function PrizeListResume() {
   const [user, setUser] = useState(null);
   const [errorMessage, setErrorMessage] = useState("");
   const [loading, setLoading] = useState(false); // estado de loading
+  const [userCoins, setUserCoins] = useState(0);
 
   const showToast = useToast(); // função para disparar toast
   const { confirm } = useConfirm(); // função para disparar modal de confirmação
@@ -27,12 +28,14 @@ function PrizeListResume() {
         if (userId) {
           const userData = await getUserProfile(userId);
           setUser({ ...userData, id: Number(userId) });
+          setUserCoins(userData.coins);
         }
       } catch (error) {
         console.error("Erro ao buscar prêmios:", error);
         setErrorMessage("Erro ao carregar prêmios.");
       }
     }
+
     fetchPrizes();
   }, [userId]);
 
@@ -70,6 +73,7 @@ function PrizeListResume() {
     <>
       <div className="text-white flex justify-between mb-6 items-end">
         <h2 className="text-2xl pt-2">Prêmios Disponíveis</h2>
+        <Coin variant="end" amount={userCoins} />
       </div>
       <div className="p-4 bg-gray-800 rounded shadow text-white">
         {prizes.length > 0 ? (
