@@ -7,6 +7,8 @@ import {
 } from "../../api/api";
 import PrizeModal from "./PrizeModal";
 import { motion, AnimatePresence } from "framer-motion";
+import Coin from "../../components/Coin";
+import EditarExcluirButton from "../EditarExcluirButton";
 
 function PrizeList() {
   const [prizes, setPrizes] = useState([]);
@@ -73,45 +75,21 @@ function PrizeList() {
         </button>
       </div>
       <div className="p-4 bg-gray-800 rounded shadow text-white">
-        <div className="flex justify-between"></div>
-
         {prizes.length > 0 ? (
           <ul className="space-y-2">
             {prizes.map((prize) => (
-              <li
-                key={prize.id}
-                className="border-b border-gray-700 pb-2 flex justify-between items-center"
-              >
-                <div className="flex min-w-[60%] justify-between">
-                  <div>
+              <li key={prize.id} className="li-table">
+                <div className="col-span-5 flex justify-between gap-4">
+                  <div className="w-[80%] ">
                     <h3 className="text-green-400 font-bold">{prize.name}</h3>
                     <p className="text-gray-400">{prize.description}</p>
                   </div>
-                  <div className="flex gap-1 items-center pr-2">
-                    <img
-                      className="w-6"
-                      src="./src/assets/coin.png"
-                      alt="moeda"
-                    />
-                    <p className="text-amber-300 font-bold font-mono">
-                      {prize.cost}
-                    </p>
-                  </div>
+                  <Coin amount={prize.cost} />
                 </div>
-                <div className="flex gap-2">
-                  <button
-                    className="bg-blue-500 px-3 py-1 rounded text-white"
-                    onClick={() => handleEdit(prize)}
-                  >
-                    Editar
-                  </button>
-                  <button
-                    className="bg-red-500 px-3 py-1 rounded text-white"
-                    onClick={() => openDeleteModal(prize)}
-                  >
-                    Excluir
-                  </button>
-                </div>
+                <EditarExcluirButton
+                  editar={() => handleEdit(prize)}
+                  exculir={() => openDeleteModal(prize)}
+                />
               </li>
             ))}
           </ul>

@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import { getTasks, deleteTask, updateTask, createTask } from "../../api/api";
 import TaskModal from "../../components/Admin/TaskModal";
+import EditarExcluirButton from "../EditarExcluirButton";
+import Coin from "../Coin";
 
 function TaskList() {
   const [tasks, setTasks] = useState([]);
@@ -83,43 +85,21 @@ function TaskList() {
         {tasks.length > 0 ? (
           <ul className="space-y-2">
             {tasks.map((task) => (
-              <li
-                key={task.id}
-                className="border-b border-gray-700 pb-2 flex justify-between items-center"
-              >
-                <div className="flex justify-between min-w-[60%]">
-                  <div>
+              <li key={task.id} className="li-table">
+                <div className="col-span-5 flex justify-between gap-4">
+                  <div className="w-[80%] ">
                     <h3 className="text-lg font-medium">{task.name}</h3>
                     <p className="text-sm text-gray-400">{task.description}</p>
                     <p className="text-blue-300 font-bold">
                       Visível para: {task.visibility}
                     </p>
                   </div>
-                  <div className="flex items-center gap-2">
-                    <img
-                      className="w-6"
-                      src="./src/assets/coin.png"
-                      alt="moeda"
-                    />
-                    <p className="text-amber-300 font-bold font-mono">
-                      {task.reward}
-                    </p>
-                  </div>
+                  <Coin amount={task.reward} />
                 </div>
-                <div className="flex gap-2">
-                  <button
-                    onClick={() => handleEdit(task)}
-                    className="bg-blue-700 px-3 py-1 cursor-pointer rounded text-white"
-                  >
-                    Editar
-                  </button>
-                  <button
-                    onClick={() => handleDeleteModal(task)}
-                    className="bg-red-700 px-3 py-1 cursor-pointer rounded text-white"
-                  >
-                    Excluir
-                  </button>
-                </div>
+                <EditarExcluirButton
+                  editar={() => handleEdit(task)}
+                  exculir={() => handleDeleteModal(task)}
+                />
               </li>
             ))}
           </ul>
