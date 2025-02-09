@@ -224,6 +224,21 @@ export async function getPendingRequests() {
   }
 }
 
+export async function getUserPendingCoins(userId) {
+  try {
+    const response = await fetch(
+      `${API_BASE_URL}/coins/user/${userId}/pending`
+    );
+    if (!response.ok) {
+      throw new Error("Erro ao buscar solicitações pendentes.");
+    }
+    return await response.json();
+  } catch (error) {
+    console.error(error);
+    return [];
+  }
+}
+
 export async function approveCoin(coinId) {
   try {
     const adminId = Number(

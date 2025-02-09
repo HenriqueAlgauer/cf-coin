@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
 import {
-  getUserCoins,
+  // getUserCoins,
   deleteCoin,
   updateCoin,
   createCoin,
   getUserTasks,
+  getUserPendingCoins,
 } from "../api/api";
 import UserRequestModal from "./UserRequestModal";
 import Coin from "./Coin";
@@ -25,7 +26,7 @@ function UserRequests() {
 
   useEffect(() => {
     async function fetchData() {
-      const userRequests = await getUserCoins(userId);
+      const userRequests = await getUserPendingCoins(userId);
       const availableTasks = await getUserTasks();
       setRequests(userRequests);
       setTasks(availableTasks);
