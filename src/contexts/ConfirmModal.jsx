@@ -74,13 +74,13 @@ export function ConfirmModalProvider({ children }) {
                 </p>
                 <div className="flex justify-between mt-4">
                   <button
-                    className="bg-green-500 px-4 py-2 rounded"
+                    className="bg-green-500 px-4 py-2 rounded cursor-pointer"
                     onClick={handleConfirm}
                   >
                     {confirmState.confirmText || "Confirmar"}
                   </button>
                   <button
-                    className="bg-gray-500 px-4 py-2 rounded"
+                    className="bg-gray-500 px-4 py-2 rounded cursor-pointer"
                     onClick={handleCancel}
                   >
                     {confirmState.cancelText || "Cancelar"}

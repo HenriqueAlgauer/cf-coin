@@ -1,17 +1,37 @@
+// src/components/AdminMenu.jsx
 import { Link } from "react-router-dom";
+import { useConfirm } from "../../contexts/ConfirmModal";
 
 function AdminMenu() {
-  const handleLogout = () => {
-    localStorage.removeItem("isAuthenticated");
-    localStorage.removeItem("userRole");
-    localStorage.removeItem("userId");
+  // Desestrutura a função confirm do contexto
+  const { confirm } = useConfirm();
 
-    sessionStorage.removeItem("isAuthenticated");
-    sessionStorage.removeItem("userRole");
-    sessionStorage.removeItem("userId");
+  const handleLogout = async () => {
+    try {
+      // Exibe a modal de confirmação global
+      await confirm({
+        title: "Confirmação de Logout",
+        message: "Você tem certeza que deseja sair?",
+        confirmText: "Sim, sair",
+        cancelText: "Cancelar",
+      });
+      // Se o usuário confirmar, execute o logout:
+      localStorage.removeItem("isAuthenticated");
+      localStorage.removeItem("userRole");
+      localStorage.removeItem("userId");
 
-    window.location.href = "/login"; // Redireciona para a página de login
+      sessionStorage.removeItem("isAuthenticated");
+      sessionStorage.removeItem("userRole");
+      sessionStorage.removeItem("userId");
+
+      // Redireciona para a tela de login
+      window.location.href = "/login";
+    } catch (error) {
+      // Se o usuário cancelar, nada acontece
+      console.log("Logout cancelado", error);
+    }
   };
+
   return (
     <nav className="w-full py-2 px-8 bg-gray-800 flex justify-between items-center">
       <Link to="/">
@@ -53,13 +73,11 @@ function AdminMenu() {
         </li>
         <li>
           <Link to="/profile">
-            <img className="w-8" src="./src/assets/user.svg" alt="" />
+            <img className="w-8" src="./src/assets/user.svg" alt="perfil" />
           </Link>
         </li>
-        <li onClick={handleLogout}>
-          <Link to="/">
-            <img className="w-6" src="./src/assets/logout.png" alt="" />
-          </Link>
+        <li onClick={handleLogout} style={{ cursor: "pointer" }}>
+          <img className="w-6" src="./src/assets/logout.png" alt="logout" />
         </li>
       </ul>
     </nav>
