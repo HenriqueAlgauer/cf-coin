@@ -2,6 +2,8 @@ import { Route, Routes } from "react-router-dom";
 import Login from "./pages/Login";
 import ProtectedRoute from "./routes/ProtectedRoute";
 import RoleBasedRoutes from "./routes/RoleBasedRoutes";
+import { ToastProvider } from "./contexts/ToastContext";
+import { ConfirmModalProvider } from "./contexts/ConfirmModal";
 
 function App() {
   return (
@@ -12,7 +14,11 @@ function App() {
         path="*"
         element={
           <ProtectedRoute>
-            <RoleBasedRoutes />
+            <ToastProvider>
+              <ConfirmModalProvider>
+                <RoleBasedRoutes />
+              </ConfirmModalProvider>
+            </ToastProvider>
           </ProtectedRoute>
         }
       />
