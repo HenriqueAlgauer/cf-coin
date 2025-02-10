@@ -321,6 +321,25 @@ export async function createCoin(coinData) {
   }
 }
 
+// No arquivo src/api/api.js
+export async function addCoinsForTask(taskId, userIds) {
+  try {
+    const response = await fetch(`${API_BASE_URL}/coins/admin`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ taskId, userIds }),
+    });
+    if (!response.ok) {
+      const errorResponse = await response.json();
+      throw new Error(errorResponse.error || "Erro ao cadastrar CF Coins.");
+    }
+    return await response.json();
+  } catch (error) {
+    console.error("Erro ao cadastrar CF Coins:", error);
+    throw error;
+  }
+}
+
 export async function getUserCoins(userId) {
   if (!userId) {
     console.error("Erro: userId não foi fornecido.");
