@@ -35,5 +35,9 @@
 }
 
 .li-table {
-  @apply border-b border-gray-700 pb-2 grid grid-cols-6 items-center gap-4;
+  @apply flex-col border-b border-gray-700 pb-2 sm:grid sm:grid-cols-6 sm:items-center gap-4;
+}
+
+.li-div-container {
+  @apply flex col-span-4 lg:col-span-5 justify-between gap-2;
 }
