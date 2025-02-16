@@ -4,6 +4,7 @@ import ProtectedRoute from "./routes/ProtectedRoute";
 import RoleBasedRoutes from "./routes/RoleBasedRoutes";
 import { ToastProvider } from "./contexts/ToastContext";
 import { ConfirmModalProvider } from "./contexts/ConfirmModal";
+import { FormModalProvider } from "./contexts/FormModalContext";
 
 function App() {
   return (
@@ -15,9 +16,11 @@ function App() {
         element={
           <ProtectedRoute>
             <ToastProvider>
-              <ConfirmModalProvider>
-                <RoleBasedRoutes />
-              </ConfirmModalProvider>
+              <FormModalProvider>
+                <ConfirmModalProvider>
+                  <RoleBasedRoutes />
+                </ConfirmModalProvider>
+              </FormModalProvider>
             </ToastProvider>
           </ProtectedRoute>
         }
