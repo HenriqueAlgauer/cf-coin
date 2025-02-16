@@ -24,7 +24,7 @@ export function ToastProvider({ children }) {
       {toast &&
         createPortal(
           <div
-            className={`fixed top-4 transition-all transition-discrete left-1/2 transform -translate-x-1/2 px-4 py-2 rounded shadow-lg text-white  
+            className={`z-20 fixed top-4 transition-all transition-discrete left-1/2 transform -translate-x-1/2 px-4 py-2 rounded shadow-lg text-white  
               ${toast.type === "success" ? "bg-green-500" : "bg-red-500"}`}
           >
             {toast.message}

@@ -16,7 +16,6 @@ export function ConfirmModalProvider({ children }) {
     reject: null,
   });
 
-  // A função confirm retorna uma promise que será resolvida ou rejeitada conforme a ação do usuário.
   const confirm = useCallback(({ title, message, confirmText, cancelText }) => {
     return new Promise((resolve, reject) => {
       setConfirmState({
@@ -52,7 +51,7 @@ export function ConfirmModalProvider({ children }) {
         <AnimatePresence>
           {confirmState.isOpen && (
             <motion.div
-              className="fixed inset-0 flex items-center justify-center z-50 "
+              className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}

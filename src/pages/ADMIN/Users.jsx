@@ -1,5 +1,5 @@
 import AdminMenu from "../../components/Admin/AdminMenu";
-import UsersTableList from "../../components/Admin/UsersTableList";
+import UsersList from "../../components/Admin/UsersList";
 
 function Users() {
   return (
@@ -8,7 +8,7 @@ function Users() {
         <AdminMenu />
         <div className="table-container">
           <div className="w-full pt-8">
-            <UsersTableList />
+            <UsersList />
           </div>
         </div>
       </div>

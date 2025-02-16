@@ -7,7 +7,7 @@ function Coin({ amount, variant }) {
     <>
       <div className={estilo}>
         <img className="w-6" src="./src/assets/coin.png" alt="moeda" />
-        <p className="text-amber-300 font-bold">{amount}</p>
+        <p className="text-amber-300 font-bold font-mono">{amount}</p>
       </div>
     </>
   );

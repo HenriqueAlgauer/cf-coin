@@ -1,7 +1,8 @@
+// src/contexts/FormModalContext.jsx
 import { createContext, useContext, useState, useCallback } from "react";
 import { createPortal } from "react-dom";
 import { motion, AnimatePresence } from "framer-motion";
-import { useToast } from "./ToastContext"; // ajuste o caminho conforme sua estrutura
+import { useToast } from "./ToastContext";
 
 const FormModalContext = createContext();
 
@@ -9,16 +10,14 @@ export function FormModalProvider({ children }) {
   const [modalState, setModalState] = useState({
     isOpen: false,
     title: "",
-    fields: [], // Ex.: [{ name: 'name', label: 'Nome', type: 'text', required: true }, ...]
-    initialValues: {}, // Objeto com valores iniciais
-    onSubmit: null, // Função de callback (interna)
+    fields: [],
+    initialValues: {},
     resolve: null,
     reject: null,
   });
 
   const showToast = useToast();
 
-  // Função que abre o modal, retornando uma Promise que é resolvida ao submeter e rejeitada ao cancelar
   const openFormModal = useCallback(({ title, fields, initialValues }) => {
     return new Promise((resolve, reject) => {
       setModalState({
@@ -26,32 +25,29 @@ export function FormModalProvider({ children }) {
         title,
         fields: fields || [],
         initialValues: initialValues || {},
-        onSubmit: null, // Vamos tratar internamente
         resolve,
         reject,
       });
     });
   }, []);
 
-  // Fecha o modal e rejeita a promise
   const handleCancel = () => {
     if (modalState.reject) {
-      modalState.reject("cancel"); // ou outro valor indicando cancelamento
+      modalState.reject("cancel");
     }
     setModalState((prev) => ({ ...prev, isOpen: false }));
   };
 
-  // Ao confirmar, validamos os campos e, se OK, resolvemos a promise
   const handleConfirm = (formValues) => {
-    // Verifica se todos os campos required foram preenchidos
+    // Valida campos obrigatórios
     for (const field of modalState.fields) {
       if (field.required && !formValues[field.name]) {
         showToast(`Campo "${field.label}" é obrigatório!`, "error");
-        return; // Interrompe a submissão
+        return;
       }
+      // Se for number, convertemos
       if (field.type === "number") {
         formValues[field.name] = Number(formValues[field.name]);
-        // Opcional: checar se éNaN
         if (isNaN(formValues[field.name])) {
           showToast(
             `Campo "${field.label}" deve ser um número válido!`,
@@ -61,7 +57,8 @@ export function FormModalProvider({ children }) {
         }
       }
     }
-    // Se passou das validações, resolvemos a promise
+
+    // Se passou pela validação, resolvemos
     if (modalState.resolve) {
       modalState.resolve(formValues);
     }
@@ -90,18 +87,13 @@ export function FormModalProvider({ children }) {
 function FormModal({ modalState, onCancel, onConfirm }) {
   const [formValues, setFormValues] = useState(() => modalState.initialValues);
 
-  // Atualiza formValues ao abrir o modal
-  // para refletir "initialValues" caso sejam alterados externamente
-  // (opcional, se preferir, pode fazer sem esse effect)
-  // useEffect(() => setFormValues(modalState.initialValues), [modalState.initialValues]);
-
   const handleChange = (fieldName, value) => {
     setFormValues((prev) => ({ ...prev, [fieldName]: value }));
   };
 
   return (
     <motion.div
-      className="fixed inset-0 flex items-center justify-center z-50"
+      className="fixed inset-0 flex items-center justify-center z-50 bg-black/50"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
@@ -116,19 +108,42 @@ function FormModal({ modalState, onCancel, onConfirm }) {
         transition={{ duration: 0.3, ease: "easeOut" }}
       >
         <h2 className="text-xl font-semibold mb-4">{modalState.title}</h2>
-        {/* Formulário Dinâmico */}
         {modalState.fields.map((field) => (
           <div key={field.name} className="mb-3">
-            <label className="block mb-1 text-sm" htmlFor={field.name}>
-              {field.label}{" "}
-              {field.required && <span className="text-red-500">*</span>}
-            </label>
-            {field.type === "textarea" ? (
+            {field.type !== "hidden" && (
+              <label className="block mb-1 text-sm" htmlFor={field.name}>
+                {field.label}{" "}
+                {field.required && <span className="text-red-500">*</span>}
+              </label>
+            )}
+
+            {/* Se for SELECT e tiver field.options, renderizamos as <option> */}
+            {field.type === "select" && field.options ? (
+              <select
+                id={field.name}
+                value={formValues[field.name] || ""}
+                onChange={(e) => handleChange(field.name, e.target.value)}
+                className="p-2 w-full bg-gray-700 rounded"
+              >
+                {field.options.map((opt) => (
+                  <option key={opt.value} value={opt.value}>
+                    {opt.label}
+                  </option>
+                ))}
+              </select>
+            ) : field.type === "textarea" ? (
               <textarea
                 id={field.name}
                 value={formValues[field.name] || ""}
                 onChange={(e) => handleChange(field.name, e.target.value)}
                 className="p-2 w-full bg-gray-700 rounded"
+              />
+            ) : field.type === "hidden" ? (
+              <input
+                id={field.name}
+                type="hidden"
+                value={formValues[field.name] || ""}
+                readOnly
               />
             ) : (
               <input
@@ -143,14 +158,11 @@ function FormModal({ modalState, onCancel, onConfirm }) {
         ))}
 
         <div className="flex justify-end mt-4 gap-2">
-          <button
-            onClick={() => onCancel()}
-            className="bg-gray-500 px-4 py-2 rounded"
-          >
+          <button onClick={onCancel} className="bg-gray-500 px-4 py-2 rounded">
             Cancelar
           </button>
           <button
-            onClick={() => onConfirm(formValues)}
+            onClick={() => onConfirm({ ...formValues })}
             className="bg-green-500 px-4 py-2 rounded"
           >
             Confirmar
