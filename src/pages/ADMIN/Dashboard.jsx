@@ -7,11 +7,11 @@ function Dashboard() {
   return (
     <div className="max-w-screen min-h-screen bg-gray-900">
       <AdminMenu />
-      <div className="w-[85%] mx-auto flex pb-8">
-        <div className="w-[65%] pt-8">
+      <div className="xl:w-[85%] mx-auto flex pb-8 flex-col gap-4 px-6 lg:flex-row">
+        <div className="lg:w-[65%] w-full pt-8">
           <PendingRequests variant="simples" />
         </div>
-        <div className="p-8 w-[35%] flex flex-col gap-4">
+        <div className="lg:p-8 lg:w-[35%] w-full flex flex-col gap-4">
           <UsersTableListResume />
           <TasksListResume variant="resumo" />
         </div>

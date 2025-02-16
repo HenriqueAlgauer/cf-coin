@@ -108,9 +108,9 @@ function PendingRequests({ variant = "default" }) {
                         Departamento: {request.user.department}
                       </p>
                     </div>
-                    <div className="flex w-[10%] gap-2 items-center justify-end pr-2">
-                      <Coin variant="end" amount={request.amount} />
-                    </div>
+                    {/* <div className="flex w-[10%] gap-2 items-center justify-end pr-2 bg-red-50"> */}
+                    <Coin variant="end" amount={request.amount} />
+                    {/* </div> */}
                   </div>
                   <p className="text-gray-300 italic bg-gray-700 p-2 rounded">
                     {request.message ? request.message : "Nenhuma mensagem"}
