@@ -1,21 +1,21 @@
 import { useEffect, useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import {
   getPrizes,
   createPrize,
   updatePrize,
   deletePrize,
 } from "../../api/api";
-import PrizeModal from "./PrizeModal";
-import { motion, AnimatePresence } from "framer-motion";
 import Coin from "../../components/Coin";
 import EditarExcluirButton from "../EditarExcluirButton";
+import { useFormModal } from "../../contexts/FormModalContext"; // Importa o hook do modal
+import { useToast } from "../../contexts/ToastContext";
 
 function PrizeList() {
   const [prizes, setPrizes] = useState([]);
-  const [isModalOpen, setIsModalOpen] = useState(false);
   const [isConfirmDeleteOpen, setIsConfirmDeleteOpen] = useState(false);
-  const [isCreating, setIsCreating] = useState(false);
   const [selectedPrize, setSelectedPrize] = useState(null);
+  const { openFormModal } = useFormModal();
 
   useEffect(() => {
     async function fetchPrizes() {
@@ -24,17 +24,83 @@ function PrizeList() {
     }
     fetchPrizes();
   }, []);
+  const showToast = useToast();
 
-  const handleCreate = () => {
-    setSelectedPrize(null);
-    setIsCreating(true);
-    setIsModalOpen(true);
+  const handleCreate = async () => {
+    try {
+      // Abre o modal genérico
+      const formData = await openFormModal({
+        title: "Novo Prêmio",
+        fields: [
+          {
+            name: "name",
+            label: "Nome do Prêmio",
+            type: "text",
+            required: true,
+          },
+          { name: "description", label: "Descrição", type: "textarea" },
+          {
+            name: "cost",
+            label: "Custo (CF Coins)",
+            type: "number",
+            required: true,
+          },
+        ],
+        initialValues: {},
+      });
+      // Se o usuário confirmou, formData conterá as propriedades "name", "description" e "cost"
+      const newPrize = await createPrize(formData);
+      setPrizes([...prizes, newPrize]);
+      showToast("Prêmio criado com sucesso!", "success");
+    } catch (error) {
+      // Se for "cancel", o usuário apenas cancelou. Se for outro, deu erro.
+      if (error === "cancel") {
+        // O usuário apenas cancelou a operação de criação/edição
+        // Então podemos retornar sem exibir erro
+        return;
+      }
+      console.error("Erro ao criar o prêmio:", error);
+      showToast(error.message, "error");
+    }
   };
 
-  const handleEdit = (prize) => {
-    setSelectedPrize(prize);
-    setIsCreating(false);
-    setIsModalOpen(true);
+  const handleEdit = async (prize) => {
+    try {
+      setSelectedPrize(prize);
+      const formData = await openFormModal({
+        title: "Editar Prêmio",
+        fields: [
+          {
+            name: "name",
+            label: "Nome do Prêmio",
+            type: "text",
+            required: true,
+          },
+          { name: "description", label: "Descrição", type: "textarea" },
+          {
+            name: "cost",
+            label: "Custo (CF Coins)",
+            type: "number",
+            required: true,
+          },
+        ],
+        initialValues: {
+          id: prize.id,
+          name: prize.name,
+          description: prize.description,
+          cost: prize.cost,
+        },
+      });
+      // formData terá as atualizações que o usuário fez
+      const updatedPrize = await updatePrize(prize.id, formData);
+      setPrizes(
+        prizes.map((p) => (p.id === updatedPrize.id ? updatedPrize : p))
+      );
+    } catch (error) {
+      if (error !== "cancel") {
+        console.error("Erro ao atualizar o prêmio:", error);
+      }
+    }
   };
 
   const openDeleteModal = (prize) => {
@@ -48,19 +114,6 @@ function PrizeList() {
       setPrizes(prizes.filter((p) => p.id !== selectedPrize.id));
     }
     setIsConfirmDeleteOpen(false);
-  };
-
-  const handleSave = async (data) => {
-    if (isCreating) {
-      const newPrize = await createPrize(data);
-      setPrizes([...prizes, newPrize]);
-    } else {
-      const updatedPrize = await updatePrize(data.id, data);
-      setPrizes(
-        prizes.map((p) => (p.id === updatedPrize.id ? updatedPrize : p))
-      );
-    }
-    setIsModalOpen(false);
   };
 
   return (
@@ -79,8 +132,8 @@ function PrizeList() {
           <ul className="space-y-2">
             {prizes.map((prize) => (
               <li key={prize.id} className="li-table">
-                <div className="col-span-5 flex justify-between gap-4">
-                  <div className="w-[80%] ">
+                <div className="li-div-container">
+                  <div className="w-[80%]">
                     <h3 className="text-green-400 font-bold">{prize.name}</h3>
                     <p className="text-gray-400">{prize.description}</p>
                   </div>
@@ -97,16 +150,6 @@ function PrizeList() {
           <p className="text-gray-400">Nenhum prêmio cadastrado.</p>
         )}
 
-        {/* Modal de Criação/Edição */}
-        <PrizeModal
-          isOpen={isModalOpen}
-          onClose={() => setIsModalOpen(false)}
-          onSave={handleSave}
-          prize={selectedPrize}
-          isCreating={isCreating}
-        />
-
-        {/* Modal de Confirmação de Exclusão */}
         <AnimatePresence>
           {isConfirmDeleteOpen && (
             <motion.div
