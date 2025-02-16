@@ -432,12 +432,14 @@ export async function createPrize(prizeData) {
     });
 
     if (!response.ok) {
-      throw new Error("Erro ao criar o prêmio.");
+      const errorText = await response.json();
+      throw new Error(errorText.error || "Erro ao criar o prêmio.");
     }
 
     return await response.json();
   } catch (error) {
     console.error("Erro ao criar prêmio:", error);
+    throw error;
   }
 }
 
