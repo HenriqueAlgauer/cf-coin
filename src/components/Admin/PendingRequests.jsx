@@ -108,9 +108,7 @@ function PendingRequests({ variant = "default" }) {
                         Departamento: {request.user.department}
                       </p>
                     </div>
-                    {/* <div className="flex w-[10%] gap-2 items-center justify-end pr-2 bg-red-50"> */}
                     <Coin variant="end" amount={request.amount} />
-                    {/* </div> */}
                   </div>
                   <p className="text-gray-300 italic bg-gray-700 p-2 rounded">
                     {request.message ? request.message : "Nenhuma mensagem"}
@@ -119,13 +117,13 @@ function PendingRequests({ variant = "default" }) {
                     {variant !== "simples" && (
                       <div className="flex gap-8">
                         <button
-                          className="bg-green-400 cursor-pointer px-4 py-1 rounded text-white font-semibold uppercase"
+                          className="bg-green-600 cursor-pointer px-4 py-1 rounded text-white "
                           onClick={() => openConfirmModal(request, "approve")}
                         >
                           Aprovar
                         </button>
                         <button
-                          className="bg-red-600 cursor-pointer px-4 py-1 rounded text-white font-semibold uppercase"
+                          className="bg-red-600 cursor-pointer px-4 py-1 rounded text-white "
                           onClick={() => openConfirmModal(request, "reject")}
                         >
                           Rejeitar
