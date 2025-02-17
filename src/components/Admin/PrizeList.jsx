@@ -153,7 +153,7 @@ function PrizeList() {
         <AnimatePresence>
           {isConfirmDeleteOpen && (
             <motion.div
-              className="fixed inset-0 flex items-center justify-center z-50"
+              className="fixed inset-0 flex items-center justify-center z-10 bg-black/50"
               onClick={() => setIsConfirmDeleteOpen(false)}
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}

@@ -1,93 +1,179 @@
+// src/components/Admin/TaskList.jsx
 import { useEffect, useState } from "react";
-import { getTasks, deleteTask, updateTask, createTask } from "../../api/api";
-import TaskModal from "../../components/Admin/TaskModal";
-import EditarExcluirButton from "../EditarExcluirButton";
+import { getTasks, createTask, updateTask, deleteTask } from "../../api/api";
+import { useFormModal } from "../../contexts/FormModalContext";
+import { useConfirm } from "../../contexts/ConfirmModal";
+import { useToast } from "../../contexts/ToastContext";
 import Coin from "../Coin";
 
 function TaskList() {
   const [tasks, setTasks] = useState([]);
-  const [selectedTask, setSelectedTask] = useState(null); // Tarefa selecionada para edição
-  const [isModalOpen, setIsModalOpen] = useState(false); // Controle da modal
-  const [isDeleteMode, setIsDeleteMode] = useState(false); // Define se a modal é de exclusão
-  const [isCreating, setIsCreating] = useState(false);
+  const showToast = useToast();
+  const { openFormModal } = useFormModal();
+  const { confirm } = useConfirm();
 
   useEffect(() => {
-    async function fetchTasks() {
-      const data = await getTasks();
-      setTasks(data);
-    }
-    fetchTasks();
-  }, []);
-
-  const handleCreate = () => {
-    setSelectedTask(null);
-    setIsCreating(true);
-    setIsDeleteMode(false);
-    setIsModalOpen(true);
-  };
-
-  // ✅ Função para abrir a modal de edição
-  const handleEdit = (task) => {
-    setSelectedTask(task);
-    setIsCreating(false);
-    setIsDeleteMode(false);
-    setIsModalOpen(true);
-  };
-
-  // ✅ Função para abrir a modal de exclusão
-  const handleDeleteModal = (task) => {
-    setSelectedTask(task);
-    setIsCreating(false);
-    setIsDeleteMode(true);
-    setIsModalOpen(true);
-  };
-
-  // ✅ Função para salvar alterações na tarefa
-  const handleSave = async (taskData) => {
-    try {
-      if (isCreating) {
-        const newTask = await createTask(taskData);
-        if (newTask) {
-          setTasks([...tasks, newTask]); // Adiciona a nova tarefa se for criada com sucesso
-        }
-      } else {
-        await updateTask(taskData.id, taskData);
-        setTasks(
-          tasks.map((task) => (task.id === taskData.id ? taskData : task))
-        );
+    async function fetchData() {
+      try {
+        const data = await getTasks();
+        setTasks(data);
+      } catch (error) {
+        console.error("Erro ao buscar tarefas:", error);
+        showToast("Erro ao buscar tarefas.", "error");
       }
-      setIsModalOpen(false); // Fecha a modal
+    }
+    fetchData();
+  }, [showToast]);
+
+  /** Criação de uma nova tarefa */
+  const handleCreate = async () => {
+    try {
+      // Abre o form modal
+      const formData = await openFormModal({
+        title: "Criar Nova Tarefa",
+        fields: [
+          {
+            name: "name",
+            label: "Nome da Tarefa",
+            type: "text",
+            required: true,
+          },
+          {
+            name: "description",
+            label: "Descrição",
+            type: "textarea",
+            required: true,
+          },
+          {
+            name: "reward",
+            label: "Recompensa (Coins)",
+            type: "number",
+            required: true,
+          },
+          {
+            name: "visibility",
+            label: "Visibilidade",
+            type: "select",
+            required: true,
+            options: [
+              { value: "ADMIN", label: "ADMIN" },
+              { value: "USER", label: "USER" },
+              { value: "AMBOS", label: "AMBOS" },
+            ],
+          },
+        ],
+        initialValues: {
+          visibility: "AMBOS", // valor padrão
+        },
+      });
+
+      // Envia para a API
+      const newTask = await createTask(formData);
+      setTasks((prev) => [...prev, newTask]);
+      showToast("Tarefa criada com sucesso!", "success");
     } catch (error) {
-      console.error("Erro ao salvar a tarefa:", error);
+      if (error === "cancel") return; // usuário cancelou a modal
+      console.error("Erro ao criar a tarefa:", error);
+      showToast(error.message, "error");
     }
   };
 
-  // ✅ Função para excluir uma tarefa
-  const handleDelete = async () => {
-    await deleteTask(selectedTask.id);
-    setTasks(tasks.filter((task) => task.id !== selectedTask.id));
-    setIsModalOpen(false);
+  /** Edição de tarefa */
+  const handleEdit = async (task) => {
+    try {
+      // Abre form modal com dados iniciais
+      const formData = await openFormModal({
+        title: "Editar Tarefa",
+        fields: [
+          { name: "id", label: "", type: "hidden" },
+          {
+            name: "name",
+            label: "Nome da Tarefa",
+            type: "text",
+            required: true,
+          },
+          {
+            name: "description",
+            label: "Descrição",
+            type: "textarea",
+            required: true,
+          },
+          {
+            name: "reward",
+            label: "Recompensa (Coins)",
+            type: "number",
+            required: true,
+          },
+          {
+            name: "visibility",
+            label: "Visibilidade",
+            type: "select",
+            required: true,
+            options: [
+              { value: "ADMIN", label: "ADMIN" },
+              { value: "USER", label: "USER" },
+              { value: "AMBOS", label: "AMBOS" },
+            ],
+          },
+        ],
+        initialValues: {
+          id: task.id,
+          name: task.name,
+          description: task.description,
+          reward: task.reward,
+          visibility: task.visibility,
+        },
+      });
+
+      // Atualiza via API
+      const updated = await updateTask(formData.id, formData);
+      setTasks((prev) => prev.map((t) => (t.id === updated.id ? updated : t)));
+      showToast("Tarefa atualizada com sucesso!", "success");
+    } catch (error) {
+      if (error === "cancel") return;
+      console.error("Erro ao editar a tarefa:", error);
+      showToast(error.message, "error");
+    }
+  };
+
+  /** Exclusão de tarefa */
+  const handleDelete = async (task) => {
+    try {
+      // Exibe modal de confirmação
+      await confirm({
+        title: "Excluir Tarefa",
+        message: `Tem certeza que deseja excluir a tarefa "${task.name}"?`,
+        confirmText: "Excluir",
+        cancelText: "Cancelar",
+      });
+      await deleteTask(task.id);
+      setTasks((prev) => prev.filter((t) => t.id !== task.id));
+      showToast("Tarefa excluída com sucesso!", "success");
+    } catch (error) {
+      if (error === "cancel") return;
+      console.error("Erro ao excluir a tarefa:", error);
+      showToast("Erro ao excluir a tarefa.", "error");
+    }
   };
 
   return (
     <>
-      <div className="flex text-white items-center justify-between mb-4">
+      <div className="flex text-white justify-between items-end mb-4">
         <h2 className="text-2xl">Tarefas Disponíveis</h2>
         <button
+          className="bg-green-400 px-4 py-2 rounded"
           onClick={handleCreate}
-          className="bg-green-400 p-2 rounded cursor-pointer"
         >
           Adicionar Tarefa
         </button>
       </div>
-
       <div className="p-4 bg-gray-800 rounded shadow text-white">
-        {tasks.length > 0 ? (
+        {Array.isArray(tasks) && tasks.length > 0 ? (
           <ul className="space-y-2">
             {tasks.map((task) => (
               <li key={task.id} className="li-table">
                 <div className="col-span-5 flex justify-between gap-4">
-                  <div className="w-[80%] ">
+                  <div className="w-[80%]">
                     <h3 className="text-lg font-medium">{task.name}</h3>
                     <p className="text-sm text-gray-400">{task.description}</p>
                     <p className="text-blue-300 font-bold">
@@ -96,10 +182,20 @@ function TaskList() {
                   </div>
                   <Coin amount={task.reward} />
                 </div>
-                <EditarExcluirButton
-                  editar={() => handleEdit(task)}
-                  exculir={() => handleDeleteModal(task)}
-                />
+                <div className="flex justify-end mt-2">
+                  <button
+                    className="bg-blue-500 px-3 py-1 rounded mr-2"
+                    onClick={() => handleEdit(task)}
+                  >
+                    Editar
+                  </button>
+                  <button
+                    className="bg-red-500 px-3 py-1 rounded"
+                    onClick={() => handleDelete(task)}
+                  >
+                    Excluir
+                  </button>
+                </div>
               </li>
             ))}
           </ul>
@@ -107,16 +203,6 @@ function TaskList() {
           <p className="text-gray-400">Nenhuma tarefa encontrada.</p>
         )}
       </div>
-
-      {/* Modal de edição ou exclusão */}
-      <TaskModal
-        isOpen={isModalOpen}
-        onClose={() => setIsModalOpen(false)}
-        task={isDeleteMode ? null : selectedTask}
-        isCreating={isCreating}
-        onSave={handleSave}
-        onDelete={handleDelete}
-      />
     </>
   );
 }

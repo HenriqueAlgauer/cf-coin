@@ -45,7 +45,7 @@ export function FormModalProvider({ children }) {
         showToast(`Campo "${field.label}" é obrigatório!`, "error");
         return;
       }
-      // Se for number, convertemos
+      // Converte number
       if (field.type === "number") {
         formValues[field.name] = Number(formValues[field.name]);
         if (isNaN(formValues[field.name])) {
@@ -58,7 +58,6 @@ export function FormModalProvider({ children }) {
       }
     }
 
-    // Se passou pela validação, resolvemos
     if (modalState.resolve) {
       modalState.resolve(formValues);
     }
@@ -117,7 +116,7 @@ function FormModal({ modalState, onCancel, onConfirm }) {
               </label>
             )}
 
-            {/* Se for SELECT e tiver field.options, renderizamos as <option> */}
+            {/* Renderização condicional para SELECT */}
             {field.type === "select" && field.options ? (
               <select
                 id={field.name}
