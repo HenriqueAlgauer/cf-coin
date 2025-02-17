@@ -5,6 +5,7 @@ import { useFormModal } from "../../contexts/FormModalContext";
 import { useConfirm } from "../../contexts/ConfirmModal";
 import { useToast } from "../../contexts/ToastContext";
 import Coin from "../Coin"; // componente que exibe CF Coins
+import EditarExcluirButton from "../EditarExcluirButton";
 
 function UserList() {
   const [users, setUsers] = useState([]);
@@ -164,8 +165,8 @@ function UserList() {
           Criar Usuário
         </button>
       </div>
-      <div className="p-4 bg-gray-800 text-white rounded">
-        <table className="w-full text-left">
+      <div className="p-4 bg-gray-800 text-white rounded overflow-auto min-w[400px]">
+        <table className="w-full text-left ">
           <thead>
             <tr className="border-b border-gray-600">
               <th className="p-2">Nome</th>
@@ -178,7 +179,7 @@ function UserList() {
           <tbody>
             {Array.isArray(users) && users.length > 0 ? (
               users.map((user) => (
-                <tr key={user.id} className="border-b border-gray-700">
+                <tr key={user.id} className="border-b border-gray-700 ">
                   <td className="p-2">{user.name}</td>
                   <td className="p-2">{user.department}</td>
                   <td className="p-2">{user.role}</td>
@@ -186,18 +187,11 @@ function UserList() {
                     <Coin amount={user.coins} />
                   </td>
                   <td className="p-2 text-right">
-                    <button
-                      className="bg-blue-500 px-2 py-1 rounded mr-2"
-                      onClick={() => handleEdit(user)}
-                    >
-                      Editar
-                    </button>
-                    <button
-                      className="bg-red-500 px-2 py-1 rounded"
-                      onClick={() => handleDelete(user)}
-                    >
-                      Excluir
-                    </button>
+                    <EditarExcluirButton
+                      editar={() => handleEdit(user)}
+                      exculir={() => handleDelete(user)}
+                      variant="fit"
+                    />
                   </td>
                 </tr>
               ))

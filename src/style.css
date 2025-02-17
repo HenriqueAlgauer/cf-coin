@@ -31,7 +31,7 @@
 }
 
 .table-container {
-  @apply w-[90%] mx-auto flex lg:w-[80%] xl:w-[70%] 2xl:w-[60%];
+  @apply w-[90%] mx-auto flex lg:w-[80%] xl:w-[70%] 2xl:w-[60%] max-w-screen;
 }
 
 .li-table {

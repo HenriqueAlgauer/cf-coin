@@ -1,4 +1,3 @@
-// src/contexts/ConfirmModalContext.jsx
 import { createContext, useContext, useState, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { createPortal } from "react-dom";
@@ -44,6 +43,11 @@ export function ConfirmModalProvider({ children }) {
     setConfirmState((prev) => ({ ...prev, isOpen: false }));
   };
 
+  const classe =
+    confirmState.confirmText === "Excluir"
+      ? "bg-red-500 px-4 py-2 rounded cursor-pointer"
+      : "bg-green-500 px-4 py-2 rounded cursor-pointer";
+
   return (
     <ConfirmModalContext.Provider value={{ confirm }}>
       {children}
@@ -51,7 +55,7 @@ export function ConfirmModalProvider({ children }) {
         <AnimatePresence>
           {confirmState.isOpen && (
             <motion.div
-              className="fixed inset-0 flex items-center justify-center z-50 bg-black/50"
+              className="fixed inset-0 flex items-center justify-center z-10 bg-black/50"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
@@ -72,10 +76,7 @@ export function ConfirmModalProvider({ children }) {
                   {confirmState.message}
                 </p>
                 <div className="flex justify-between mt-4">
-                  <button
-                    className="bg-green-500 px-4 py-2 rounded cursor-pointer"
-                    onClick={handleConfirm}
-                  >
+                  <button className={classe} onClick={handleConfirm}>
                     {confirmState.confirmText || "Confirmar"}
                   </button>
                   <button

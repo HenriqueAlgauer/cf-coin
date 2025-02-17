@@ -92,7 +92,7 @@ function FormModal({ modalState, onCancel, onConfirm }) {
 
   return (
     <motion.div
-      className="fixed inset-0 flex items-center justify-center z-50 bg-black/50"
+      className="fixed inset-0 flex items-center justify-center z-10 bg-black/50"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
@@ -156,13 +156,16 @@ function FormModal({ modalState, onCancel, onConfirm }) {
           </div>
         ))}
 
-        <div className="flex justify-end mt-4 gap-2">
-          <button onClick={onCancel} className="bg-gray-500 px-4 py-2 rounded">
+        <div className="flex justify-between mt-4 gap-2">
+          <button
+            onClick={onCancel}
+            className="bg-gray-500 px-4 py-2 rounded cursor-pointer"
+          >
             Cancelar
           </button>
           <button
             onClick={() => onConfirm({ ...formValues })}
-            className="bg-green-500 px-4 py-2 rounded"
+            className="bg-green-500 px-4 py-2 rounded cursor-pointer"
           >
             Confirmar
           </button>
