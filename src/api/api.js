@@ -527,7 +527,7 @@ export async function approvePrizeRequest(requestId) {
     if (!response.ok) {
       const errorText = await response.text();
       console.error("Erro ao aprovar o resgate:", errorText);
-      throw new Error(errorText);
+      throw new Error(errorText || "Erro ao aprovar o resgate.");
     }
 
     return await response.json();
