@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
 import {
   getPrizes,
   createPrize,
@@ -8,24 +7,32 @@ import {
 } from "../../api/api";
 import Coin from "../../components/Coin";
 import EditarExcluirButton from "../EditarExcluirButton";
-import { useFormModal } from "../../contexts/FormModalContext"; // Importa o hook do modal
+import { useFormModal } from "../../contexts/FormModalContext";
+import { useConfirm } from "../../contexts/ConfirmModal";
 import { useToast } from "../../contexts/ToastContext";
 
 function PrizeList() {
   const [prizes, setPrizes] = useState([]);
-  const [isConfirmDeleteOpen, setIsConfirmDeleteOpen] = useState(false);
+  // eslint-disable-next-line no-unused-vars
   const [selectedPrize, setSelectedPrize] = useState(null);
+  const showToast = useToast();
   const { openFormModal } = useFormModal();
+  const { confirm } = useConfirm();
 
   useEffect(() => {
     async function fetchPrizes() {
-      const data = await getPrizes();
-      setPrizes(data);
+      try {
+        const data = await getPrizes();
+        setPrizes(data);
+      } catch (error) {
+        console.error("Erro ao buscar prêmios:", error);
+        showToast("Erro ao buscar prêmios.", "error");
+      }
     }
     fetchPrizes();
-  }, []);
-  const showToast = useToast();
+  }, [showToast]);
 
+  /** Criação de Prêmio */
   const handleCreate = async () => {
     try {
       // Abre o modal genérico
@@ -48,15 +55,14 @@ function PrizeList() {
         ],
         initialValues: {},
       });
-      // Se o usuário confirmou, formData conterá as propriedades "name", "description" e "cost"
+
+      // Chama a API se o usuário confirmar
       const newPrize = await createPrize(formData);
-      setPrizes([...prizes, newPrize]);
+      setPrizes((prev) => [...prev, newPrize]);
       showToast("Prêmio criado com sucesso!", "success");
     } catch (error) {
-      // Se for "cancel", o usuário apenas cancelou. Se for outro, deu erro.
       if (error === "cancel") {
-        // O usuário apenas cancelou a operação de criação/edição
-        // Então podemos retornar sem exibir erro
+        // Usuário apenas cancelou
         return;
       }
       console.error("Erro ao criar o prêmio:", error);
@@ -64,12 +70,15 @@ function PrizeList() {
     }
   };
 
+  /** Edição de Prêmio */
   const handleEdit = async (prize) => {
     try {
       setSelectedPrize(prize);
+
       const formData = await openFormModal({
         title: "Editar Prêmio",
         fields: [
+          { name: "id", label: "", type: "hidden" },
           {
             name: "name",
             label: "Nome do Prêmio",
@@ -91,29 +100,44 @@ function PrizeList() {
           cost: prize.cost,
         },
       });
-      // formData terá as atualizações que o usuário fez
+
+      // Atualiza via API
       const updatedPrize = await updatePrize(prize.id, formData);
-      setPrizes(
-        prizes.map((p) => (p.id === updatedPrize.id ? updatedPrize : p))
+      setPrizes((prev) =>
+        prev.map((p) => (p.id === updatedPrize.id ? updatedPrize : p))
       );
+      showToast("Prêmio atualizado com sucesso!", "success");
     } catch (error) {
-      if (error !== "cancel") {
-        console.error("Erro ao atualizar o prêmio:", error);
+      if (error === "cancel") {
+        return;
       }
+      console.error("Erro ao atualizar o prêmio:", error);
+      showToast(error.message, "error");
     }
   };
 
-  const openDeleteModal = (prize) => {
-    setSelectedPrize(prize);
-    setIsConfirmDeleteOpen(true);
-  };
-
-  const handleDelete = async () => {
-    if (selectedPrize) {
-      await deletePrize(selectedPrize.id);
-      setPrizes(prizes.filter((p) => p.id !== selectedPrize.id));
+  /** Exclusão de Prêmio */
+  const handleDelete = async (prize) => {
+    try {
+      // Usa a modal de confirmação global
+      await confirm({
+        title: "Confirmar Exclusão",
+        message: `Tem certeza que deseja excluir o prêmio "${prize.name}"?`,
+        confirmText: "Excluir",
+        cancelText: "Cancelar",
+      });
+      // Se o usuário confirmar, exclui
+      await deletePrize(prize.id);
+      setPrizes((prev) => prev.filter((p) => p.id !== prize.id));
+      showToast("Prêmio excluído com sucesso!", "success");
+    } catch (error) {
+      if (error === "cancel") {
+        // O usuário cancelou
+        return;
+      }
+      console.error("Erro ao excluir o prêmio:", error);
+      showToast("Erro ao excluir o prêmio.", "error");
     }
-    setIsConfirmDeleteOpen(false);
   };
 
   return (
@@ -127,8 +151,9 @@ function PrizeList() {
           Novo Prêmio
         </button>
       </div>
+
       <div className="p-4 bg-gray-800 rounded shadow text-white">
-        {prizes.length > 0 ? (
+        {prizes?.length > 0 ? (
           <ul className="space-y-2">
             {prizes.map((prize) => (
               <li key={prize.id} className="li-table">
@@ -141,7 +166,7 @@ function PrizeList() {
                 </div>
                 <EditarExcluirButton
                   editar={() => handleEdit(prize)}
-                  exculir={() => openDeleteModal(prize)}
+                  exculir={() => handleDelete(prize)}
                 />
               </li>
             ))}
@@ -149,52 +174,6 @@ function PrizeList() {
         ) : (
           <p className="text-gray-400">Nenhum prêmio cadastrado.</p>
         )}
-
-        <AnimatePresence>
-          {isConfirmDeleteOpen && (
-            <motion.div
-              className="fixed inset-0 flex items-center justify-center z-10 bg-black/50"
-              onClick={() => setIsConfirmDeleteOpen(false)}
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-            >
-              <motion.div
-                className="bg-gray-800 p-6 rounded shadow-lg text-white w-96"
-                onClick={(e) => e.stopPropagation()}
-                initial={{ y: -50, opacity: 0 }}
-                animate={{ y: 0, opacity: 1 }}
-                exit={{ y: -50, opacity: 0 }}
-                transition={{ duration: 0.3, ease: "easeOut" }}
-              >
-                <h2 className="text-xl font-semibold text-center mb-4">
-                  Confirmar Exclusão
-                </h2>
-                <p className="text-gray-300 text-center">
-                  Tem certeza que deseja excluir o prêmio{" "}
-                  <span className="text-red-400 font-bold">
-                    {selectedPrize?.name}
-                  </span>
-                  ?
-                </p>
-                <div className="flex justify-between mt-4">
-                  <button
-                    className="bg-red-500 px-4 py-2 rounded"
-                    onClick={handleDelete}
-                  >
-                    Excluir
-                  </button>
-                  <button
-                    className="bg-gray-500 px-4 py-2 rounded"
-                    onClick={() => setIsConfirmDeleteOpen(false)}
-                  >
-                    Cancelar
-                  </button>
-                </div>
-              </motion.div>
-            </motion.div>
-          )}
-        </AnimatePresence>
       </div>
     </>
   );

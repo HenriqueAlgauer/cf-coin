@@ -43,10 +43,15 @@ export function ConfirmModalProvider({ children }) {
     setConfirmState((prev) => ({ ...prev, isOpen: false }));
   };
 
-  const classe =
-    confirmState.confirmText === "Excluir"
-      ? "bg-red-500 px-4 py-2 rounded cursor-pointer"
-      : "bg-green-500 px-4 py-2 rounded cursor-pointer";
+  let classe;
+  if (
+    confirmState.confirmText === "Excluir" ||
+    confirmState.confirmText === "Rejeitar"
+  ) {
+    classe = "bg-red-500 px-4 py-2 rounded cursor-pointer";
+  } else {
+    classe = "bg-green-500 px-4 py-2 rounded cursor-pointer";
+  }
 
   return (
     <ConfirmModalContext.Provider value={{ confirm }}>

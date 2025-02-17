@@ -1,48 +1,79 @@
+// src/components/Admin/PrizeRequestList.jsx
 import { useEffect, useState } from "react";
 import {
   getPendingPrizeRequests,
   approvePrizeRequest,
   rejectPrizeRequest,
 } from "../../api/api";
-import { motion, AnimatePresence } from "framer-motion";
 import Coin from "../Coin";
+import { useConfirm } from "../../contexts/ConfirmModal";
+import { useToast } from "../../contexts/ToastContext";
+import EditarExcluirButton from "../EditarExcluirButton";
 
 function PrizeRequestList() {
   const [requests, setRequests] = useState([]);
-  const [selectedRequest, setSelectedRequest] = useState(null);
-  const [isConfirmModalOpen, setIsConfirmModalOpen] = useState(false);
-  const [actionType, setActionType] = useState(""); // "approve" ou "reject"
+  const showToast = useToast();
+  const { confirm } = useConfirm(); // Para modal de confirmação global
 
   useEffect(() => {
     async function fetchRequests() {
-      const data = await getPendingPrizeRequests();
-      setRequests(data);
+      try {
+        const data = await getPendingPrizeRequests();
+        setRequests(data);
+      } catch (error) {
+        console.error("Erro ao buscar solicitações de prêmios:", error);
+        showToast("Erro ao buscar solicitações de prêmios.", "error");
+      }
     }
     fetchRequests();
-  }, []);
+  }, [showToast]);
 
-  const openModal = (request, action) => {
-    setSelectedRequest(request);
-    setActionType(action);
-    setIsConfirmModalOpen(true);
+  /** Aprovar uma solicitação */
+  const handleApprove = async (request) => {
+    try {
+      await confirm({
+        title: "Confirmar Aprovação",
+        message: `Deseja aprovar o resgate do prêmio "${request.prize.name}" pelo usuário "${request.user.name}"?`,
+        confirmText: "Aprovar",
+        cancelText: "Cancelar",
+      });
+      // Se o usuário confirmar, chamamos a API
+      await approvePrizeRequest(request.id);
+
+      // Remove do estado local
+      setRequests((prev) => prev.filter((req) => req.id !== request.id));
+      showToast("Solicitação aprovada com sucesso!", "success");
+    } catch (error) {
+      if (error === "cancel") {
+        // Usuário cancelou
+        return;
+      }
+      console.error("Erro ao aprovar a solicitação:", error);
+      showToast("Erro ao aprovar a solicitação.", "error");
+    }
   };
 
-  const handleConfirmAction = async () => {
-    if (!selectedRequest) return;
-
+  /** Rejeitar uma solicitação */
+  const handleReject = async (request) => {
     try {
-      if (actionType === "approve") {
-        await approvePrizeRequest(selectedRequest.id);
-      } else if (actionType === "reject") {
-        await rejectPrizeRequest(selectedRequest.id);
-      }
+      await confirm({
+        title: "Confirmar Rejeição",
+        message: `Deseja rejeitar o resgate do prêmio "${request.prize.name}" pelo usuário "${request.user.name}"?`,
+        confirmText: "Rejeitar",
+        cancelText: "Cancelar",
+      });
+      // Se confirmar
+      await rejectPrizeRequest(request.id);
 
-      setRequests((prev) =>
-        prev.filter((req) => req.id !== selectedRequest.id)
-      );
-      setIsConfirmModalOpen(false);
+      // Remove do estado local
+      setRequests((prev) => prev.filter((req) => req.id !== request.id));
+      showToast("Solicitação rejeitada com sucesso!", "success");
     } catch (error) {
-      console.error("Erro ao processar a solicitação:", error);
+      if (error === "cancel") {
+        return;
+      }
+      console.error("Erro ao rejeitar a solicitação:", error);
+      showToast("Erro ao rejeitar a solicitação.", "error");
     }
   };
 
@@ -56,8 +87,8 @@ function PrizeRequestList() {
           <ul className="space-y-2">
             {requests.map((request) => (
               <li key={request.id} className="li-table">
-                <div className="col-span-5 flex justify-between gap-4 ">
-                  <div className="w-[80%] ">
+                <div className="li-div-container">
+                  <div className="w-[80%]">
                     <h3 className="text-green-400 font-bold">
                       {request.prize.name}
                     </h3>
@@ -68,89 +99,18 @@ function PrizeRequestList() {
                   </div>
                   <Coin amount={request.prize.cost} />
                 </div>
-                <div className="col-span-1 flex justify-end gap-2">
-                  <button
-                    className="bg-green-600 px-3 py-1 rounded text-white"
-                    onClick={() => openModal(request, "approve")}
-                  >
-                    Aprovar
-                  </button>
-                  <button
-                    className="bg-red-600 px-3 py-1 rounded text-white"
-                    onClick={() => openModal(request, "reject")}
-                  >
-                    Rejeitar
-                  </button>
-                </div>
+                <EditarExcluirButton
+                  editar={() => handleApprove(request)}
+                  editText="Aprovar"
+                  exculir={() => handleReject(request)}
+                  deleteText="Rejeitar"
+                />
               </li>
             ))}
           </ul>
         ) : (
           <p className="text-gray-400">Nenhuma solicitação pendente.</p>
         )}
-
-        {/* Modal de Confirmação */}
-        <AnimatePresence>
-          {isConfirmModalOpen && selectedRequest && (
-            <motion.div
-              className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50"
-              onClick={() => setIsConfirmModalOpen(false)}
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-            >
-              <motion.div
-                className="bg-gray-800 p-6 rounded shadow-lg text-white w-96"
-                onClick={(e) => e.stopPropagation()}
-                initial={{ y: -50, opacity: 0 }}
-                animate={{ y: 0, opacity: 1 }}
-                exit={{ y: -50, opacity: 0 }}
-                transition={{ duration: 0.3, ease: "easeOut" }}
-              >
-                <h2 className="text-xl font-semibold text-center mb-4">
-                  {actionType === "approve"
-                    ? "Confirmar Aprovação"
-                    : "Confirmar Rejeição"}
-                </h2>
-                <p className="text-gray-300 text-center">
-                  Você tem certeza que deseja{" "}
-                  <span
-                    className={
-                      actionType === "approve"
-                        ? "text-green-400"
-                        : "text-red-400"
-                    }
-                  >
-                    {actionType === "approve" ? "aprovar" : "rejeitar"}
-                  </span>{" "}
-                  o resgate do prêmio{" "}
-                  <span className="text-amber-300 font-bold">
-                    {selectedRequest.prize.name}
-                  </span>
-                  ?
-                </p>
-                <div className="flex justify-between mt-4">
-                  <button
-                    className={
-                      actionType === "approve"
-                        ? "bg-green-500 px-4 py-2 rounded"
-                        : "bg-red-500 px-4 py-2 rounded"
-                    }
-                    onClick={handleConfirmAction}
-                  >
-                    {actionType === "approve" ? "Aprovar" : "Rejeitar"}
-                  </button>
-                  <button
-                    className="bg-gray-500 px-4 py-2 rounded"
-                    onClick={() => setIsConfirmModalOpen(false)}
-                  >
-                    Cancelar
-                  </button>
-                </div>
-              </motion.div>
-            </motion.div>
-          )}
-        </AnimatePresence>
       </div>
     </>
   );

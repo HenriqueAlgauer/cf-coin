@@ -5,6 +5,7 @@ import { useFormModal } from "../../contexts/FormModalContext";
 import { useConfirm } from "../../contexts/ConfirmModal";
 import { useToast } from "../../contexts/ToastContext";
 import Coin from "../Coin";
+import EditarExcluirButton from "../EditarExcluirButton";
 
 function TaskList() {
   const [tasks, setTasks] = useState([]);
@@ -172,7 +173,7 @@ function TaskList() {
           <ul className="space-y-2">
             {tasks.map((task) => (
               <li key={task.id} className="li-table">
-                <div className="col-span-5 flex justify-between gap-4">
+                <div className="li-div-container">
                   <div className="w-[80%]">
                     <h3 className="text-lg font-medium">{task.name}</h3>
                     <p className="text-sm text-gray-400">{task.description}</p>
@@ -182,20 +183,10 @@ function TaskList() {
                   </div>
                   <Coin amount={task.reward} />
                 </div>
-                <div className="flex justify-end mt-2">
-                  <button
-                    className="bg-blue-500 px-3 py-1 rounded mr-2"
-                    onClick={() => handleEdit(task)}
-                  >
-                    Editar
-                  </button>
-                  <button
-                    className="bg-red-500 px-3 py-1 rounded"
-                    onClick={() => handleDelete(task)}
-                  >
-                    Excluir
-                  </button>
-                </div>
+                <EditarExcluirButton
+                  editar={() => handleEdit(task)}
+                  exculir={() => handleDelete(task)}
+                />
               </li>
             ))}
           </ul>
