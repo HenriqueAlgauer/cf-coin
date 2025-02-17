@@ -1,100 +1,176 @@
+// src/components/UserRequests.jsx
+
 import { useEffect, useState } from "react";
 import {
-  // getUserCoins,
-  deleteCoin,
-  updateCoin,
   createCoin,
+  updateCoin,
   getUserTasks,
   getUserPendingCoins,
+  deleteCoin,
 } from "../api/api";
-import UserRequestModal from "./UserRequestModal";
 import Coin from "./Coin";
 import EditarExcluirButton from "./EditarExcluirButton";
+import { useConfirm } from "../contexts/ConfirmModal"; // Modal global p/ exclusão
+import { useToast } from "../contexts/ToastContext"; // Toast
+import { useFormModal } from "../contexts/FormModalContext"; // Modal global p/ criar/editar
 
 function UserRequests() {
   const [requests, setRequests] = useState([]);
   const [tasks, setTasks] = useState([]);
-  const [selectedRequest, setSelectedRequest] = useState(null);
-
-  const [isModalOpen, setIsModalOpen] = useState(false); // criar/editar
-  const [isCreating, setIsCreating] = useState(false);
-
-  const [isConfirmDeleteOpen, setIsConfirmDeleteOpen] = useState(false);
+  const showToast = useToast();
+  const { confirm } = useConfirm();
+  const { openFormModal } = useFormModal();
 
   const userId =
     localStorage.getItem("userId") || sessionStorage.getItem("userId");
 
   useEffect(() => {
     async function fetchData() {
-      const userRequests = await getUserPendingCoins(userId);
-      const availableTasks = await getUserTasks();
-      setRequests(userRequests);
-      setTasks(availableTasks);
+      try {
+        const userRequests = await getUserPendingCoins(userId);
+        const availableTasks = await getUserTasks();
+        setRequests(userRequests);
+        setTasks(availableTasks);
+      } catch (error) {
+        console.error("Erro ao buscar solicitações ou tarefas:", error);
+        showToast("Erro ao buscar solicitações de moedas.", "error");
+      }
     }
     fetchData();
-  }, [userId]);
+  }, [userId, showToast]);
 
-  const handleEdit = (request) => {
-    setSelectedRequest({ ...request });
-    setIsCreating(false);
-    setIsModalOpen(true);
-  };
+  // Cria nova solicitação
+  const handleCreate = async () => {
+    try {
+      // Abre a modal global de formulário, definindo os campos
+      const formData = await openFormModal({
+        title: "Nova Solicitação",
+        fields: [
+          {
+            name: "taskId",
+            label: "Tarefa",
+            type: "select",
+            required: true,
+            // Prepara as opções das tasks
+            options: tasks.map((task) => ({
+              value: task.id,
+              label: `${task.name} (Recompensa: ${task.reward} coins)`,
+            })),
+          },
+          {
+            name: "message",
+            label: "Mensagem (opcional)",
+            type: "textarea",
+            required: false,
+          },
+        ],
+        initialValues: {},
+      });
 
-  const handleCreate = () => {
-    setSelectedRequest(null);
-    setIsCreating(true);
-    setIsModalOpen(true);
-  };
+      // Ao confirmar, formData.taskId e formData.message estarão preenchidos
+      const numericUserId =
+        Number(localStorage.getItem("userId")) ||
+        Number(sessionStorage.getItem("userId")) ||
+        0;
 
-  const openDeleteModal = (request) => {
-    setSelectedRequest(request);
-    setIsConfirmDeleteOpen(true);
-  };
+      if (!numericUserId) {
+        showToast("Usuário não encontrado para criar a solicitação.", "error");
+        return;
+      }
 
-  const handleDelete = async () => {
-    if (selectedRequest) {
-      await deleteCoin(selectedRequest.id);
-      setRequests((prev) =>
-        prev.filter((req) => req.id !== selectedRequest.id)
+      // Precisamos saber o reward da task selecionada para "amount"
+      const selectedTask = tasks.find(
+        (task) => String(task.id) === String(formData.taskId)
       );
-    }
-    setIsConfirmDeleteOpen(false);
-    setSelectedRequest(null);
-  };
+      if (!selectedTask) {
+        showToast("Tarefa inválida.", "error");
+        return;
+      }
 
-  const handleSave = async (data) => {
-    const userId =
-      Number(localStorage.getItem("userId")) ||
-      Number(sessionStorage.getItem("userId")) ||
-      0;
+      // Monta os dados p/ createCoin
+      const requestBody = {
+        userId: numericUserId,
+        taskId: Number(formData.taskId),
+        message: formData.message || "",
+        // O backend já pega o reward com base na task,
+        // mas se precisar, também podemos mandar "amount"
+      };
 
-    if (!userId) {
-      console.error("Erro: userId não foi fornecido.");
-      return;
-    }
-
-    const requestData = { ...data, userId }; // ✅ Garante que userId é passado corretamente
-
-    if (isCreating) {
-      const newRequest = await createCoin(requestData);
+      const newRequest = await createCoin(requestBody);
       if (newRequest) {
         setRequests((prev) => [...prev, newRequest]);
+        showToast("Solicitação criada com sucesso!", "success");
       }
-    } else {
-      if (!data.id) {
+    } catch (error) {
+      if (error === "cancel") return; // usuário cancelou a modal
+      console.error("Erro ao criar a solicitação:", error);
+      showToast("Erro ao criar a solicitação.", "error");
+    }
+  };
+
+  // Edita uma solicitação
+  const handleEdit = async (request) => {
+    try {
+      // Abre modal global de formulário, com valores iniciais
+      const formData = await openFormModal({
+        title: "Editar Solicitação",
+        fields: [
+          // Se quiser, podemos impedir de trocar a taskId
+          // ou permitir (caso seja um select).
+          { name: "id", label: "", type: "hidden" },
+          {
+            name: "message",
+            label: "Mensagem",
+            type: "textarea",
+            required: false,
+          },
+        ],
+        initialValues: {
+          id: request.id,
+          message: request.message || "",
+        },
+      });
+
+      // Ao confirmar, chamamos updateCoin
+      if (!formData.id) {
         console.error("Erro: ID da Coin não foi fornecido.");
         return;
       }
 
-      await updateCoin(data.id, data.message);
+      await updateCoin(formData.id, formData.message);
       setRequests((prev) =>
         prev.map((req) =>
-          req.id === data.id ? { ...req, message: data.message } : req
+          req.id === formData.id ? { ...req, message: formData.message } : req
         )
       );
+      showToast("Solicitação atualizada com sucesso!", "success");
+    } catch (error) {
+      if (error === "cancel") return; // Usuário cancelou
+      console.error("Erro ao editar solicitação:", error);
+      showToast("Erro ao editar a solicitação.", "error");
     }
+  };
 
-    setIsModalOpen(false);
+  // Exclui a solicitação
+  const handleDelete = async (request) => {
+    try {
+      await confirm({
+        title: "Confirmar Exclusão",
+        message: `Tem certeza que deseja excluir a solicitação para "${request.task?.name}"?`,
+        confirmText: "Excluir",
+        cancelText: "Cancelar",
+      });
+      // Se o usuário confirmou:
+      await deleteCoin(request.id);
+      setRequests((prev) => prev.filter((r) => r.id !== request.id));
+      showToast("Solicitação excluída com sucesso!", "success");
+    } catch (error) {
+      if (error === "cancel") {
+        return;
+      }
+      console.error("Erro ao excluir a solicitação:", error);
+      showToast("Erro ao excluir a solicitação.", "error");
+    }
   };
 
   return (
@@ -105,13 +181,14 @@ function UserRequests() {
           Nova Solicitação
         </button>
       </div>
+
       <div className="p-4 bg-gray-800 rounded shadow text-white">
         {requests.length > 0 ? (
           <ul className="space-y-2">
             {requests.map((request) => (
               <li key={request.id} className="li-table">
-                <div className="col-span-5 flex justify-between gap-4">
-                  <div className="w-[80%] ">
+                <div className="li-div-container">
+                  <div className="w-[80%]">
                     <p className="font-bold text-green-400">
                       {request.task?.name}
                     </p>
@@ -123,7 +200,7 @@ function UserRequests() {
                 </div>
                 <EditarExcluirButton
                   editar={() => handleEdit(request)}
-                  exculir={() => openDeleteModal(request)}
+                  exculir={() => handleDelete(request)}
                 />
               </li>
             ))}
@@ -131,18 +208,6 @@ function UserRequests() {
         ) : (
           <p className="text-gray-400">Nenhuma solicitação encontrada.</p>
         )}
-
-        <UserRequestModal
-          isOpen={isModalOpen}
-          onClose={() => setIsModalOpen(false)}
-          onSave={handleSave}
-          isCreating={isCreating}
-          request={selectedRequest}
-          tasks={tasks}
-          isConfirmDeleteOpen={isConfirmDeleteOpen}
-          onDelete={handleDelete}
-          onCancelDelete={() => setIsConfirmDeleteOpen(false)}
-        />
       </div>
     </>
   );
