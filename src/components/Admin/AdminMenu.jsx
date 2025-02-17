@@ -1,10 +1,15 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { useConfirm } from "../../contexts/ConfirmModal"; // ajuste o caminho
-import menuIcon from "../../assets/menu.svg";
-import logoutIcon from "../../assets/logout.png";
-import userIcon from "../../assets/user.svg";
-import coinIcon from "../../assets/coin.png";
+// import menuIcon from "../../assets/menu.svg";
+// import logoutIcon from "../../assets/logout.png";
+// import userIcon from "../../assets/user.svg";
+// import coinIcon from "../../assets/coin.png";
+
+const menuIcon = "/menu.svg";
+const logoutIcon = "/logout.png";
+const userIcon = "/user.svg";
+const coinIcon = "/coin.png";
 
 function AdminMenu() {
   const [isOpen, setIsOpen] = useState(false); // Controla o menu móvel (hambúrguer)
