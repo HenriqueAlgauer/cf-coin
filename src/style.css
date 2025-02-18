@@ -41,3 +41,7 @@
 .li-div-container {
   @apply flex col-span-4 lg:col-span-5 justify-between gap-2;
 }
+
+.menu-link-mobile {
+  @apply font-medium px-4 py-2 rounded-sm hover:bg-gray-800 hover:text-green-400 transition-all;
+}

@@ -1,4 +1,4 @@
-import coin from "../assets/coin.png";
+import coin from "/coin.png";
 
 function Coin({ amount, variant }) {
   const estilo =

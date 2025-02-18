@@ -10,6 +10,7 @@ const menuIcon = "/menu.svg";
 const logoutIcon = "/logout.png";
 const userIcon = "/user.svg";
 const coinIcon = "/coin.png";
+const close = "/close.png";
 
 function AdminMenu() {
   const [isOpen, setIsOpen] = useState(false); // Controla o menu móvel (hambúrguer)
@@ -104,6 +105,12 @@ function AdminMenu() {
           <img src={menuIcon} alt="Menu" className="w-6 h-6" />
         </button>
       </div>
+      {isOpen && (
+        <div
+          className="fixed inset-0 bg-black/50 z-40 md:hidden"
+          onClick={toggleMenu}
+        />
+      )}
 
       {/* Menu Lateral (drawer) no mobile */}
       <div
@@ -114,53 +121,50 @@ function AdminMenu() {
         {/* Cabeçalho do menu lateral no mobile */}
         <div className="flex justify-between items-center p-4 bg-gray-800">
           <h2 className="text-white text-xl font-semibold">Menu</h2>
-          <button onClick={toggleMenu} className="text-white">
-            x
+          <button
+            onClick={toggleMenu}
+            className="text-white bg-gray-900  w-8 h-8 rounded hover:bg-green-400 cursor-pointer transition-all"
+          >
+            <img src={close} alt="close" />
           </button>
         </div>
 
         {/* Itens do menu no mobile */}
-        <ul className="flex flex-col gap-4 p-4 text-green-400">
-          <li>
-            <Link to="/dashboard" onClick={toggleMenu} className="font-medium">
-              Dashboard
-            </Link>
-          </li>
-          <li>
-            <Link to="/coins" onClick={toggleMenu} className="font-medium">
-              Coins
-            </Link>
-          </li>
-          <li>
-            <Link to="/users" onClick={toggleMenu} className="font-medium">
-              Usuários
-            </Link>
-          </li>
-          <li>
-            <Link to="/tarefas" onClick={toggleMenu} className="font-medium">
-              Tarefas
-            </Link>
-          </li>
-          <li>
-            <Link to="/premios" onClick={toggleMenu} className="font-medium">
-              Prêmios
-            </Link>
-          </li>
-          <li>
-            <Link
-              to="/premios-solicitacoes"
-              onClick={toggleMenu}
-              className="font-medium"
-            >
-              Solicitações Prêmios
-            </Link>
-          </li>
-          <li onClick={toggleMenu}>
-            <Link to="/profile" className="flex items-center gap-2">
-              <img className="w-8 inline" src={userIcon} alt="Perfil" />
-              <span>Perfil</span>
-            </Link>
-          </li>
+        <ul className="flex flex-col gap-1 pt-4 text-white">
+          <Link
+            to="/dashboard"
+            onClick={toggleMenu}
+            className="menu-link-mobile"
+          >
+            Dashboard
+          </Link>
+          <Link to="/coins" onClick={toggleMenu} className="menu-link-mobile">
+            Coins
+          </Link>
+          <Link to="/users" onClick={toggleMenu} className="menu-link-mobile">
+            Usuários
+          </Link>
+          <Link to="/tarefas" onClick={toggleMenu} className="menu-link-mobile">
+            Tarefas
+          </Link>
+          <Link to="/premios" onClick={toggleMenu} className="menu-link-mobile">
+            Prêmios
+          </Link>
+          <Link
+            to="/premios-solicitacoes"
+            onClick={toggleMenu}
+            className="menu-link-mobile"
+          >
+            Solicitações Prêmios
+          </Link>
+          <Link
+            to="/profile"
+            onClick={toggleMenu}
+            className="flex items-center gap-2 menu-link-mobile"
+          >
+            <img className="w-8 inline" src={userIcon} alt="Perfil" />
+            <span>Perfil</span>
+          </Link>
           <li
             className="cursor-pointer"
             onClick={() => {

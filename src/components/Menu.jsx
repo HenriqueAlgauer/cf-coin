@@ -95,6 +95,13 @@ function Menu() {
         </button>
       </div>
 
+      {isOpen && (
+        <div
+          className="fixed inset-0 bg-black/50 z-40 md:hidden"
+          onClick={toggleMenu}
+        />
+      )}
+
       {/* Drawer Lateral para Mobile */}
       <div
         className={`fixed top-0 left-0 h-screen w-64 bg-gray-900 transform ${
