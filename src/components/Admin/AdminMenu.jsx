@@ -130,51 +130,61 @@ function AdminMenu() {
         </div>
 
         {/* Itens do menu no mobile */}
-        <ul className="flex flex-col gap-1 pt-4 text-white">
-          <Link
-            to="/dashboard"
-            onClick={toggleMenu}
-            className="menu-link-mobile"
-          >
-            Dashboard
-          </Link>
-          <Link to="/coins" onClick={toggleMenu} className="menu-link-mobile">
-            Coins
-          </Link>
-          <Link to="/users" onClick={toggleMenu} className="menu-link-mobile">
-            Usuários
-          </Link>
-          <Link to="/tarefas" onClick={toggleMenu} className="menu-link-mobile">
-            Tarefas
-          </Link>
-          <Link to="/premios" onClick={toggleMenu} className="menu-link-mobile">
-            Prêmios
-          </Link>
-          <Link
-            to="/premios-solicitacoes"
-            onClick={toggleMenu}
-            className="menu-link-mobile"
-          >
-            Solicitações Prêmios
-          </Link>
-          <Link
-            to="/profile"
-            onClick={toggleMenu}
-            className="flex items-center gap-2 menu-link-mobile"
-          >
-            <img className="w-8 inline" src={userIcon} alt="Perfil" />
-            <span>Perfil</span>
-          </Link>
-          <li
-            className="cursor-pointer"
-            onClick={() => {
-              toggleMenu();
-              handleLogout();
-            }}
-          >
-            <img className="w-6 inline" src={logoutIcon} alt="Logout" />
-            <span className="ml-2">Logout</span>
-          </li>
+        <ul className="flex flex-col justify-between h-[90%] pt-2 text-white">
+          <div className="flex flex-col gap-2 px-2">
+            <Link
+              to="/dashboard"
+              onClick={toggleMenu}
+              className="menu-link-mobile"
+            >
+              Dashboard
+            </Link>
+            <Link to="/coins" onClick={toggleMenu} className="menu-link-mobile">
+              Coins
+            </Link>
+            <Link to="/users" onClick={toggleMenu} className="menu-link-mobile">
+              Usuários
+            </Link>
+            <Link
+              to="/tarefas"
+              onClick={toggleMenu}
+              className="menu-link-mobile"
+            >
+              Tarefas
+            </Link>
+            <Link
+              to="/premios"
+              onClick={toggleMenu}
+              className="menu-link-mobile"
+            >
+              Prêmios
+            </Link>
+            <Link
+              to="/premios-solicitacoes"
+              onClick={toggleMenu}
+              className="menu-link-mobile"
+            >
+              Solicitações Prêmios
+            </Link>
+          </div>
+          <div className="flex justify-between px-4">
+            <Link
+              to="/profile"
+              onClick={toggleMenu}
+              className="flex flex-col items-center bg-gray-800 p-4 rounded-full"
+            >
+              <img className="w-8 inline" src={userIcon} alt="Perfil" />
+            </Link>
+            <li
+              className="flex flex-col items-center bg-gray-800 p-4 rounded-full"
+              onClick={() => {
+                toggleMenu();
+                handleLogout();
+              }}
+            >
+              <img className="w-8 inline" src={logoutIcon} alt="Logout" />
+            </li>
+          </div>
         </ul>
       </div>
     </>
