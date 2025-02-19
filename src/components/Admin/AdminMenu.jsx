@@ -65,8 +65,8 @@ function AdminMenu() {
               </li>
             </ul>
           </div>
-          <div className="w-full  px-6 bg-gray-800 border-y-1">
-            <div className="w-full lg:w-[85%] flex mx-auto">
+          <div className="w-full  px-2 bg-gray-800 border-y-1">
+            <div className="w-full flex mx-auto">
               <Link className="border-l-1 menu-link-desktop" to="/dashboard">
                 Dashboard
               </Link>
