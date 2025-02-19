@@ -1,14 +1,9 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { useConfirm } from "../../contexts/ConfirmModal"; // ajuste o caminho
-// import menuIcon from "../../assets/menu.svg";
-// import logoutIcon from "../../assets/logout.png";
-// import userIcon from "../../assets/user.svg";
-// import coinIcon from "../../assets/coin.png";
-
+import { useConfirm } from "../../contexts/ConfirmModal";
 const menuIcon = "/menu.svg";
 const logoutIcon = "/logout.png";
-const userIcon = "/user.svg";
+const userIcon = "/user.png";
 const coinIcon = "/coin.png";
 const close = "/close.png";
 
@@ -49,49 +44,38 @@ function AdminMenu() {
       {/* Barra superior fixa: Desktop Menu visível apenas em telas md+ */}
       <nav className="hidden md:flex w-full py-2 px-8 bg-gray-800 justify-between items-center">
         <Link to="/">
-          <img src={coinIcon} alt="logo" className="w-8 h-8" />
+          <img src={coinIcon} alt="logo" className="w-20 h-20" />
         </Link>
-        <ul className="flex gap-8 items-center">
-          <li>
-            <Link className="text-green-400 font-medium" to="/dashboard">
-              Dashboard
-            </Link>
-          </li>
-          <li>
-            <Link className="text-green-400 font-medium" to="/coins">
-              Coins
-            </Link>
-          </li>
-          <li>
-            <Link className="text-green-400 font-medium" to="/users">
-              Usuários
-            </Link>
-          </li>
-          <li>
-            <Link className="text-green-400 font-medium" to="/tarefas">
-              Tarefas
-            </Link>
-          </li>
-          <li>
-            <Link className="text-green-400 font-medium" to="/premios">
-              Prêmios
-            </Link>
-          </li>
-          <li>
-            <Link
-              className="text-green-400 font-medium"
-              to="/premios-solicitacoes"
-            >
-              Solicitações Prêmios
-            </Link>
-          </li>
-          <li>
-            <Link to="/profile">
-              <img className="w-8" src={userIcon} alt="perfil" />
-            </Link>
-          </li>
-          <li onClick={handleLogout} className="cursor-pointer">
-            <img className="w-6" src={logoutIcon} alt="logout" />
+        <ul className="flex gap-4 items-center">
+          <Link className="menu-link-desktop" to="/dashboard">
+            Dashboard
+          </Link>
+          <Link className="menu-link-desktop" to="/coins">
+            Coins
+          </Link>
+          <Link className="menu-link-desktop" to="/users">
+            Usuários
+          </Link>
+          <Link className="menu-link-desktop" to="/tarefas">
+            Tarefas
+          </Link>
+          <Link className="menu-link-desktop" to="/premios">
+            Prêmios
+          </Link>
+          <Link className="menu-link-desktop" to="/premios-solicitacoes">
+            Solicitações Prêmios
+          </Link>
+          <Link
+            className="bg-gray-900 p-2 mr-4 rounded-full cursor-pointer"
+            to="/profile"
+          >
+            <img className="w-8 " src={userIcon} alt="perfil" />
+          </Link>
+          <li
+            onClick={handleLogout}
+            className="cursor-pointer p-2 flex items-center justify-center bg-gray-900 rounded-full"
+          >
+            <img className="w-8 ml-0.5" src={logoutIcon} alt="logout" />
           </li>
         </ul>
       </nav>
@@ -123,7 +107,7 @@ function AdminMenu() {
           <h2 className="text-white text-xl font-semibold">Menu</h2>
           <button
             onClick={toggleMenu}
-            className="text-white bg-gray-900  w-8 h-8 rounded hover:bg-green-400 cursor-pointer transition-all"
+            className="text-white bg-gray-900  w-8 h-8 rounded cursor-pointer transition-all"
           >
             <img src={close} alt="close" />
           </button>

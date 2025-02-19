@@ -3,6 +3,8 @@ import { getUserProfile } from "../api/api";
 import AdminMenu from "../components/Admin/AdminMenu";
 import Menu from "../components/Menu";
 
+const coinImg = "/coin.png";
+
 function Profile() {
   const userRole =
     localStorage.getItem("userRole") || sessionStorage.getItem("userRole");
@@ -29,13 +31,14 @@ function Profile() {
   return (
     <div className="flex flex-col bg-gray-900 gap-[80px] min-h-screen">
       {userRole === "ADMIN" ? <AdminMenu /> : <Menu />}
-      <main className="flex flex-col items-center">
-        <div className="w-[70%] bg-gray-800 p-6 rounded shadow text-white">
+      <main className="flex flex-col items-center text-white">
+        <div>
           <h2 className="text-2xl mb-4">Meu Perfil</h2>
-
-          <div className="flex flex-col gap-4">
+        </div>
+        <div className="w-[70%] flex">
+          <div className="w-[60%]">
             <div>
-              <label className="block text-gray-400">Nome</label>
+              <label className="text-gray-400">Nome</label>
               <input
                 type="text"
                 value={userData.name}
@@ -45,7 +48,7 @@ function Profile() {
             </div>
 
             <div>
-              <label className="block text-gray-400">Departamento</label>
+              <label className="text-gray-400">Departamento</label>
               <input
                 type="text"
                 value={userData.department}
@@ -55,23 +58,22 @@ function Profile() {
             </div>
 
             <div>
-              <label className="block text-gray-400">CF Coins</label>
-              <input
-                type="text"
-                value={userData.coins}
-                disabled
-                className="p-2 w-full bg-gray-700 rounded outline-none "
-              />
-            </div>
-
-            <div>
-              <label className="block text-gray-400">Email</label>
+              <label className="text-gray-400">Email</label>
               <input
                 type="text"
                 value={userData.email}
                 disabled
-                className="p-2 w-full bg-gray-700 rounded outline-none "
+                className="p-2 w-full  bg-gray-700 rounded outline-none "
               />
+            </div>
+          </div>
+          <div className="w-[40%] flex items-center justify-center py-20 flex-col bg-gray-800 rounded shadow ">
+            <p className="text-7xl font-mono text-amber-300 ">CF Coins</p>
+            <div className="flex items-center">
+              <img src={coinImg} alt="" />
+              <p className="text-[7rem] font-mono text-amber-300 ">
+                {userData.coins}
+              </p>
             </div>
           </div>
         </div>
