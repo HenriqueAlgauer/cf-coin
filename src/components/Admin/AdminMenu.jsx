@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { useConfirm } from "../../contexts/ConfirmModal";
+
 const menuIcon = "/menu.svg";
 const logoutIcon = "/logout.png";
 const userIcon = "/user.png";
@@ -42,42 +43,51 @@ function AdminMenu() {
   return (
     <>
       {/* Barra superior fixa: Desktop Menu visível apenas em telas md+ */}
-      <nav className="hidden md:flex w-full py-2 px-8 bg-gray-800 justify-between items-center">
-        <Link to="/">
-          <img src={coinIcon} alt="logo" className="w-20 h-20" />
-        </Link>
-        <ul className="flex gap-4 items-center">
-          <Link className="menu-link-desktop" to="/dashboard">
-            Dashboard
-          </Link>
-          <Link className="menu-link-desktop" to="/coins">
-            Coins
-          </Link>
-          <Link className="menu-link-desktop" to="/users">
-            Usuários
-          </Link>
-          <Link className="menu-link-desktop" to="/tarefas">
-            Tarefas
-          </Link>
-          <Link className="menu-link-desktop" to="/premios">
-            Prêmios
-          </Link>
-          <Link className="menu-link-desktop" to="/premios-solicitacoes">
-            Solicitações Prêmios
-          </Link>
-          <Link
-            className="bg-gray-900 p-2 mr-4 rounded-full cursor-pointer"
-            to="/profile"
-          >
-            <img className="w-8 " src={userIcon} alt="perfil" />
-          </Link>
-          <li
-            onClick={handleLogout}
-            className="cursor-pointer p-2 flex items-center justify-center bg-gray-900 rounded-full"
-          >
-            <img className="w-8 ml-0.5" src={logoutIcon} alt="logout" />
-          </li>
-        </ul>
+      <nav className="hidden md:flex max-w-full flex-col  bg-gray-800 justify-between items-center">
+        <div className="w-full flex flex-col gap-2 ">
+          <div className="flex w-[85%] mx-auto justify-between px-6 items-center ">
+            <Link to="/">
+              <img src={coinIcon} alt="logo" className="w-20 h-20" />
+            </Link>
+            <ul className="flex items-center">
+              <Link
+                className="flex items-center gap-4 bg-gray-900 py-2 px-4 mr-4 rounded-full cursor-pointer"
+                to="/profile"
+              >
+                <img className="w-8 " src={userIcon} alt="perfil" />
+                <p className="text-xl text-white">Olá Henrique !</p>
+              </Link>
+              <li
+                onClick={handleLogout}
+                className="cursor-pointer p-2 flex items-center justify-center bg-gray-900 rounded-full"
+              >
+                <img className="w-8 ml-0.5" src={logoutIcon} alt="logout" />
+              </li>
+            </ul>
+          </div>
+          <div className="w-full  px-6 bg-gray-800 border-y-1">
+            <div className="w-full lg:w-[85%] flex mx-auto">
+              <Link className="border-l-1 menu-link-desktop" to="/dashboard">
+                Dashboard
+              </Link>
+              <Link className="menu-link-desktop" to="/coins">
+                Coins
+              </Link>
+              <Link className="menu-link-desktop" to="/users">
+                Usuários
+              </Link>
+              <Link className="menu-link-desktop" to="/tarefas">
+                Tarefas
+              </Link>
+              <Link className="menu-link-desktop" to="/premios">
+                Prêmios
+              </Link>
+              <Link className="menu-link-desktop" to="/premios-solicitacoes">
+                Solicitações Prêmios
+              </Link>
+            </div>
+          </div>
+        </div>
       </nav>
 
       {/* Barra superior fixa: Mobile Menu (hamburguer) visível somente em telas < md */}
@@ -151,22 +161,24 @@ function AdminMenu() {
               Solicitações Prêmios
             </Link>
           </div>
-          <div className="flex justify-between px-4">
+          <div className="flex flex-col gap-4 justify-between px-4 pb-2">
             <Link
               to="/profile"
               onClick={toggleMenu}
-              className="flex flex-col items-center bg-gray-800 p-4 rounded-full"
+              className="flex gap-2 items-center bg-gray-800 p-4 rounded-full"
             >
               <img className="w-8 inline" src={userIcon} alt="Perfil" />
+              <p className="text-lg font-medium text-white">Olá Henrique !</p>
             </Link>
             <li
-              className="flex flex-col items-center bg-gray-800 p-4 rounded-full"
+              className="flex gap-2 items-center bg-gray-800 p-4 rounded-full"
               onClick={() => {
                 toggleMenu();
                 handleLogout();
               }}
             >
               <img className="w-8 inline" src={logoutIcon} alt="Logout" />
+              <p className="text-lg font-medium text-white">Logout</p>
             </li>
           </div>
         </ul>

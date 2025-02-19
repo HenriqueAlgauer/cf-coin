@@ -1,15 +1,10 @@
-// src/components/Menu.jsx
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { useConfirm } from "../contexts/ConfirmModal"; // Ajuste o caminho se necessário
-// import menuIcon from "../assets/menu.svg"; // Ícone do menu hamburguer
-// import logoutIcon from "../assets/logout.png";
-// import userIcon from "../assets/user.svg";
-// import coinIcon from "../assets/coin.png"; // Ícone do logo, se quiser
+import { useConfirm } from "../contexts/ConfirmModal";
 
 const menuIcon = "/menu.svg";
 const logoutIcon = "/logout.png";
-const userIcon = "/user.svg";
+const userIcon = "/user.png";
 const coinIcon = "/coin.png";
 
 function Menu() {

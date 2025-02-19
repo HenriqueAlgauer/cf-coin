@@ -11,7 +11,7 @@ function Dashboard() {
         <div className="lg:w-[65%] w-full pt-8">
           <PendingRequests variant="simples" />
         </div>
-        <div className="lg:p-8 lg:w-[35%] w-full flex flex-col gap-4">
+        <div className="lg:pt-8  lg:w-[35%] w-full flex flex-col gap-4">
           <UsersTableListResume />
           <TasksListResume variant="resumo" />
         </div>
