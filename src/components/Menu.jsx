@@ -161,7 +161,9 @@ function Menu() {
               className="flex gap-2 items-center bg-gray-800 p-4 rounded-full"
             >
               <img className="w-8 inline" src={userIcon} alt="Perfil" />
-              <p className="text-lg font-medium text-white">Olá Henrique !</p>
+              <p className="text-xl text-white">
+                Olá <span className="font-bold"> {userName} </span>! 👋
+              </p>
             </Link>
             <li
               className="flex gap-2 items-center bg-gray-800 p-4 rounded-full"
