@@ -24,16 +24,20 @@ function AdminMenu() {
       localStorage.removeItem("isAuthenticated");
       localStorage.removeItem("userRole");
       localStorage.removeItem("userId");
+      localStorage.removeItem("userName");
 
       sessionStorage.removeItem("isAuthenticated");
       sessionStorage.removeItem("userRole");
       sessionStorage.removeItem("userId");
+      sessionStorage.removeItem("userName");
 
       window.location.href = "/login";
     } catch (error) {
       console.log("Logout cancelado", error);
     }
   };
+  const userName =
+    localStorage.getItem("userName") || sessionStorage.getItem("userName");
 
   // Abre/fecha o menu lateral no mobile
   const toggleMenu = () => {
@@ -55,7 +59,9 @@ function AdminMenu() {
                 to="/profile"
               >
                 <img className="w-8 " src={userIcon} alt="perfil" />
-                <p className="text-xl text-white">Olá Henrique !</p>
+                <p className="text-xl text-white">
+                  Olá <span className="font-bold"> {userName} </span>! 👋
+                </p>
               </Link>
               <li
                 onClick={handleLogout}
@@ -65,7 +71,7 @@ function AdminMenu() {
               </li>
             </ul>
           </div>
-          <div className="w-full  px-2 bg-gray-800 border-y-1">
+          <div className="w-full  px-2 bg-gray-800 border-y-1 border-green-400">
             <div className="w-full flex mx-auto">
               <Link className="border-l-1 menu-link-desktop" to="/dashboard">
                 Dashboard

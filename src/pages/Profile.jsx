@@ -2,8 +2,8 @@ import { useEffect, useState } from "react";
 import { getUserProfile } from "../api/api";
 import AdminMenu from "../components/Admin/AdminMenu";
 import Menu from "../components/Menu";
-
-const coinImg = "/coin.png";
+import CoinFrame from "../components/CoinFrame";
+import ProfileInput from "../components/ProfileInput";
 
 function Profile() {
   const userRole =
@@ -32,48 +32,29 @@ function Profile() {
     <div className="flex flex-col bg-gray-900 gap-[80px] min-h-screen">
       {userRole === "ADMIN" ? <AdminMenu /> : <Menu />}
       <main className="flex flex-col items-center text-white">
-        <div>
+        {/* <div>
           <h2 className="text-2xl mb-4">Meu Perfil</h2>
-        </div>
-        <div className="w-[70%] flex">
-          <div className="w-[60%]">
-            <div>
-              <label className="text-gray-400">Nome</label>
-              <input
-                type="text"
-                value={userData.name}
-                disabled
-                className="p-2 w-full bg-gray-700 rounded outline-none "
-              />
-            </div>
-
-            <div>
-              <label className="text-gray-400">Departamento</label>
-              <input
-                type="text"
-                value={userData.department}
-                disabled
-                className="p-2 w-full bg-gray-700 rounded outline-none "
-              />
-            </div>
-
-            <div>
-              <label className="text-gray-400">Email</label>
-              <input
-                type="text"
-                value={userData.email}
-                disabled
-                className="p-2 w-full  bg-gray-700 rounded outline-none "
-              />
-            </div>
+        </div> */}
+        <div className="w-[70%] flex flex-col gap-8 lg:flex-row ">
+          <div className="bg-gray-800 w-full rounded px-4 py-8">
+            <h4 className="text-xl">Prêmios resgatados</h4>
           </div>
-          <div className="w-[40%] flex items-center justify-center py-20 flex-col bg-gray-800 rounded shadow ">
-            <p className="text-7xl font-mono text-amber-300 ">CF Coins</p>
-            <div className="flex items-center">
-              <img src={coinImg} alt="" />
-              <p className="text-[7rem] font-mono text-amber-300 ">
-                {userData.coins}
+          <div className="w-full lg:w-[40%] flex flex-col gap-8 items-center justify-center  ">
+            <div className="w-full flex flex-col gap-2">
+              <ProfileInput title="Nome" data={userData.name} />
+              <ProfileInput title="Email" data={userData.email} />
+              <ProfileInput title="Departamento" data={userData.department} />
+            </div>
+            <div className="bg-gray-800 border-amber-300 border-1 w-full rounded shadow py-8 flex flex-col items-center justify-center">
+              <p className="text-7xl font-mono text-amber-300 antialiased">
+                CF Coins
               </p>
+              <div className="flex items-center">
+                <CoinFrame />
+                <p className="text-[10rem] leading-none font-mono text-amber-300 ">
+                  {userData.coins}
+                </p>
+              </div>
             </div>
           </div>
         </div>

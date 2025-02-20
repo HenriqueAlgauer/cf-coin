@@ -24,10 +24,12 @@ function Menu() {
       localStorage.removeItem("isAuthenticated");
       localStorage.removeItem("userRole");
       localStorage.removeItem("userId");
+      localStorage.removeItem("userName");
 
       sessionStorage.removeItem("isAuthenticated");
       sessionStorage.removeItem("userRole");
       sessionStorage.removeItem("userId");
+      sessionStorage.removeItem("userName");
 
       // Redireciona para a tela de login
       window.location.href = "/login";
@@ -36,6 +38,9 @@ function Menu() {
       console.log("Logout cancelado", error);
     }
   };
+
+  const userName =
+    localStorage.getItem("userName") || sessionStorage.getItem("userName");
 
   const toggleMenu = () => {
     setIsOpen((prev) => !prev);
@@ -56,7 +61,9 @@ function Menu() {
                 to="/profile"
               >
                 <img className="w-8" src={userIcon} alt="perfil" />
-                <p className="text-xl text-white">Olá Henrique !</p>
+                <p className="text-xl text-white">
+                  Olá <span className="font-bold"> {userName} </span>! 👋
+                </p>
               </Link>
 
               <li
@@ -67,7 +74,7 @@ function Menu() {
               </li>
             </ul>
           </div>
-          <div className="w-full  px-6 bg-gray-800 border-y-1">
+          <div className="w-full px-6 bg-gray-800 border-y-1 border-green-400">
             <div className="w-full lg:w-[85%] flex mx-auto">
               <Link className="border-l-1 menu-link-desktop" to="/">
                 Home

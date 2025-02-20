@@ -92,8 +92,6 @@ function UserRequests() {
         userId: numericUserId,
         taskId: Number(formData.taskId),
         message: formData.message || "",
-        // O backend já pega o reward com base na task,
-        // mas se precisar, também podemos mandar "amount"
       };
 
       const newRequest = await createCoin(requestBody);

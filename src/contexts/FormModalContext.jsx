@@ -135,7 +135,7 @@ function FormModal({ modalState, onCancel, onConfirm }) {
                 id={field.name}
                 value={formValues[field.name] || ""}
                 onChange={(e) => handleChange(field.name, e.target.value)}
-                className="p-2 w-full bg-gray-700 rounded"
+                className="p-2 w-full bg-gray-700 rounded-sm resize-none outline-none h-28"
               />
             ) : field.type === "hidden" ? (
               <input
