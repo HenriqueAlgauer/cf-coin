@@ -10,6 +10,7 @@ import EditarExcluirButton from "../EditarExcluirButton";
 import { useFormModal } from "../../contexts/FormModalContext";
 import { useConfirm } from "../../contexts/ConfirmModal";
 import { useToast } from "../../contexts/ToastContext";
+import GreenButton from "../GreenButton";
 
 function PrizeList() {
   const [prizes, setPrizes] = useState([]);
@@ -144,12 +145,11 @@ function PrizeList() {
     <>
       <div className="flex text-white justify-between items-end mb-4">
         <h2 className="text-2xl">Prêmios Disponíveis</h2>
-        <button
-          className="bg-green-400 px-4 py-2 rounded"
+        <GreenButton
+          name="Novo Prêmio"
           onClick={handleCreate}
-        >
-          Novo Prêmio
-        </button>
+          variant="botao"
+        />
       </div>
 
       <div className="p-4 bg-gray-800 rounded shadow text-white">

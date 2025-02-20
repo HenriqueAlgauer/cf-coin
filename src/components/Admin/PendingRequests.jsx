@@ -9,6 +9,7 @@ import {
 import PendingRequestsModal from "../Admin/PendingRequestsModal"; // Modal de confirmação para coins pendentes
 import AddCoinsModal from "../Admin/AddCoinsModal"; // Modal para cadastrar CF Coins manualmente
 import Coin from "../Coin";
+import GreenButton from "../GreenButton";
 
 function PendingRequests({ variant = "default" }) {
   const [requests, setRequests] = useState([]);
@@ -80,12 +81,11 @@ function PendingRequests({ variant = "default" }) {
       <div className="flex justify-between items-end mb-6 text-white">
         <h2 className="text-2xl">Solicitações Pendentes</h2>
         {variant !== "simples" && (
-          <button
-            className="bg-green-400 px-4 py-2 rounded font-semibold"
+          <GreenButton
             onClick={openAddCoinsModal}
-          >
-            + CF Coins
-          </button>
+            name="+ CF Coins"
+            variant="botao"
+          />
         )}
       </div>
 

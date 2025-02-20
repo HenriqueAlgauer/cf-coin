@@ -6,6 +6,7 @@ import { useConfirm } from "../../contexts/ConfirmModal";
 import { useToast } from "../../contexts/ToastContext";
 import Coin from "../Coin";
 import EditarExcluirButton from "../EditarExcluirButton";
+import GreenButton from "../GreenButton";
 
 function TaskList() {
   const [tasks, setTasks] = useState([]);
@@ -161,12 +162,11 @@ function TaskList() {
     <>
       <div className="flex text-white justify-between items-end mb-4">
         <h2 className="text-2xl">Tarefas Disponíveis</h2>
-        <button
-          className="bg-green-400 px-4 py-2 rounded"
+        <GreenButton
+          name="Adicionar Tarefa"
           onClick={handleCreate}
-        >
-          Adicionar Tarefa
-        </button>
+          variant="botao"
+        />
       </div>
       <div className="p-4 bg-gray-800 rounded shadow text-white">
         {Array.isArray(tasks) && tasks.length > 0 ? (

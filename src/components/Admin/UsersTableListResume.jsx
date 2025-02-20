@@ -1,7 +1,7 @@
-import { Link } from "react-router-dom";
 import { getUsers } from "../../api/api";
 import { useEffect, useState } from "react";
 import Coin from "../Coin";
+import GreenButton from "../GreenButton";
 
 function UsersTableListResume() {
   const [users, setUsers] = useState([]);
@@ -18,12 +18,7 @@ function UsersTableListResume() {
     <>
       <div className="flex justify-between items-end">
         <h2 className="text-white text-2xl">Lista de Usuários</h2>
-        <Link
-          className="bg-green-400 text-white font-semibold px-4 py-2 rounded"
-          to="/users"
-        >
-          Usuários
-        </Link>
+        <GreenButton name="Usuários" to="/users" />
       </div>
       <div className="bg-gray-800 max-h-[300px] overflow-y-auto scrollbar-custom p-4 rounded shadow">
         <table className="w-full text-white overflow-auto">

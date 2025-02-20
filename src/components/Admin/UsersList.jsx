@@ -6,6 +6,7 @@ import { useConfirm } from "../../contexts/ConfirmModal";
 import { useToast } from "../../contexts/ToastContext";
 import Coin from "../Coin"; // componente que exibe CF Coins
 import EditarExcluirButton from "../EditarExcluirButton";
+import GreenButton from "../GreenButton";
 
 function UserList() {
   const [users, setUsers] = useState([]);
@@ -158,12 +159,17 @@ function UserList() {
     <>
       <div className="flex text-white justify-between items-end mb-4">
         <h2 className="text-2xl">Usuários</h2>
-        <button
+        {/* <button
           className="bg-green-400 px-4 py-2 rounded"
           onClick={handleCreate}
         >
           Criar Usuário
-        </button>
+        </button> */}
+        <GreenButton
+          name="Criar Usuário"
+          onClick={handleCreate}
+          variant="botao"
+        />
       </div>
       <div className="p-4 bg-gray-800 text-white rounded overflow-auto min-w[400px]">
         <table className="w-full text-left ">
