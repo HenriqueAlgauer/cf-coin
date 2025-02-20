@@ -31,7 +31,7 @@ function Profile() {
   return (
     <div className="flex flex-col bg-gray-900 gap-[80px] min-h-screen">
       {userRole === "ADMIN" ? <AdminMenu /> : <Menu />}
-      <main className="flex flex-col items-center text-white">
+      <main className="flex flex-col items-center text-white pb-20">
         {/* <div>
           <h2 className="text-2xl mb-4">Meu Perfil</h2>
         </div> */}
@@ -46,7 +46,7 @@ function Profile() {
               <ProfileInput title="Departamento" data={userData.department} />
             </div>
             <div className="bg-gray-800 border-amber-300 border-1 w-full rounded shadow py-8 flex flex-col items-center justify-center">
-              <p className="text-7xl font-mono text-amber-300 antialiased">
+              <p className="text-[3rem] font-mono text-amber-300 antialiased">
                 CF Coins
               </p>
               <div className="flex items-center">
