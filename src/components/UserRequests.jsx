@@ -1,5 +1,3 @@
-// src/components/UserRequests.jsx
-
 import { useEffect, useState } from "react";
 import {
   createCoin,
@@ -10,9 +8,10 @@ import {
 } from "../api/api";
 import Coin from "./Coin";
 import EditarExcluirButton from "./EditarExcluirButton";
-import { useConfirm } from "../contexts/ConfirmModal"; // Modal global p/ exclusão
-import { useToast } from "../contexts/ToastContext"; // Toast
-import { useFormModal } from "../contexts/FormModalContext"; // Modal global p/ criar/editar
+import GreenButton from "./GreenButton";
+import { useConfirm } from "../contexts/ConfirmModal";
+import { useToast } from "../contexts/ToastContext";
+import { useFormModal } from "../contexts/FormModalContext";
 
 function UserRequests() {
   const [requests, setRequests] = useState([]);
@@ -175,9 +174,7 @@ function UserRequests() {
     <>
       <div className="flex justify-between mb-6 text-white items-end">
         <h2 className="text-2xl">Minhas Solicitações</h2>
-        <button className="bg-green-400 p-2 rounded" onClick={handleCreate}>
-          Nova Solicitação
-        </button>
+        <GreenButton name="Nova Solicitação" onClick={handleCreate} />
       </div>
 
       <div className="p-4 bg-gray-800 rounded shadow text-white">
