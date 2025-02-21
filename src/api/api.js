@@ -421,6 +421,24 @@ export async function getPrizes() {
   }
 }
 
+export async function getUserPrizes(userId) {
+  try {
+    if (!userId) {
+      throw new Error("userId está vazio");
+    }
+    const response = await fetch(
+      `${API_BASE_URL}/prize-redemptions/user/${userId}`
+    );
+    if (!response.ok) {
+      throw new Error("Erro ao buscar os prêmios.");
+    }
+    return await response.json();
+  } catch (error) {
+    console.error("Erro ao criar prêmio:", error);
+    throw error;
+  }
+}
+
 export async function createPrize(prizeData) {
   try {
     const response = await fetch(`${API_BASE_URL}/prizes`, {
