@@ -37,7 +37,7 @@ function Profile() {
           <h2 className="text-2xl mb-4">Meu Perfil</h2>
         </div> */}
         <div className="w-[70%] flex flex-col  gap-8 lg:flex-row ">
-          <div className="bg-gray-800 w-full rounded px-4 py-8">
+          <div className="bg-gray-800 w-full rounded">
             <UserPrizesList />
           </div>
           <div className="w-full lg:w-[40%] flex flex-col gap-4 items-center   ">

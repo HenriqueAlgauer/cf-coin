@@ -6,7 +6,6 @@ function UserPrizesList() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  // Pegando o userId do localStorage ou sessionStorage
   const userId =
     localStorage.getItem("userId") || sessionStorage.getItem("userId");
 
@@ -31,7 +30,7 @@ function UserPrizesList() {
   }, [userId]);
 
   return (
-    <div className="p-4 bg-gray-800 rounded shadow text-white">
+    <div className="p-4 bg-gray-800 rounded text-white">
       <h2 className="text-2xl mb-4">Meus Prêmios Resgatados</h2>
 
       {loading ? (

@@ -1,8 +1,8 @@
-// src/contexts/FormModalContext.jsx
 import { createContext, useContext, useState, useCallback } from "react";
 import { createPortal } from "react-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { useToast } from "./ToastContext";
+import GreenButton from "../components/GreenButton";
 
 const FormModalContext = createContext();
 
@@ -106,7 +106,7 @@ function FormModal({ modalState, onCancel, onConfirm }) {
         exit={{ y: -50, opacity: 0 }}
         transition={{ duration: 0.3, ease: "easeOut" }}
       >
-        <h2 className="text-xl font-semibold mb-4">{modalState.title}</h2>
+        <h2 className="text-xl font-mono mb-4">{modalState.title}</h2>
         {modalState.fields.map((field) => (
           <div key={field.name} className="mb-3">
             {field.type !== "hidden" && (
@@ -156,19 +156,18 @@ function FormModal({ modalState, onCancel, onConfirm }) {
           </div>
         ))}
 
-        <div className="flex justify-between mt-4 gap-2">
+        <div className="flex justify-between mt-4">
           <button
             onClick={onCancel}
-            className="bg-gray-500 px-4 py-2 rounded cursor-pointer"
+            className="bg-gray-800 border-1 border-red-600 text-white px-4 py-2 hover:bg-gray-900 transition-all ease-linear font-mono rounded-sm cursor-pointer font-semibold shadow"
           >
             Cancelar
           </button>
-          <button
+          <GreenButton
+            variant="botao"
+            name="Confirmar"
             onClick={() => onConfirm({ ...formValues })}
-            className="bg-green-500 px-4 py-2 rounded cursor-pointer"
-          >
-            Confirmar
-          </button>
+          />
         </div>
       </motion.div>
     </motion.div>
