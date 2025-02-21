@@ -39,7 +39,7 @@ function UserCoinsHistory({ userId }) {
                     <p className="font-bold ">
                       {coin.task?.name || "Sem Tarefa"}
                     </p>
-                    <p className="text-gray-400">
+                    <p className="text-gray-400 ">
                       {new Date(coin.createdAt).toLocaleDateString()}
                     </p>
                   </div>
