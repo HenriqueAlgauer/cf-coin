@@ -10,6 +10,7 @@ import PendingRequestsModal from "../Admin/PendingRequestsModal"; // Modal de co
 import AddCoinsModal from "../Admin/AddCoinsModal"; // Modal para cadastrar CF Coins manualmente
 import Coin from "../Coin";
 import GreenButton from "../GreenButton";
+import EditarExcluirButton from "../EditarExcluirButton";
 
 function PendingRequests({ variant = "default" }) {
   const [requests, setRequests] = useState([]);
@@ -115,19 +116,13 @@ function PendingRequests({ variant = "default" }) {
                   </p>
                   <div className="flex justify-between items-center">
                     {variant !== "simples" && (
-                      <div className="flex gap-8">
-                        <button
-                          className="bg-green-600 cursor-pointer px-4 py-1 rounded text-white "
-                          onClick={() => openConfirmModal(request, "approve")}
-                        >
-                          Aprovar
-                        </button>
-                        <button
-                          className="bg-red-600 cursor-pointer px-4 py-1 rounded text-white "
-                          onClick={() => openConfirmModal(request, "reject")}
-                        >
-                          Rejeitar
-                        </button>
+                      <div className="flex justify-end w-full">
+                        <EditarExcluirButton
+                          editText="Aprovar"
+                          editar={() => openConfirmModal(request, "approve")}
+                          deleteText="Rejeitar"
+                          exculir={() => openConfirmModal(request, "reject")}
+                        />
                       </div>
                     )}
                   </div>

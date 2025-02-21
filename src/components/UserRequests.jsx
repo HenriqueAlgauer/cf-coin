@@ -174,7 +174,11 @@ function UserRequests() {
     <>
       <div className="flex justify-between mb-6 text-white items-end">
         <h2 className="text-2xl">Minhas Solicitações</h2>
-        <GreenButton name="Nova Solicitação" onClick={handleCreate} />
+        <GreenButton
+          variant="botao"
+          name="Nova Solicitação"
+          onClick={handleCreate}
+        />
       </div>
 
       <div className="p-4 bg-gray-800 rounded shadow text-white">
