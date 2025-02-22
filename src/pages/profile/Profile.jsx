@@ -1,14 +1,10 @@
 import { useEffect, useState } from "react";
 import { getUserProfile } from "../../api/api";
-import AdminMenu from "../../components/Admin/AdminMenu";
-import Menu from "../../components/Menu";
 import CoinFrame from "../../components/CoinFrame";
 import ProfileInput from "./ProfileInput";
 import UserPrizesList from "./UserPrizesList";
 
 function Profile() {
-  const userRole =
-    localStorage.getItem("userRole") || sessionStorage.getItem("userRole");
   const userId =
     localStorage.getItem("userId") || sessionStorage.getItem("userId");
 
@@ -30,36 +26,28 @@ function Profile() {
   }, [userId]);
 
   return (
-    <div className="flex flex-col bg-gray-900 gap-[80px] min-h-screen">
-      {userRole === "ADMIN" ? <AdminMenu /> : <Menu />}
-      <main className="flex flex-col items-center text-white pb-20">
-        {/* <div>
-          <h2 className="text-2xl mb-4">Meu Perfil</h2>
-        </div> */}
-        <div className="w-[70%] flex flex-col  gap-8 lg:flex-row ">
-          <div className="bg-gray-800 w-full rounded">
-            <UserPrizesList />
-          </div>
-          <div className="w-full lg:w-[40%] flex flex-col gap-4 items-center   ">
-            <div className="w-full flex flex-col gap-2">
-              <ProfileInput title="Nome" data={userData.name} />
-              <ProfileInput title="Email" data={userData.email} />
-              <ProfileInput title="Departamento" data={userData.department} />
-            </div>
-            <div className="bg-gray-800 border-amber-300 border-1 w-full rounded shadow py-8 flex flex-col items-center justify-center">
-              <p className="text-[3rem] font-mono text-amber-300 antialiased">
-                CF Coins
-              </p>
-              <div className="flex items-center">
-                <CoinFrame />
-                <p className="text-[10rem] leading-none font-mono text-amber-300 ">
-                  {userData.coins}
-                </p>
-              </div>
-            </div>
+    <div className="w-full flex flex-col text-white gap-4 lg:flex-row ">
+      <div className="bg-gray-800 w-full rounded">
+        <UserPrizesList />
+      </div>
+      <div className="w-full lg:w-[40%] flex flex-col gap-4 items-center   ">
+        <div className="w-full flex flex-col gap-2">
+          <ProfileInput title="Nome" data={userData.name} />
+          <ProfileInput title="Email" data={userData.email} />
+          <ProfileInput title="Departamento" data={userData.department} />
+        </div>
+        <div className="bg-gray-800 border-amber-300 border-1 w-full rounded shadow py-8 flex flex-col items-center justify-center">
+          <p className="text-[3rem] font-mono text-amber-300 antialiased">
+            CF Coins
+          </p>
+          <div className="flex items-center">
+            <CoinFrame />
+            <p className="text-[10rem] leading-none font-mono text-amber-300 ">
+              {userData.coins}
+            </p>
           </div>
         </div>
-      </main>
+      </div>
     </div>
   );
 }
