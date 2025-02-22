@@ -1,16 +1,17 @@
-// src/components/PrizeListResume.jsx
 import { useEffect, useState } from "react";
-// import { motion, AnimatePresence } from "framer-motion";
 import { getPrizes, requestPrize, getUserProfile } from "../api/api";
 import Coin from "./Coin";
 import { useToast } from "../contexts/ToastContext";
 import { useConfirm } from "../contexts/ConfirmModal";
+import ListItem from "./tabelaExibicao/ListItem";
+import ListDiv from "./tabelaExibicao/ListDiv";
+import ListItemText from "./tabelaExibicao/ListItemText";
 
 function PrizeListResume() {
   const [prizes, setPrizes] = useState([]);
   const [user, setUser] = useState(null);
   const [errorMessage, setErrorMessage] = useState("");
-  const [loading, setLoading] = useState(false); // estado de loading
+  const [loading, setLoading] = useState(false);
   const [userCoins, setUserCoins] = useState(0);
 
   const showToast = useToast(); // função para disparar toast
@@ -79,28 +80,30 @@ function PrizeListResume() {
         {prizes.length > 0 ? (
           <ul className="space-y-2">
             {prizes.map((prize) => (
-              <li key={prize.id} className="li-table">
-                <div className="col-span-5 flex justify-between gap-4">
-                  <div className="w-[80%]">
-                    <h3 className="text-green-400 font-bold">{prize.name}</h3>
-                    <p className="text-gray-400">{prize.description}</p>
-                  </div>
-                  <Coin amount={prize.cost} />
+              <ListItem variant="6" itemKey={prize.id} key={prize.id}>
+                <ListDiv>
+                  <ListItemText
+                    title={prize.name}
+                    subtitle={prize.description}
+                  />
+                </ListDiv>
+                <Coin amount={prize.cost} />
+                <div className="flex items-center">
+                  <button
+                    className={`px-3 py-1 rounded border-2 font-mono text-white ${
+                      user && user.coins >= prize.cost
+                        ? "border-blue-600"
+                        : "border-gray-400  cursor-not-allowed"
+                    }`}
+                    onClick={() =>
+                      user && user.coins >= prize.cost && handleRequest(prize)
+                    }
+                    disabled={!user || user.coins < prize.cost || loading}
+                  >
+                    {loading ? "Carregando..." : "Solicitar"}
+                  </button>
                 </div>
-                <button
-                  className={`px-3 py-1 rounded text-white ${
-                    user && user.coins >= prize.cost
-                      ? "bg-blue-500"
-                      : "bg-gray-500 cursor-not-allowed"
-                  }`}
-                  onClick={() =>
-                    user && user.coins >= prize.cost && handleRequest(prize)
-                  }
-                  disabled={!user || user.coins < prize.cost || loading}
-                >
-                  {loading ? "Carregando..." : "Solicitar"}
-                </button>
-              </li>
+              </ListItem>
             ))}
           </ul>
         ) : (

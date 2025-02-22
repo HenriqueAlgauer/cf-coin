@@ -12,6 +12,9 @@ import GreenButton from "./GreenButton";
 import { useConfirm } from "../contexts/ConfirmModal";
 import { useToast } from "../contexts/ToastContext";
 import { useFormModal } from "../contexts/FormModalContext";
+import ListItem from "./tabelaExibicao/ListItem";
+import ListDiv from "./tabelaExibicao/ListDiv";
+import ListItemText from "./tabelaExibicao/ListItemText";
 
 function UserRequests() {
   const [requests, setRequests] = useState([]);
@@ -185,23 +188,19 @@ function UserRequests() {
         {requests.length > 0 ? (
           <ul className="space-y-2">
             {requests.map((request) => (
-              <li key={request.id} className="li-table">
-                <div className="li-div-container">
-                  <div className="w-[80%]">
-                    <p className="font-bold text-green-400">
-                      {request.task?.name}
-                    </p>
-                    <p className="text-gray-400 max-h-[80px] overflow-auto">
-                      {request.message || "Sem mensagem"}
-                    </p>
-                  </div>
-                  <Coin amount={request.amount} />
-                </div>
+              <ListItem variant="6" itemKey={request.id} key={request.id}>
+                <ListDiv>
+                  <ListItemText
+                    title={request.task?.name}
+                    subtitle={request.message || "Sem mensagem"}
+                  />
+                  <Coin variant="end" amount={request.amount} />
+                </ListDiv>
                 <EditarExcluirButton
                   editar={() => handleEdit(request)}
                   exculir={() => handleDelete(request)}
                 />
-              </li>
+              </ListItem>
             ))}
           </ul>
         ) : (

@@ -2,6 +2,9 @@ import { useEffect, useState } from "react";
 import { getTasks } from "../../api/api";
 import Coin from "../Coin";
 import GreenButton from "../GreenButton";
+import ListItem from "../tabelaExibicao/ListItem";
+import ListDiv from "../tabelaExibicao/ListDiv";
+import ListItemText from "../tabelaExibicao/ListItemText";
 
 function TasksListResume({ variant }) {
   const [tasks, setTasks] = useState([]);
@@ -32,16 +35,12 @@ function TasksListResume({ variant }) {
         {tasks.length > 0 ? (
           <ul className="space-y-2">
             {tasks.map((task) => (
-              <li
-                key={task.id}
-                className="border-b border-gray-700 pb-2 flex justify-between"
-              >
-                <div className="w-[90%] ">
-                  <h3 className="text-lg font-medium">{task.name}</h3>
-                  <p className="text-sm text-gray-400">{task.description}</p>
-                </div>
+              <ListItem variant="6" itemKey={task.id} key={task.id}>
+                <ListDiv>
+                  <ListItemText title={task.name} subtitle={task.description} />
+                </ListDiv>
                 <Coin variant="end" amount={task.reward} />
-              </li>
+              </ListItem>
             ))}
           </ul>
         ) : (

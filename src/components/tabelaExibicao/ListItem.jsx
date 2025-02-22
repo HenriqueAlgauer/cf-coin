@@ -10,7 +10,7 @@ function ListItem({ itemKey, children, variant = 5 }) {
       className="flex-col border-b border-gray-700 pb-2 sm:grid sm:grid-cols-6 sm:items-center gap-4"
     >
       <div
-        className={`flex ${
+        className={`flex flex-col md:flex-row ${
           gridCols[variant] || "col-span-4"
         } justify-between gap-2`}
       >
