@@ -1,10 +1,9 @@
-// src/components/UserList.jsx
 import { useEffect, useState } from "react";
 import { getUsers, createUser, updateUser, deleteUser } from "../../api/api";
 import { useFormModal } from "../../contexts/FormModalContext";
 import { useConfirm } from "../../contexts/ConfirmModal";
 import { useToast } from "../../contexts/ToastContext";
-import Coin from "../Coin"; // componente que exibe CF Coins
+import Coin from "../Coin";
 import EditarExcluirButton from "../tabelaExibicao/EditarExcluirButton";
 import GreenButton from "../GreenButton";
 
