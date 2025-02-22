@@ -1,5 +1,4 @@
 import Menu from "../../components/Menu";
-// import TableRow from "../../components/TableRow";
 import TaskListResume from "../../components/Admin/TaskListResume";
 
 function TarefasInfo() {

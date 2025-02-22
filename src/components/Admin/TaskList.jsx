@@ -5,7 +5,7 @@ import { useFormModal } from "../../contexts/FormModalContext";
 import { useConfirm } from "../../contexts/ConfirmModal";
 import { useToast } from "../../contexts/ToastContext";
 import Coin from "../Coin";
-import EditarExcluirButton from "../EditarExcluirButton";
+import EditarExcluirButton from "../tabelaExibicao/EditarExcluirButton";
 import GreenButton from "../GreenButton";
 
 function TaskList() {

@@ -10,7 +10,7 @@ import PendingRequestsModal from "../Admin/PendingRequestsModal"; // Modal de co
 import AddCoinsModal from "../Admin/AddCoinsModal"; // Modal para cadastrar CF Coins manualmente
 import Coin from "../Coin";
 import GreenButton from "../GreenButton";
-import EditarExcluirButton from "../EditarExcluirButton";
+import EditarExcluirButton from "../tabelaExibicao/EditarExcluirButton";
 
 function PendingRequests({ variant = "default" }) {
   const [requests, setRequests] = useState([]);

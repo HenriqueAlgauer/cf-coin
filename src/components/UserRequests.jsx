@@ -7,7 +7,7 @@ import {
   deleteCoin,
 } from "../api/api";
 import Coin from "./Coin";
-import EditarExcluirButton from "./EditarExcluirButton";
+import EditarExcluirButton from "./tabelaExibicao/EditarExcluirButton";
 import GreenButton from "./GreenButton";
 import { useConfirm } from "../contexts/ConfirmModal";
 import { useToast } from "../contexts/ToastContext";

@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
 import { getUserCoins, getUserProfile } from "../api/api";
 import Coin from "./Coin";
-import ListItem from "./ListItem";
-import Status from "./Status";
+import ListItem from "./tabelaExibicao/ListItem";
+import Status from "./tabelaExibicao/Status";
+import ListItemText from "./tabelaExibicao/ListItemText";
 
 function UserCoinsHistory({ userId }) {
   const [coins, setCoins] = useState([]);
@@ -34,15 +35,11 @@ function UserCoinsHistory({ userId }) {
           <ul className="space-y-2">
             {coins.map((coin) => (
               <ListItem variant="6" key={coin.id}>
-                <div className="w-[80%] flex items-center justify-between ">
-                  <div>
-                    <p className="font-bold ">
-                      {coin.task?.name || "Sem Tarefa"}
-                    </p>
-                    <p className="text-gray-400 ">
-                      {new Date(coin.createdAt).toLocaleDateString()}
-                    </p>
-                  </div>
+                <div className="w-[80%] flex flex-col md:flex-row gap-4 md:gap-0 md:items-center justify-between ">
+                  <ListItemText
+                    title={coin.task?.name || "Sem Tarefa"}
+                    subtitle={new Date(coin.createdAt).toLocaleDateString()}
+                  />
                   <Status entity={coin} />
                 </div>
                 <Coin variant="end" amount={coin.amount} />

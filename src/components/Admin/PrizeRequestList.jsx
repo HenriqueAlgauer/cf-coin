@@ -8,7 +8,7 @@ import {
 import Coin from "../Coin";
 import { useConfirm } from "../../contexts/ConfirmModal";
 import { useToast } from "../../contexts/ToastContext";
-import EditarExcluirButton from "../EditarExcluirButton";
+import EditarExcluirButton from "../tabelaExibicao/EditarExcluirButton";
 
 function PrizeRequestList() {
   const [requests, setRequests] = useState([]);

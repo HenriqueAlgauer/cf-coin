@@ -6,7 +6,7 @@ import {
   deletePrize,
 } from "../../api/api";
 import Coin from "../../components/Coin";
-import EditarExcluirButton from "../EditarExcluirButton";
+import EditarExcluirButton from "../tabelaExibicao/EditarExcluirButton";
 import { useFormModal } from "../../contexts/FormModalContext";
 import { useConfirm } from "../../contexts/ConfirmModal";
 import { useToast } from "../../contexts/ToastContext";
