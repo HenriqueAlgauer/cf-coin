@@ -1,14 +1,13 @@
-// src/components/Admin/PrizeRequestList.jsx
 import { useEffect, useState } from "react";
 import {
   getPendingPrizeRequests,
   approvePrizeRequest,
   rejectPrizeRequest,
-} from "../../api/api";
-import Coin from "../Coin";
-import { useConfirm } from "../../contexts/ConfirmModal";
-import { useToast } from "../../contexts/ToastContext";
-import EditarExcluirButton from "../tabelaExibicao/EditarExcluirButton";
+} from "../../../api/api";
+import Coin from "../../../components/Coin";
+import { useConfirm } from "../../../contexts/ConfirmModal";
+import { useToast } from "../../../contexts/ToastContext";
+import EditarExcluirButton from "../../../components/tabelaExibicao/EditarExcluirButton";
 
 function PrizeRequestList() {
   const [requests, setRequests] = useState([]);

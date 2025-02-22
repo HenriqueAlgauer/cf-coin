@@ -1,5 +1,5 @@
-import AdminMenu from "../../components/Admin/AdminMenu";
-import PendingRequests from "../../components/Admin/PendingRequests";
+import AdminMenu from "../../../components/Admin/AdminMenu";
+import PendingRequests from "../../../components/Admin/PendingRequests";
 
 function CoinRequests() {
   return (

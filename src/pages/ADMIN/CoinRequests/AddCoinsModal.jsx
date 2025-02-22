@@ -1,7 +1,7 @@
 // src/components/AddCoinsModal.jsx
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { getTasks, getUsers } from "../../api/api"; // Certifique-se de que essas funções estão implementadas
+import { getTasks, getUsers } from "../../../api/api"; // Certifique-se de que essas funções estão implementadas
 
 function AddCoinsModal({ isOpen, onConfirm, onCancel }) {
   const [tasks, setTasks] = useState([]);

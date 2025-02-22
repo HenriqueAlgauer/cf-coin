@@ -5,16 +5,16 @@ import {
   getUserTasks,
   getUserPendingCoins,
   deleteCoin,
-} from "../api/api";
-import Coin from "./Coin";
-import EditarExcluirButton from "./tabelaExibicao/EditarExcluirButton";
-import GreenButton from "./GreenButton";
-import { useConfirm } from "../contexts/ConfirmModal";
-import { useToast } from "../contexts/ToastContext";
-import { useFormModal } from "../contexts/FormModalContext";
-import ListItem from "./tabelaExibicao/ListItem";
-import ListDiv from "./tabelaExibicao/ListDiv";
-import ListItemText from "./tabelaExibicao/ListItemText";
+} from "../../../api/api";
+import Coin from "../../../components/Coin";
+import EditarExcluirButton from "../../../components/tabelaExibicao/EditarExcluirButton";
+import GreenButton from "../../../components/GreenButton";
+import { useConfirm } from "../../../contexts/ConfirmModal";
+import { useToast } from "../../../contexts/ToastContext";
+import { useFormModal } from "../../../contexts/FormModalContext";
+import ListItem from "../../../components/tabelaExibicao/ListItem";
+import ListDiv from "../../../components/tabelaExibicao/ListDiv";
+import ListItemText from "../../../components/tabelaExibicao/ListItemText";
 
 function UserRequests() {
   const [requests, setRequests] = useState([]);

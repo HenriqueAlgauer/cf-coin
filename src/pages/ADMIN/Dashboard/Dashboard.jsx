@@ -1,7 +1,7 @@
-import AdminMenu from "../../components/Admin/AdminMenu";
-import PendingRequests from "../../components/Admin/PendingRequests";
-import TasksListResume from "../../components/Admin/TaskListResume";
-import UsersTableListResume from "../../components/Admin/UsersTableListResume";
+import AdminMenu from "../../../components/Admin/AdminMenu";
+import PendingRequests from "../../../components/Admin/PendingRequests";
+import TasksListResume from "../../../components/TaskListResume";
+import UsersTableListResume from "./UsersTableListResume";
 
 function Dashboard() {
   return (

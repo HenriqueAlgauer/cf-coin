@@ -1,16 +1,17 @@
 import { Navigate, Route, Routes } from "react-router-dom";
-import Home from "../pages/USERS/Home";
-import Profile from "../pages/Profile";
-import TarefasInfo from "../pages/USERS/TarefasInfo";
-import Solicitacao from "../pages/USERS/Solicitacao";
+import Profile from "../pages/profile/Profile";
 
-import CoinRequests from "../pages/ADMIN/CoinRequests";
-import Dashboard from "../pages/ADMIN/Dashboard";
-import Users from "../pages/ADMIN/Users";
-import Tarefas from "../pages/ADMIN/Tarefas";
-import Prizes from "../pages/ADMIN/Prizes";
-import Premios from "../pages/USERS/Premios";
-import PrizeRequests from "../pages/ADMIN/PrizeRequests";
+import Home from "../pages/USERS/Home/Home";
+import TarefasUser from "../pages/USERS/Tarefas/Tarefas";
+import SolicitacoesCoin from "../pages/USERS/SolicitacoesCoin/SolicitacoesCoin";
+
+import CoinRequests from "../pages/ADMIN/CoinRequests/CoinRequests";
+import Dashboard from "../pages/ADMIN/Dashboard/Dashboard";
+import Users from "../pages/ADMIN/Users/Users";
+import Tasks from "../pages/ADMIN/Tasks/Tasks";
+import Prizes from "../pages/ADMIN/Prizes/Prizes";
+import Premios from "../pages/USERS/Premios/Premios";
+import PrizeRequests from "../pages/ADMIN/PrizeRequests/PrizeRequests";
 
 function RoleBasedRoutes() {
   const userRole =
@@ -24,7 +25,7 @@ function RoleBasedRoutes() {
         <Route path="/users" element={<Users />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/coins" element={<CoinRequests />} />
-        <Route path="/tarefas" element={<Tarefas />} />
+        <Route path="/tarefas" element={<Tasks />} />
         <Route path="/premios" element={<Prizes />} />
         <Route path="/premios-solicitacoes" element={<PrizeRequests />} />
       </Routes>
@@ -34,8 +35,8 @@ function RoleBasedRoutes() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/profile" element={<Profile />} />
-        <Route path="/info" element={<TarefasInfo />} />
-        <Route path="/solicitacao" element={<Solicitacao />} />
+        <Route path="/tarefas" element={<TarefasUser />} />
+        <Route path="/solicitacao" element={<SolicitacoesCoin />} />
         <Route path="/premios" element={<Premios />} />
       </Routes>
     );

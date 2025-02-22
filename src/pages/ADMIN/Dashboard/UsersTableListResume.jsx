@@ -1,7 +1,7 @@
-import { getUsers } from "../../api/api";
+import { getUsers } from "../../../api/api";
 import { useEffect, useState } from "react";
-import Coin from "../Coin";
-import GreenButton from "../GreenButton";
+import Coin from "../../../components/Coin";
+import GreenButton from "../../../components/GreenButton";
 
 function UsersTableListResume() {
   const [users, setUsers] = useState([]);

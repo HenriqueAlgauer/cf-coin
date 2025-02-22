@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
-import { getUserCoins, getUserProfile } from "../api/api";
-import Coin from "./Coin";
-import ListItem from "./tabelaExibicao/ListItem";
-import Status from "./tabelaExibicao/Status";
-import ListItemText from "./tabelaExibicao/ListItemText";
-import ListDiv from "./tabelaExibicao/ListDiv";
+import { getUserCoins, getUserProfile } from "../../../api/api";
+import Coin from "../../../components/Coin";
+import ListItem from "../../../components/tabelaExibicao/ListItem";
+import Status from "../../../components/tabelaExibicao/Status";
+import ListItemText from "../../../components/tabelaExibicao/ListItemText";
+import ListDiv from "../../../components/tabelaExibicao/ListDiv";
 
 function UserCoinsHistory({ userId }) {
   const [coins, setCoins] = useState([]);

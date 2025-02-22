@@ -1,13 +1,13 @@
 import { useEffect, useState } from "react";
-import { getPrizes, requestPrize, getUserProfile } from "../api/api";
-import Coin from "./Coin";
-import { useToast } from "../contexts/ToastContext";
-import { useConfirm } from "../contexts/ConfirmModal";
-import ListItem from "./tabelaExibicao/ListItem";
-import ListDiv from "./tabelaExibicao/ListDiv";
-import ListItemText from "./tabelaExibicao/ListItemText";
+import { getPrizes, requestPrize, getUserProfile } from "../../../api/api";
+import Coin from "../../../components/Coin";
+import { useToast } from "../../../contexts/ToastContext";
+import { useConfirm } from "../../../contexts/ConfirmModal";
+import ListItem from "../../../components/tabelaExibicao/ListItem";
+import ListDiv from "../../../components/tabelaExibicao/ListDiv";
+import ListItemText from "../../../components/tabelaExibicao/ListItemText";
 
-function PrizeListResume() {
+function ListaPremios() {
   const [prizes, setPrizes] = useState([]);
   const [user, setUser] = useState(null);
   const [errorMessage, setErrorMessage] = useState("");
@@ -115,4 +115,4 @@ function PrizeListResume() {
   );
 }
 
-export default PrizeListResume;
+export default ListaPremios;

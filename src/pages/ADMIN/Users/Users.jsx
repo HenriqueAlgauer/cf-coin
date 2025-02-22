@@ -1,14 +1,14 @@
-import AdminMenu from "../../components/Admin/AdminMenu";
-import PrizeList from "../../components/Admin/PrizeList";
+import AdminMenu from "../../../components/Admin/AdminMenu";
+import UsersList from "../../../components/Admin/UsersList";
 
-function Prizes() {
+function Users() {
   return (
     <>
       <div className="page-div">
         <AdminMenu />
         <div className="table-container">
           <div className="w-full pt-8">
-            <PrizeList />
+            <UsersList />
           </div>
         </div>
       </div>
@@ -16,4 +16,4 @@ function Prizes() {
   );
 }
 
-export default Prizes;
+export default Users;

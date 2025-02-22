@@ -1,7 +1,7 @@
-import Menu from "../../components/Menu";
-import TaskListResume from "../../components/Admin/TaskListResume";
+import Menu from "../../../components/Menu";
+import TaskListResume from "../../../components/TaskListResume";
 
-function TarefasInfo() {
+function Tarefas() {
   return (
     <div className="page-div">
       <Menu />
@@ -14,4 +14,4 @@ function TarefasInfo() {
   );
 }
 
-export default TarefasInfo;
+export default Tarefas;

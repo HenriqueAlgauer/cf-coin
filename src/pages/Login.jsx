@@ -21,16 +21,16 @@ function Login() {
       if (lembrar) {
         localStorage.setItem("isAuthenticated", "true");
         localStorage.setItem("userRole", response.user.role);
-        localStorage.setItem("userId", response.user.id); // ✅ Salva userId
+        localStorage.setItem("userId", response.user.id);
         localStorage.setItem("userName", response.user.name);
       } else {
         sessionStorage.setItem("isAuthenticated", "true");
         sessionStorage.setItem("userRole", response.user.role);
-        sessionStorage.setItem("userId", response.user.id); // ✅ Salva userId
+        sessionStorage.setItem("userId", response.user.id);
         sessionStorage.setItem("userName", response.user.name);
       }
 
-      navigate("/"); // ✅ Redireciona corretamente
+      navigate("/");
     } catch (error) {
       setMessage("Login inválido.");
       throw error;

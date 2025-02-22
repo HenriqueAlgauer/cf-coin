@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { getUserPrizes } from "../api/api";
+import { getUserPrizes } from "../../api/api";
 
 function UserPrizesList() {
   const [prizes, setPrizes] = useState([]);

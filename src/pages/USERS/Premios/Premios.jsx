@@ -1,5 +1,5 @@
-import PrizeListResume from "../../components/PrizeListResume";
-import Menu from "../../components/Menu";
+import ListaPremios from "./ListaPremios";
+import Menu from "../../../components/Menu";
 
 function Premios() {
   return (
@@ -7,7 +7,7 @@ function Premios() {
       <Menu />
       <div className="table-container">
         <div className="w-full pt-8">
-          <PrizeListResume />
+          <ListaPremios />
         </div>
       </div>
     </div>

@@ -1,7 +1,7 @@
-import Menu from "../../components/Menu";
-import UserRequests from "../../components/UserRequests";
+import Menu from "../../../components/Menu";
+import UserRequests from "./UserRequests";
 
-function Solicitacao() {
+function SolicitacoesCoin() {
   return (
     <div className="page-div">
       <Menu />
@@ -14,4 +14,4 @@ function Solicitacao() {
   );
 }
 
-export default Solicitacao;
+export default SolicitacoesCoin;

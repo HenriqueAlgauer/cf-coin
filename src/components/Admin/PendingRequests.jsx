@@ -7,7 +7,7 @@ import {
   addCoinsForTask,
 } from "../../api/api";
 import PendingRequestsModal from "../Admin/PendingRequestsModal"; // Modal de confirmação para coins pendentes
-import AddCoinsModal from "../Admin/AddCoinsModal"; // Modal para cadastrar CF Coins manualmente
+import AddCoinsModal from "../../pages/ADMIN/CoinRequests/AddCoinsModal"; // Modal para cadastrar CF Coins manualmente
 import Coin from "../Coin";
 import GreenButton from "../GreenButton";
 import EditarExcluirButton from "../tabelaExibicao/EditarExcluirButton";

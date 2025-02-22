@@ -79,7 +79,7 @@ function Menu() {
               <Link className="border-l-1 menu-link-desktop" to="/">
                 Home
               </Link>
-              <Link className="menu-link-desktop" to="/info">
+              <Link className="menu-link-desktop" to="/tarefas">
                 Tabela de Pontos
               </Link>
 
@@ -134,7 +134,11 @@ function Menu() {
               Home
             </Link>
 
-            <Link to="/info" onClick={toggleMenu} className="menu-link-mobile">
+            <Link
+              to="/tarefas"
+              onClick={toggleMenu}
+              className="menu-link-mobile"
+            >
               Tabela de Pontos
             </Link>
 

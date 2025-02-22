@@ -4,13 +4,13 @@ import {
   createPrize,
   updatePrize,
   deletePrize,
-} from "../../api/api";
-import Coin from "../../components/Coin";
-import EditarExcluirButton from "../tabelaExibicao/EditarExcluirButton";
-import { useFormModal } from "../../contexts/FormModalContext";
-import { useConfirm } from "../../contexts/ConfirmModal";
-import { useToast } from "../../contexts/ToastContext";
-import GreenButton from "../GreenButton";
+} from "../../../api/api";
+import Coin from "../../../components/Coin";
+import EditarExcluirButton from "../../../components/tabelaExibicao/EditarExcluirButton";
+import { useFormModal } from "../../../contexts/FormModalContext";
+import { useConfirm } from "../../../contexts/ConfirmModal";
+import { useToast } from "../../../contexts/ToastContext";
+import GreenButton from "../../../components/GreenButton";
 
 function PrizeList() {
   const [prizes, setPrizes] = useState([]);

@@ -1,5 +1,5 @@
-import Menu from "../../components/Menu";
-import UserCoinsHistory from "../../components/UserCoinsHistory";
+import Menu from "../../../components/Menu";
+import UserCoinsHistory from "./UserCoinsHistory";
 
 function Home() {
   const userId = Number(sessionStorage.getItem("userId"));

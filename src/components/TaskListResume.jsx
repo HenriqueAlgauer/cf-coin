@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
-import { getTasks } from "../../api/api";
-import Coin from "../Coin";
-import GreenButton from "../GreenButton";
-import ListItem from "../tabelaExibicao/ListItem";
-import ListDiv from "../tabelaExibicao/ListDiv";
-import ListItemText from "../tabelaExibicao/ListItemText";
+import { getTasks } from "../api/api";
+import Coin from "./Coin";
+import GreenButton from "./GreenButton";
+import ListItem from "./tabelaExibicao/ListItem";
+import ListDiv from "./tabelaExibicao/ListDiv";
+import ListItemText from "./tabelaExibicao/ListItemText";
 
 function TasksListResume({ variant }) {
   const [tasks, setTasks] = useState([]);

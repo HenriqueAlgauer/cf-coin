@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
-import { getUserProfile } from "../api/api";
-import AdminMenu from "../components/Admin/AdminMenu";
-import Menu from "../components/Menu";
-import CoinFrame from "../components/CoinFrame";
-import ProfileInput from "../components/ProfileInput";
-import UserPrizesList from "../components/UserPrizesList";
+import { getUserProfile } from "../../api/api";
+import AdminMenu from "../../components/Admin/AdminMenu";
+import Menu from "../../components/Menu";
+import CoinFrame from "../../components/CoinFrame";
+import ProfileInput from "./ProfileInput";
+import UserPrizesList from "./UserPrizesList";
 
 function Profile() {
   const userRole =
