@@ -15,8 +15,8 @@ function ListaPremios() {
   const [loading, setLoading] = useState(false);
   const [userCoins, setUserCoins] = useState(0);
 
-  const showToast = useToast(); // função para disparar toast
-  const { confirm } = useConfirm(); // função para disparar modal de confirmação
+  const showToast = useToast();
+  const { confirm } = useConfirm();
 
   const userId =
     localStorage.getItem("userId") || sessionStorage.getItem("userId");
