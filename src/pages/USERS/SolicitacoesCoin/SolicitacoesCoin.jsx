@@ -1,7 +1,7 @@
-import UserRequests from "./UserRequests";
+import SolicitacoesCoinUsuario from "./SolicitacoesCoinUsuario";
 
 function SolicitacoesCoin() {
-  return <UserRequests />;
+  return <SolicitacoesCoinUsuario />;
 }
 
 export default SolicitacoesCoin;

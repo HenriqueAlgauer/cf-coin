@@ -16,7 +16,7 @@ import ListItem from "../../../components/tabelaExibicao/ListItem";
 import ListDiv from "../../../components/tabelaExibicao/ListDiv";
 import ListItemText from "../../../components/tabelaExibicao/ListItemText";
 
-function UserRequests() {
+function SolicitacoesCoinUsuario() {
   const [requests, setRequests] = useState([]);
   const [tasks, setTasks] = useState([]);
   const showToast = useToast();
@@ -211,4 +211,4 @@ function UserRequests() {
   );
 }
 
-export default UserRequests;
+export default SolicitacoesCoinUsuario;
