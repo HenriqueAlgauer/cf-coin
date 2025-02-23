@@ -15,6 +15,7 @@ import { useFormModal } from "../../../contexts/FormModalContext";
 import ListItem from "../../../components/tabelaExibicao/ListItem";
 import ListDiv from "../../../components/tabelaExibicao/ListDiv";
 import ListItemText from "../../../components/tabelaExibicao/ListItemText";
+import TableLayout from "../../../components/tabelaExibicao/TableLayout";
 
 function SolicitacoesCoinUsuario() {
   const [requests, setRequests] = useState([]);
@@ -174,40 +175,34 @@ function SolicitacoesCoinUsuario() {
   };
 
   return (
-    <>
-      <div className="flex justify-between mb-6 text-white items-end">
-        <h2 className="text-2xl">Minhas Solicitações</h2>
-        <GreenButton
-          variant="botao"
-          name="Nova Solicitação"
-          onClick={handleCreate}
-        />
-      </div>
-
-      <div className="p-4 bg-gray-800 rounded shadow text-white">
-        {requests.length > 0 ? (
-          <ul className="space-y-2">
-            {requests.map((request) => (
-              <ListItem itemKey={request.id} key={request.id}>
-                <ListDiv grid={6}>
-                  <ListItemText
-                    title={request.task?.name}
-                    subtitle={request.message || "Sem mensagem"}
-                  />
-                  <Coin variant="end" amount={request.amount} />
-                </ListDiv>
-                <EditarExcluirButton
-                  editar={() => handleEdit(request)}
-                  exculir={() => handleDelete(request)}
+    <TableLayout name="Minhas Solicitações">
+      <GreenButton
+        variant="botao"
+        name="Nova Solicitação"
+        onClick={handleCreate}
+      />
+      {requests.length > 0 ? (
+        <ul className="space-y-2">
+          {requests.map((request) => (
+            <ListItem itemKey={request.id} key={request.id}>
+              <ListDiv grid={6}>
+                <ListItemText
+                  title={request.task?.name}
+                  subtitle={request.message || "Sem mensagem"}
                 />
-              </ListItem>
-            ))}
-          </ul>
-        ) : (
-          <p className="text-gray-400">Nenhuma solicitação encontrada.</p>
-        )}
-      </div>
-    </>
+                <Coin variant="end" amount={request.amount} />
+              </ListDiv>
+              <EditarExcluirButton
+                editar={() => handleEdit(request)}
+                exculir={() => handleDelete(request)}
+              />
+            </ListItem>
+          ))}
+        </ul>
+      ) : (
+        <p className="text-gray-400">Nenhuma solicitação encontrada.</p>
+      )}
+    </TableLayout>
   );
 }
 

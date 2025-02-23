@@ -33,7 +33,6 @@ function HistoricoCoins() {
   return (
     <TableLayout name="Histórico de CF Coins">
       <Coin amount={userCoins} />
-
       {coins.length > 0 ? (
         <ul className="space-y-2">
           {coins.map((coin) => (
@@ -53,31 +52,6 @@ function HistoricoCoins() {
         <p className="text-gray-400">Nenhuma transação encontrada.</p>
       )}
     </TableLayout>
-    // <>
-    //   <TableHeader name="Histórico de CF Coins">
-    //     <Coin amount={userCoins} />
-    //   </TableHeader>
-    //   <div className="p-4 bg-gray-500 rounded shadow text-white">
-    //     {coins.length > 0 ? (
-    //       <ul className="space-y-2">
-    //         {coins.map((coin) => (
-    //           <ListItem itemKey={coin.id} key={coin.id}>
-    //             <ListDiv grid={6}>
-    //               <ListItemText
-    //                 title={coin.task?.name || "Sem Tarefa"}
-    //                 subtitle={new Date(coin.createdAt).toLocaleDateString()}
-    //               />
-    //               <Coin variant="end" amount={coin.amount} />
-    //             </ListDiv>
-    //             <Status entity={coin} />
-    //           </ListItem>
-    //         ))}
-    //       </ul>
-    //     ) : (
-    //       <p className="text-gray-400">Nenhuma transação encontrada.</p>
-    //     )}
-    //   </div>
-    // </>
   );
 }
 

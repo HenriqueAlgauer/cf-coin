@@ -6,6 +6,7 @@ import { useConfirm } from "../../../contexts/ConfirmModal";
 import ListItem from "../../../components/tabelaExibicao/ListItem";
 import ListDiv from "../../../components/tabelaExibicao/ListDiv";
 import ListItemText from "../../../components/tabelaExibicao/ListItemText";
+import TableLayout from "../../../components/tabelaExibicao/TableLayout";
 
 function ListaPremios() {
   const [prizes, setPrizes] = useState([]);
@@ -71,47 +72,39 @@ function ListaPremios() {
   };
 
   return (
-    <>
-      <div className="text-white flex justify-between mb-6 items-end">
-        <h2 className="text-2xl pt-2">Prêmios Disponíveis</h2>
-        <Coin variant="end" amount={userCoins} />
-      </div>
-      <div className="p-4 bg-gray-800 rounded shadow text-white">
-        {prizes.length > 0 ? (
-          <ul className="space-y-2">
-            {prizes.map((prize) => (
-              <ListItem itemKey={prize.id} key={prize.id}>
-                <ListDiv grid={6}>
-                  <ListItemText
-                    title={prize.name}
-                    subtitle={prize.description}
-                  />
-                  <Coin amount={prize.cost} />
-                </ListDiv>
-                <div className="flex items-center justify-end col-span-2">
-                  <button
-                    className={`px-3 py-1 rounded border-2 font-mono w-full lg:w-8/12 text-white ${
-                      user && user.coins >= prize.cost
-                        ? "border-blue-600"
-                        : "border-gray-400  cursor-not-allowed"
-                    }`}
-                    onClick={() =>
-                      user && user.coins >= prize.cost && handleRequest(prize)
-                    }
-                    disabled={!user || user.coins < prize.cost || loading}
-                  >
-                    {loading ? "Carregando..." : "Solicitar"}
-                  </button>
-                </div>
-              </ListItem>
-            ))}
-          </ul>
-        ) : (
-          <p className="text-gray-400">Nenhum prêmio cadastrado.</p>
-        )}
-        {errorMessage && <p className="text-red-500 mt-2">{errorMessage}</p>}
-      </div>
-    </>
+    <TableLayout name="Prêmios Disponíveis">
+      <Coin variant="end" amount={userCoins} />
+      {prizes.length > 0 ? (
+        <ul className="space-y-2">
+          {prizes.map((prize) => (
+            <ListItem itemKey={prize.id} key={prize.id}>
+              <ListDiv grid={6}>
+                <ListItemText title={prize.name} subtitle={prize.description} />
+                <Coin amount={prize.cost} />
+              </ListDiv>
+              <div className="flex items-center justify-end col-span-2">
+                <button
+                  className={`px-3 py-1 rounded border-2 font-mono w-full lg:w-8/12 text-white ${
+                    user && user.coins >= prize.cost
+                      ? "border-blue-600"
+                      : "border-gray-400  cursor-not-allowed"
+                  }`}
+                  onClick={() =>
+                    user && user.coins >= prize.cost && handleRequest(prize)
+                  }
+                  disabled={!user || user.coins < prize.cost || loading}
+                >
+                  {loading ? "Carregando..." : "Solicitar"}
+                </button>
+              </div>
+            </ListItem>
+          ))}
+        </ul>
+      ) : (
+        <p className="text-gray-400">Nenhum prêmio cadastrado.</p>
+      )}
+      {errorMessage && <p className="text-red-500 mt-2">{errorMessage}</p>}
+    </TableLayout>
   );
 }
 
