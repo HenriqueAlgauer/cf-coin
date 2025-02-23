@@ -1,13 +1,14 @@
 import { useEffect, useState } from "react";
-import { getUsers, createUser, updateUser, deleteUser } from "../../api/api";
-import { useFormModal } from "../../contexts/FormModalContext";
-import { useConfirm } from "../../contexts/ConfirmModal";
-import { useToast } from "../../contexts/ToastContext";
-import Coin from "../Coin";
-import EditarExcluirButton from "../tabelaExibicao/EditarExcluirButton";
-import ListItem from "../tabelaExibicao/ListItem";
-import ListDiv from "../tabelaExibicao/ListDiv";
-import GreenButton from "../GreenButton";
+import { getUsers, createUser, updateUser, deleteUser } from "../../../api/api";
+import { useFormModal } from "../../../contexts/FormModalContext";
+import { useConfirm } from "../../../contexts/ConfirmModal";
+import { useToast } from "../../../contexts/ToastContext";
+import Coin from "../../../components/Coin";
+import EditarExcluirButton from "../../../components/tabelaExibicao/EditarExcluirButton";
+import ListItem from "../../../components/tabelaExibicao/ListItem";
+import ListDiv from "../../../components/tabelaExibicao/ListDiv";
+import GreenButton from "../../../components/GreenButton";
+import TableLayout from "../../../components/tabelaExibicao/TableLayout";
 
 function UserList() {
   const [users, setUsers] = useState([]);
@@ -157,41 +158,70 @@ function UserList() {
   };
 
   return (
-    <>
-      <div className="flex text-white justify-between items-end mb-4">
-        <h2 className="text-2xl bg-red-800">
-          Usuários - colocar ícones no menu principal e MOBILE && colocar ícone
-          do TOTEM e CF para exibir departamento / menu profile
-        </h2>
-        <GreenButton
-          name="Criar Usuário"
-          onClick={handleCreate}
-          variant="botao"
-        />
-      </div>
-      <div className="p-4 bg-gray-800 text-white rounded overflow-auto min-w[400px]">
-        {Array.isArray(users) && users.length > 0 ? (
-          <ul className="space-y-2">
-            {users.map((user) => (
-              <ListItem key={user.id} itemKey={user.id}>
-                <ListDiv>
+    <TableLayout name="Usuários">
+      <GreenButton
+        name="Criar Usuário"
+        onClick={handleCreate}
+        variant="botao"
+      />
+      {Array.isArray(users) && users.length > 0 ? (
+        <ul className="space-y-2">
+          {users.map((user) => (
+            <ListItem key={user.id} itemKey={user.id}>
+              <ListDiv>
+                <div className="bg-violet-400 w-full grid grid-cols-4">
                   <p className="">{user.name}</p>
                   <p className="">{user.department}</p>
                   <p className="">{user.role}</p>
                   <Coin amount={user.coins} />
-                </ListDiv>
-                <EditarExcluirButton
-                  editar={() => handleEdit(user)}
-                  exculir={() => handleDelete(user)}
-                />
-              </ListItem>
-            ))}
-          </ul>
-        ) : (
-          <p className="text-gray-400">Nenhum usuário encontrado.</p>
-        )}
-      </div>
-    </>
+                </div>
+              </ListDiv>
+              <EditarExcluirButton
+                editar={() => handleEdit(user)}
+                exculir={() => handleDelete(user)}
+              />
+            </ListItem>
+          ))}
+        </ul>
+      ) : (
+        <p className="text-gray-400">Nenhum usuário encontrado.</p>
+      )}
+    </TableLayout>
+    // <>
+    //   <div className="flex text-white justify-between items-end mb-4">
+    //     <h2 className="text-2xl bg-red-800">
+    //       Usuários - colocar ícones no menu principal e MOBILE && colocar ícone
+    //       do TOTEM e CF para exibir departamento / menu profile
+    //     </h2>
+    //     <GreenButton
+    //       name="Criar Usuário"
+    //       onClick={handleCreate}
+    //       variant="botao"
+    //     />
+    //   </div>
+    //   <div className="p-4 bg-gray-800 text-white rounded overflow-auto min-w[400px]">
+    //     {Array.isArray(users) && users.length > 0 ? (
+    //       <ul className="space-y-2">
+    //         {users.map((user) => (
+    //           <ListItem key={user.id} itemKey={user.id}>
+    //             <ListDiv>
+    //               <p className="">{user.name}</p>
+    //               <p className="">{user.department}</p>
+    //               <p className="">{user.role}</p>
+    //               <Coin amount={user.coins} />
+    //             </ListDiv>
+    //             <EditarExcluirButton
+    //               editar={() => handleEdit(user)}
+    //               exculir={() => handleDelete(user)}
+    //             />
+    //           </ListItem>
+    //         ))}
+    //       </ul>
+    //     ) : (
+    //       <p className="text-gray-400">Nenhum usuário encontrado.</p>
+    //     )}
+    //   </div>
+    // </>
   );
 }
 

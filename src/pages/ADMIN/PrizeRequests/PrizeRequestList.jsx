@@ -11,6 +11,7 @@ import EditarExcluirButton from "../../../components/tabelaExibicao/EditarExclui
 import ListItem from "../../../components/tabelaExibicao/ListItem";
 import ListDiv from "../../../components/tabelaExibicao/ListDiv";
 import ListItemText from "../../../components/tabelaExibicao/ListItemText";
+import TableLayout from "../../../components/tabelaExibicao/TableLayout";
 
 function PrizeRequestList() {
   const [requests, setRequests] = useState([]);
@@ -80,37 +81,33 @@ function PrizeRequestList() {
   };
 
   return (
-    <>
-      <div className="text-white flex justify-between mb-6 items-end">
-        <h2 className="text-2xl pt-2">Solicitações de prêmios</h2>
-      </div>
-      <div className="p-4 bg-gray-800 rounded shadow text-white">
-        {requests.length > 0 ? (
-          <ul className="space-y-2">
-            {requests.map((request) => (
-              <ListItem key={request.id} itemKey={request.id}>
-                <ListDiv>
-                  <ListItemText
-                    title={request.prize.name}
-                    subtitle={request.prize.description}
-                    text={`Usuário: ${request.user.name}`}
-                  />
-                  <Coin amount={request.prize.cost} />
-                </ListDiv>
-                <EditarExcluirButton
-                  editar={() => handleApprove(request)}
-                  editText="Aprovar"
-                  exculir={() => handleReject(request)}
-                  deleteText="Rejeitar"
+    <TableLayout name="Solicitações de prêmios">
+      <></>
+      {requests.length > 0 ? (
+        <ul className="space-y-2">
+          {requests.map((request) => (
+            <ListItem key={request.id} itemKey={request.id}>
+              <ListDiv>
+                <ListItemText
+                  title={request.prize.name}
+                  subtitle={request.prize.description}
+                  text={`Usuário: ${request.user.name}`}
                 />
-              </ListItem>
-            ))}
-          </ul>
-        ) : (
-          <p className="text-gray-400">Nenhuma solicitação pendente.</p>
-        )}
-      </div>
-    </>
+                <Coin amount={request.prize.cost} />
+              </ListDiv>
+              <EditarExcluirButton
+                editar={() => handleApprove(request)}
+                editText="Aprovar"
+                exculir={() => handleReject(request)}
+                deleteText="Rejeitar"
+              />
+            </ListItem>
+          ))}
+        </ul>
+      ) : (
+        <p className="text-gray-400">Nenhuma solicitação pendente.</p>
+      )}
+    </TableLayout>
   );
 }
 

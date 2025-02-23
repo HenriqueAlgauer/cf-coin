@@ -1,4 +1,4 @@
-import UsersList from "../../../components/Admin/UsersList";
+import UsersList from "./UsersList";
 
 function Users() {
   return <UsersList />;

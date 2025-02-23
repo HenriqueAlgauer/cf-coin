@@ -9,6 +9,7 @@ import GreenButton from "../../../components/GreenButton";
 import ListItem from "../../../components/tabelaExibicao/ListItem";
 import ListDiv from "../../../components/tabelaExibicao/ListDiv";
 import ListItemText from "../../../components/tabelaExibicao/ListItemText";
+import TableLayout from "../../../components/tabelaExibicao/TableLayout";
 
 function TaskList() {
   const [tasks, setTasks] = useState([]);
@@ -29,10 +30,8 @@ function TaskList() {
     fetchData();
   }, [showToast]);
 
-  /** Criação de uma nova tarefa */
   const handleCreate = async () => {
     try {
-      // Abre o form modal
       const formData = await openFormModal({
         title: "Criar Nova Tarefa",
         fields: [
@@ -67,25 +66,22 @@ function TaskList() {
           },
         ],
         initialValues: {
-          visibility: "AMBOS", // valor padrão
+          visibility: "AMBOS",
         },
       });
 
-      // Envia para a API
       const newTask = await createTask(formData);
       setTasks((prev) => [...prev, newTask]);
       showToast("Tarefa criada com sucesso!", "success");
     } catch (error) {
-      if (error === "cancel") return; // usuário cancelou a modal
+      if (error === "cancel") return;
       console.error("Erro ao criar a tarefa:", error);
       showToast(error.message, "error");
     }
   };
 
-  /** Edição de tarefa */
   const handleEdit = async (task) => {
     try {
-      // Abre form modal com dados iniciais
       const formData = await openFormModal({
         title: "Editar Tarefa",
         fields: [
@@ -129,7 +125,6 @@ function TaskList() {
         },
       });
 
-      // Atualiza via API
       const updated = await updateTask(formData.id, formData);
       setTasks((prev) => prev.map((t) => (t.id === updated.id ? updated : t)));
       showToast("Tarefa atualizada com sucesso!", "success");
@@ -140,10 +135,8 @@ function TaskList() {
     }
   };
 
-  /** Exclusão de tarefa */
   const handleDelete = async (task) => {
     try {
-      // Exibe modal de confirmação
       await confirm({
         title: "Excluir Tarefa",
         message: `Tem certeza que deseja excluir a tarefa "${task.name}"?`,
@@ -161,40 +154,35 @@ function TaskList() {
   };
 
   return (
-    <>
-      <div className="flex text-white justify-between items-end mb-4">
-        <h2 className="text-2xl">Tarefas Disponíveis</h2>
-        <GreenButton
-          name="Adicionar Tarefa"
-          onClick={handleCreate}
-          variant="botao"
-        />
-      </div>
-      <div className="p-4 bg-gray-800 rounded shadow text-white">
-        {Array.isArray(tasks) && tasks.length > 0 ? (
-          <ul className="space-y-2">
-            {tasks.map((task) => (
-              <ListItem key={task.id} itemKey={task.id}>
-                <ListDiv grid={6}>
-                  <ListItemText
-                    title={task.name}
-                    subtitle={task.description || "Sem mensagem"}
-                    text={`Visível para:${task.visibility}`}
-                  />
-                  <Coin amount={task.reward} />
-                </ListDiv>
-                <EditarExcluirButton
-                  editar={() => handleEdit(task)}
-                  exculir={() => handleDelete(task)}
+    <TableLayout name="Tarefas Disponíveis">
+      <GreenButton
+        name="Adicionar Tarefa"
+        onClick={handleCreate}
+        variant="botao"
+      />
+      {Array.isArray(tasks) && tasks.length > 0 ? (
+        <ul className="space-y-2">
+          {tasks.map((task) => (
+            <ListItem key={task.id} itemKey={task.id}>
+              <ListDiv grid={6}>
+                <ListItemText
+                  title={task.name}
+                  subtitle={task.description || "Sem mensagem"}
+                  text={`Visível para:${task.visibility}`}
                 />
-              </ListItem>
-            ))}
-          </ul>
-        ) : (
-          <p className="text-gray-400">Nenhuma tarefa encontrada.</p>
-        )}
-      </div>
-    </>
+                <Coin amount={task.reward} />
+              </ListDiv>
+              <EditarExcluirButton
+                editar={() => handleEdit(task)}
+                exculir={() => handleDelete(task)}
+              />
+            </ListItem>
+          ))}
+        </ul>
+      ) : (
+        <p className="text-gray-400">Nenhuma tarefa encontrada.</p>
+      )}
+    </TableLayout>
   );
 }
 

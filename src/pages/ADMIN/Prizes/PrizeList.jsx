@@ -14,6 +14,7 @@ import GreenButton from "../../../components/GreenButton";
 import ListItem from "../../../components/tabelaExibicao/ListItem";
 import ListDiv from "../../../components/tabelaExibicao/ListDiv";
 import ListItemText from "../../../components/tabelaExibicao/ListItemText";
+import TableLayout from "../../../components/tabelaExibicao/TableLayout";
 
 function PrizeList() {
   const [prizes, setPrizes] = useState([]);
@@ -36,10 +37,8 @@ function PrizeList() {
     fetchPrizes();
   }, [showToast]);
 
-  /** Criação de Prêmio */
   const handleCreate = async () => {
     try {
-      // Abre o modal genérico
       const formData = await openFormModal({
         title: "Novo Prêmio",
         fields: [
@@ -60,13 +59,11 @@ function PrizeList() {
         initialValues: {},
       });
 
-      // Chama a API se o usuário confirmar
       const newPrize = await createPrize(formData);
       setPrizes((prev) => [...prev, newPrize]);
       showToast("Prêmio criado com sucesso!", "success");
     } catch (error) {
       if (error === "cancel") {
-        // Usuário apenas cancelou
         return;
       }
       console.error("Erro ao criar o prêmio:", error);
@@ -74,7 +71,6 @@ function PrizeList() {
     }
   };
 
-  /** Edição de Prêmio */
   const handleEdit = async (prize) => {
     try {
       setSelectedPrize(prize);
@@ -105,7 +101,6 @@ function PrizeList() {
         },
       });
 
-      // Atualiza via API
       const updatedPrize = await updatePrize(prize.id, formData);
       setPrizes((prev) =>
         prev.map((p) => (p.id === updatedPrize.id ? updatedPrize : p))
@@ -120,23 +115,19 @@ function PrizeList() {
     }
   };
 
-  /** Exclusão de Prêmio */
   const handleDelete = async (prize) => {
     try {
-      // Usa a modal de confirmação global
       await confirm({
         title: "Confirmar Exclusão",
         message: `Tem certeza que deseja excluir o prêmio "${prize.name}"?`,
         confirmText: "Excluir",
         cancelText: "Cancelar",
       });
-      // Se o usuário confirmar, exclui
       await deletePrize(prize.id);
       setPrizes((prev) => prev.filter((p) => p.id !== prize.id));
       showToast("Prêmio excluído com sucesso!", "success");
     } catch (error) {
       if (error === "cancel") {
-        // O usuário cancelou
         return;
       }
       console.error("Erro ao excluir o prêmio:", error);
@@ -145,40 +136,27 @@ function PrizeList() {
   };
 
   return (
-    <>
-      <div className="flex text-white justify-between items-end mb-4">
-        <h2 className="text-2xl">Prêmios Disponíveis</h2>
-        <GreenButton
-          name="Novo Prêmio"
-          onClick={handleCreate}
-          variant="botao"
-        />
-      </div>
-
-      <div className="p-4 bg-gray-800 rounded shadow text-white">
-        {prizes?.length > 0 ? (
-          <ul className="space-y-2">
-            {prizes.map((prize) => (
-              <ListItem key={prize.id} itemKey={prize.id}>
-                <ListDiv>
-                  <ListItemText
-                    title={prize.name}
-                    subtitle={prize.description}
-                  />
-                  <Coin amount={prize.cost} />
-                </ListDiv>
-                <EditarExcluirButton
-                  editar={() => handleEdit(prize)}
-                  exculir={() => handleDelete(prize)}
-                />
-              </ListItem>
-            ))}
-          </ul>
-        ) : (
-          <p className="text-gray-400">Nenhum prêmio cadastrado.</p>
-        )}
-      </div>
-    </>
+    <TableLayout name="Prêmios Disponíveis">
+      <GreenButton name="Novo Prêmio" onClick={handleCreate} variant="botao" />
+      {prizes?.length > 0 ? (
+        <ul className="space-y-2">
+          {prizes.map((prize) => (
+            <ListItem key={prize.id} itemKey={prize.id}>
+              <ListDiv>
+                <ListItemText title={prize.name} subtitle={prize.description} />
+                <Coin amount={prize.cost} />
+              </ListDiv>
+              <EditarExcluirButton
+                editar={() => handleEdit(prize)}
+                exculir={() => handleDelete(prize)}
+              />
+            </ListItem>
+          ))}
+        </ul>
+      ) : (
+        <p className="text-gray-400">Nenhum prêmio cadastrado.</p>
+      )}
+    </TableLayout>
   );
 }
 

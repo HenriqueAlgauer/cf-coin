@@ -11,6 +11,7 @@ import AddCoinsModal from "../../pages/ADMIN/CoinRequests/AddCoinsModal"; // Mod
 import Coin from "../Coin";
 import GreenButton from "../GreenButton";
 import EditarExcluirButton from "../tabelaExibicao/EditarExcluirButton";
+import TableLayout from "../tabelaExibicao/TableLayout";
 
 function PendingRequests({ variant = "default" }) {
   const [requests, setRequests] = useState([]);
@@ -64,77 +65,68 @@ function PendingRequests({ variant = "default" }) {
     setIsAddCoinsModalOpen(false);
   };
 
-  // Função que lida com o cadastro de coins via API
   const handleAddCoins = async ({ taskId, userIds }) => {
     try {
-      // Chame a API que cadastra CF Coins para vários usuários
       await addCoinsForTask(taskId, userIds);
       closeAddCoinsModal();
-      // Opcional: Atualize a interface ou exiba um toast de sucesso
     } catch (error) {
       console.error("Erro ao cadastrar CF Coins:", error.message);
-      // Opcional: Exiba uma toast message de erro
     }
   };
 
   return (
-    <>
-      <div className="flex justify-between items-end mb-6 text-white">
-        <h2 className="text-2xl">Solicitações Pendentes</h2>
-        {variant !== "simples" && (
-          <GreenButton
-            onClick={openAddCoinsModal}
-            name="+ CF Coins"
-            variant="botao"
-          />
-        )}
-      </div>
-
-      <div className="p-4 bg-gray-800 rounded shadow text-white">
-        {requests.length > 0 ? (
-          <ul className="space-y-2">
-            {requests.map((request) => (
-              <li key={request.id} className="border-b border-gray-700 pb-2">
-                <div className="flex flex-col gap-2">
-                  <div className="flex justify-between">
-                    <div className="w-full">
-                      <p>
-                        <span className="font-bold text-green-400">
-                          {request.user.name}{" "}
-                        </span>
-                        solicitou:{" "}
-                        <span className="font-bold">{request.task.name}</span>
-                      </p>
-                      <p className="text-gray-400">
-                        Departamento: {request.user.department}
-                      </p>
-                    </div>
-                    <Coin variant="end" amount={request.amount} />
+    <TableLayout name="Solicitações Pendentes">
+      {variant === "simples" ? (
+        <></>
+      ) : (
+        <GreenButton
+          onClick={openAddCoinsModal}
+          name="+ CF Coins"
+          variant="botao"
+        />
+      )}
+      {requests.length > 0 ? (
+        <ul className="space-y-2">
+          {requests.map((request) => (
+            <li key={request.id} className="border-b border-gray-700 pb-2">
+              <div className="flex flex-col gap-2">
+                <div className="flex justify-between">
+                  <div className="w-full">
+                    <p>
+                      <span className="font-bold text-green-400">
+                        {request.user.name}{" "}
+                      </span>
+                      solicitou:{" "}
+                      <span className="font-bold">{request.task.name}</span>
+                    </p>
+                    <p className="text-gray-400">
+                      Departamento: {request.user.department}
+                    </p>
                   </div>
-                  <p className="text-gray-300 italic bg-gray-700 p-2 rounded">
-                    {request.message ? request.message : "Nenhuma mensagem"}
-                  </p>
-                  <div className="flex justify-between items-center">
-                    {variant !== "simples" && (
-                      <div className="flex justify-end w-full">
-                        <EditarExcluirButton
-                          editText="Aprovar"
-                          editar={() => openConfirmModal(request, "approve")}
-                          deleteText="Rejeitar"
-                          exculir={() => openConfirmModal(request, "reject")}
-                        />
-                      </div>
-                    )}
-                  </div>
+                  <Coin variant="end" amount={request.amount} />
                 </div>
-              </li>
-            ))}
-          </ul>
-        ) : (
-          <p className="text-gray-400">Nenhuma solicitação pendente.</p>
-        )}
-      </div>
-
+                <p className="text-gray-300 italic bg-gray-700 p-2 rounded">
+                  {request.message ? request.message : "Nenhuma mensagem"}
+                </p>
+                <div className="flex justify-between items-center">
+                  {variant !== "simples" && (
+                    <div className="flex justify-end w-full">
+                      <EditarExcluirButton
+                        editText="Aprovar"
+                        editar={() => openConfirmModal(request, "approve")}
+                        deleteText="Rejeitar"
+                        exculir={() => openConfirmModal(request, "reject")}
+                      />
+                    </div>
+                  )}
+                </div>
+              </div>
+            </li>
+          ))}
+        </ul>
+      ) : (
+        <p className="text-gray-400">Nenhuma solicitação pendente.</p>
+      )}
       <PendingRequestsModal
         isOpen={isConfirmModalOpen}
         actionType={actionType}
@@ -148,7 +140,7 @@ function PendingRequests({ variant = "default" }) {
         onConfirm={handleAddCoins}
         onCancel={closeAddCoinsModal}
       />
-    </>
+    </TableLayout>
   );
 }
 
