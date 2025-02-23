@@ -1,10 +1,10 @@
 import AdminMenu from "./Admin/AdminMenu";
-import Menu from "./Menu";
+import UserMenu from "./UserMenu";
 
 function Layout({ children, isAdmin, isFull = false }) {
   return (
     <div className="max-w-screen min-h-screen bg-gray-900">
-      {isAdmin ? <AdminMenu /> : <Menu />}
+      {isAdmin ? <AdminMenu /> : <UserMenu />}
       <div
         className={
           isFull

@@ -159,7 +159,10 @@ function UserList() {
   return (
     <>
       <div className="flex text-white justify-between items-end mb-4">
-        <h2 className="text-2xl">Usuários</h2>
+        <h2 className="text-2xl bg-red-800">
+          Usuários - colocar ícones no menu principal e MOBILE && colocar ícone
+          do TOTEM e CF para exibir departamento / menu profile
+        </h2>
         <GreenButton
           name="Criar Usuário"
           onClick={handleCreate}
