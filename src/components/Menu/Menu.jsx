@@ -11,7 +11,7 @@ const coinIcon = "/coin.png";
 const close = "/close.png";
 
 function Menu({ items }) {
-  const [isOpen, setIsOpen] = useState(false); // estado para o drawer no mobile
+  const [isOpen, setIsOpen] = useState(false);
   const { confirm } = useConfirm();
 
   const handleLogout = async () => {
@@ -50,7 +50,7 @@ function Menu({ items }) {
       {/* Menu Desktop (md+) */}
       <nav className="hidden md:flex max-w-full flex-col  bg-gray-800 justify-between items-center">
         <div className="w-full flex flex-col gap-2 ">
-          <div className="flex w-[85%] mx-auto justify-between px-6 items-center ">
+          <div className="flex w-full lg:w-[85%] mx-auto justify-between px-6 items-center ">
             <Link to="/">
               <img src={coinIcon} alt="logo" className="w-20 h-20" />
             </Link>

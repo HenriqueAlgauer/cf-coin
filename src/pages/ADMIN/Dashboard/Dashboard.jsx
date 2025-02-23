@@ -8,8 +8,9 @@ function Dashboard() {
       <div className="lg:w-[65%] w-full">
         <PendingRequests variant="simples" />
       </div>
-      <div className=" lg:w-[35%] w-full flex flex-col gap-4">
+      <div className=" lg:w-[35%] w-full flex flex-col">
         <UsersTableListResume />
+        <div className="mb-2"></div>
         <TasksListResume variant="resumo" />
       </div>
     </div>

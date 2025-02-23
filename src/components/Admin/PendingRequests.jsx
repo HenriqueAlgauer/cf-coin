@@ -1,4 +1,3 @@
-// src/components/PendingRequests.jsx
 import { useEffect, useState } from "react";
 import {
   getPendingRequests,
@@ -6,8 +5,8 @@ import {
   rejectCoin,
   addCoinsForTask,
 } from "../../api/api";
-import PendingRequestsModal from "../Admin/PendingRequestsModal"; // Modal de confirmação para coins pendentes
-import AddCoinsModal from "../../pages/ADMIN/CoinRequests/AddCoinsModal"; // Modal para cadastrar CF Coins manualmente
+import PendingRequestsModal from "../Admin/PendingRequestsModal";
+import AddCoinsModal from "../../pages/ADMIN/CoinRequests/AddCoinsModal";
 import Coin from "../Coin";
 import GreenButton from "../GreenButton";
 import EditarExcluirButton from "../tabelaExibicao/EditarExcluirButton";
@@ -19,7 +18,6 @@ function PendingRequests({ variant = "default" }) {
   const [selectedRequest, setSelectedRequest] = useState(null);
   const [actionType, setActionType] = useState("");
 
-  // Novo estado para a modal de cadastro de coins
   const [isAddCoinsModalOpen, setIsAddCoinsModalOpen] = useState(false);
 
   useEffect(() => {
@@ -77,7 +75,7 @@ function PendingRequests({ variant = "default" }) {
   return (
     <TableLayout name="Solicitações Pendentes">
       {variant === "simples" ? (
-        <></>
+        <GreenButton name="Coins" to="/coins" />
       ) : (
         <GreenButton
           onClick={openAddCoinsModal}
@@ -110,8 +108,9 @@ function PendingRequests({ variant = "default" }) {
                 </p>
                 <div className="flex justify-between items-center">
                   {variant !== "simples" && (
-                    <div className="flex justify-end w-full">
+                    <div className="flex justify-end w-full ">
                       <EditarExcluirButton
+                        grid={10}
                         editText="Aprovar"
                         editar={() => openConfirmModal(request, "approve")}
                         deleteText="Rejeitar"

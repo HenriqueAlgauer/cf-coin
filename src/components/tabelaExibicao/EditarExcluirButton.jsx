@@ -8,6 +8,7 @@ function EditarExcluirButton({
   const gridCols = {
     1: "col-span-1",
     2: "col-span-2",
+    10: "w-full",
   };
 
   const baseClasseBotao =
@@ -19,7 +20,7 @@ function EditarExcluirButton({
 
   return (
     <div
-      className={`flex justify-between items-center gap-4 sm:justify-end sm:gap-2 ${
+      className={`flex justify-between sm:justify-end sm:gap-2 items-center gap-4 ${
         gridCols[grid] || "col-span-1"
       }`}
     >

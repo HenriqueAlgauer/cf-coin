@@ -8,8 +8,8 @@ function Coin({ amount, variant }) {
   return (
     <>
       <div className={estilo}>
-        <img className="w-6" src={coin} alt="moeda" />
         <p className="text-amber-300 font-bold font-mono">{amount}</p>
+        <img className="w-6" src={coin} alt="moeda" />
       </div>
     </>
   );
