@@ -8,6 +8,9 @@ import Coin from "../../../components/Coin";
 import { useConfirm } from "../../../contexts/ConfirmModal";
 import { useToast } from "../../../contexts/ToastContext";
 import EditarExcluirButton from "../../../components/tabelaExibicao/EditarExcluirButton";
+import ListItem from "../../../components/tabelaExibicao/ListItem";
+import ListDiv from "../../../components/tabelaExibicao/ListDiv";
+import ListItemText from "../../../components/tabelaExibicao/ListItemText";
 
 function PrizeRequestList() {
   const [requests, setRequests] = useState([]);
@@ -85,26 +88,22 @@ function PrizeRequestList() {
         {requests.length > 0 ? (
           <ul className="space-y-2">
             {requests.map((request) => (
-              <li key={request.id} className="li-table">
-                <div className="li-div-container">
-                  <div className="w-[80%]">
-                    <h3 className="text-green-400 font-bold">
-                      {request.prize.name}
-                    </h3>
-                    <p className="text-gray-400">{request.prize.description}</p>
-                    <p className="text-blue-300">
-                      Usuário: {request.user.name}
-                    </p>
-                  </div>
+              <ListItem key={request.id} itemKey={request.id}>
+                <ListDiv>
+                  <ListItemText
+                    title={request.prize.name}
+                    subtitle={request.prize.description}
+                    text={`Usuário: ${request.user.name}`}
+                  />
                   <Coin amount={request.prize.cost} />
-                </div>
+                </ListDiv>
                 <EditarExcluirButton
                   editar={() => handleApprove(request)}
                   editText="Aprovar"
                   exculir={() => handleReject(request)}
                   deleteText="Rejeitar"
                 />
-              </li>
+              </ListItem>
             ))}
           </ul>
         ) : (

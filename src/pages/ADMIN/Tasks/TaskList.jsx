@@ -1,12 +1,14 @@
-// src/components/Admin/TaskList.jsx
 import { useEffect, useState } from "react";
-import { getTasks, createTask, updateTask, deleteTask } from "../../api/api";
-import { useFormModal } from "../../contexts/FormModalContext";
-import { useConfirm } from "../../contexts/ConfirmModal";
-import { useToast } from "../../contexts/ToastContext";
-import Coin from "../Coin";
-import EditarExcluirButton from "../tabelaExibicao/EditarExcluirButton";
-import GreenButton from "../GreenButton";
+import { getTasks, createTask, updateTask, deleteTask } from "../../../api/api";
+import { useFormModal } from "../../../contexts/FormModalContext";
+import { useConfirm } from "../../../contexts/ConfirmModal";
+import { useToast } from "../../../contexts/ToastContext";
+import Coin from "../../../components/Coin";
+import EditarExcluirButton from "../../../components/tabelaExibicao/EditarExcluirButton";
+import GreenButton from "../../../components/GreenButton";
+import ListItem from "../../../components/tabelaExibicao/ListItem";
+import ListDiv from "../../../components/tabelaExibicao/ListDiv";
+import ListItemText from "../../../components/tabelaExibicao/ListItemText";
 
 function TaskList() {
   const [tasks, setTasks] = useState([]);
@@ -172,22 +174,20 @@ function TaskList() {
         {Array.isArray(tasks) && tasks.length > 0 ? (
           <ul className="space-y-2">
             {tasks.map((task) => (
-              <li key={task.id} className="li-table">
-                <div className="li-div-container">
-                  <div className="w-[80%]">
-                    <h3 className="text-lg font-medium">{task.name}</h3>
-                    <p className="text-sm text-gray-400">{task.description}</p>
-                    <p className="text-blue-300 font-bold">
-                      Visível para: {task.visibility}
-                    </p>
-                  </div>
+              <ListItem key={task.id} itemKey={task.id}>
+                <ListDiv grid={6}>
+                  <ListItemText
+                    title={task.name}
+                    subtitle={task.description || "Sem mensagem"}
+                    text={`Visível para:${task.visibility}`}
+                  />
                   <Coin amount={task.reward} />
-                </div>
+                </ListDiv>
                 <EditarExcluirButton
                   editar={() => handleEdit(task)}
                   exculir={() => handleDelete(task)}
                 />
-              </li>
+              </ListItem>
             ))}
           </ul>
         ) : (

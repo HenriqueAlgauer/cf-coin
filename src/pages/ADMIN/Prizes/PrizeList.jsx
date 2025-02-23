@@ -11,6 +11,9 @@ import { useFormModal } from "../../../contexts/FormModalContext";
 import { useConfirm } from "../../../contexts/ConfirmModal";
 import { useToast } from "../../../contexts/ToastContext";
 import GreenButton from "../../../components/GreenButton";
+import ListItem from "../../../components/tabelaExibicao/ListItem";
+import ListDiv from "../../../components/tabelaExibicao/ListDiv";
+import ListItemText from "../../../components/tabelaExibicao/ListItemText";
 
 function PrizeList() {
   const [prizes, setPrizes] = useState([]);
@@ -156,19 +159,19 @@ function PrizeList() {
         {prizes?.length > 0 ? (
           <ul className="space-y-2">
             {prizes.map((prize) => (
-              <li key={prize.id} className="li-table">
-                <div className="li-div-container">
-                  <div className="w-[80%]">
-                    <h3 className="text-green-400 font-bold">{prize.name}</h3>
-                    <p className="text-gray-400">{prize.description}</p>
-                  </div>
+              <ListItem key={prize.id} itemKey={prize.id}>
+                <ListDiv>
+                  <ListItemText
+                    title={prize.name}
+                    subtitle={prize.description}
+                  />
                   <Coin amount={prize.cost} />
-                </div>
+                </ListDiv>
                 <EditarExcluirButton
                   editar={() => handleEdit(prize)}
                   exculir={() => handleDelete(prize)}
                 />
-              </li>
+              </ListItem>
             ))}
           </ul>
         ) : (

@@ -1,4 +1,4 @@
-import TaskList from "../../../components/Admin/TaskList";
+import TaskList from "./TaskList";
 
 function Tasks() {
   return <TaskList />;
