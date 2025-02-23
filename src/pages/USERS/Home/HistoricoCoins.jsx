@@ -5,6 +5,8 @@ import ListItem from "../../../components/tabelaExibicao/ListItem";
 import Status from "../../../components/tabelaExibicao/Status";
 import ListItemText from "../../../components/tabelaExibicao/ListItemText";
 import ListDiv from "../../../components/tabelaExibicao/ListDiv";
+// import TableHeader from "../../../components/tabelaExibicao/TableHeader";
+import TableLayout from "../../../components/tabelaExibicao/TableLayout";
 
 const userId =
   localStorage.getItem("userId") || sessionStorage.getItem("userId");
@@ -29,32 +31,53 @@ function HistoricoCoins() {
   });
 
   return (
-    <>
-      <div className="text-white flex justify-between mb-6 items-end">
-        <h2 className="text-2xl pt-2">Histórico de CF Coins</h2>
-        <Coin variant="end" amount={userCoins} />
-      </div>
-      <div className="p-4 bg-gray-800 rounded shadow text-white">
-        {coins.length > 0 ? (
-          <ul className="space-y-2">
-            {coins.map((coin) => (
-              <ListItem itemKey={coin.id} key={coin.id}>
-                <ListDiv grid={6}>
-                  <ListItemText
-                    title={coin.task?.name || "Sem Tarefa"}
-                    subtitle={new Date(coin.createdAt).toLocaleDateString()}
-                  />
-                  <Coin variant="end" amount={coin.amount} />
-                </ListDiv>
-                <Status entity={coin} />
-              </ListItem>
-            ))}
-          </ul>
-        ) : (
-          <p className="text-gray-400">Nenhuma transação encontrada.</p>
-        )}
-      </div>
-    </>
+    <TableLayout name="Histórico de CF Coins">
+      <Coin amount={userCoins} />
+
+      {coins.length > 0 ? (
+        <ul className="space-y-2">
+          {coins.map((coin) => (
+            <ListItem itemKey={coin.id} key={coin.id}>
+              <ListDiv grid={6}>
+                <ListItemText
+                  title={coin.task?.name || "Sem Tarefa"}
+                  subtitle={new Date(coin.createdAt).toLocaleDateString()}
+                />
+                <Coin variant="end" amount={coin.amount} />
+              </ListDiv>
+              <Status entity={coin} />
+            </ListItem>
+          ))}
+        </ul>
+      ) : (
+        <p className="text-gray-400">Nenhuma transação encontrada.</p>
+      )}
+    </TableLayout>
+    // <>
+    //   <TableHeader name="Histórico de CF Coins">
+    //     <Coin amount={userCoins} />
+    //   </TableHeader>
+    //   <div className="p-4 bg-gray-500 rounded shadow text-white">
+    //     {coins.length > 0 ? (
+    //       <ul className="space-y-2">
+    //         {coins.map((coin) => (
+    //           <ListItem itemKey={coin.id} key={coin.id}>
+    //             <ListDiv grid={6}>
+    //               <ListItemText
+    //                 title={coin.task?.name || "Sem Tarefa"}
+    //                 subtitle={new Date(coin.createdAt).toLocaleDateString()}
+    //               />
+    //               <Coin variant="end" amount={coin.amount} />
+    //             </ListDiv>
+    //             <Status entity={coin} />
+    //           </ListItem>
+    //         ))}
+    //       </ul>
+    //     ) : (
+    //       <p className="text-gray-400">Nenhuma transação encontrada.</p>
+    //     )}
+    //   </div>
+    // </>
   );
 }
 
