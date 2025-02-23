@@ -31,10 +31,8 @@ function Menu() {
       sessionStorage.removeItem("userId");
       sessionStorage.removeItem("userName");
 
-      // Redireciona para a tela de login
       window.location.href = "/login";
     } catch (error) {
-      // Se o usuário cancelar, nada acontece
       console.log("Logout cancelado", error);
     }
   };
