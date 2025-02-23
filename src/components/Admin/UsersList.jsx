@@ -5,6 +5,8 @@ import { useConfirm } from "../../contexts/ConfirmModal";
 import { useToast } from "../../contexts/ToastContext";
 import Coin from "../Coin";
 import EditarExcluirButton from "../tabelaExibicao/EditarExcluirButton";
+import ListItem from "../tabelaExibicao/ListItem";
+import ListDiv from "../tabelaExibicao/ListDiv";
 import GreenButton from "../GreenButton";
 
 function UserList() {
@@ -158,12 +160,6 @@ function UserList() {
     <>
       <div className="flex text-white justify-between items-end mb-4">
         <h2 className="text-2xl">Usuários</h2>
-        {/* <button
-          className="bg-green-400 px-4 py-2 rounded"
-          onClick={handleCreate}
-        >
-          Criar Usuário
-        </button> */}
         <GreenButton
           name="Criar Usuário"
           onClick={handleCreate}
@@ -171,43 +167,26 @@ function UserList() {
         />
       </div>
       <div className="p-4 bg-gray-800 text-white rounded overflow-auto min-w[400px]">
-        <table className="w-full text-left ">
-          <thead>
-            <tr className="border-b border-gray-600">
-              <th className="p-2">Nome</th>
-              <th className="p-2">Departamento</th>
-              <th className="p-2">Role</th>
-              <th className="p-2 text-center">Coins</th>
-              <th className="p-2 text-right">Ações</th>
-            </tr>
-          </thead>
-          <tbody>
-            {Array.isArray(users) && users.length > 0 ? (
-              users.map((user) => (
-                <tr key={user.id} className="border-b border-gray-700 ">
-                  <td className="p-2">{user.name}</td>
-                  <td className="p-2">{user.department}</td>
-                  <td className="p-2">{user.role}</td>
-                  <td className="p-2 flex justify-center">
-                    <Coin amount={user.coins} />
-                  </td>
-                  <td className="p-2 text-right">
-                    <EditarExcluirButton
-                      editar={() => handleEdit(user)}
-                      exculir={() => handleDelete(user)}
-                    />
-                  </td>
-                </tr>
-              ))
-            ) : (
-              <tr>
-                <td colSpan="6" className="text-center p-4 text-gray-400">
-                  Nenhum usuário encontrado.
-                </td>
-              </tr>
-            )}
-          </tbody>
-        </table>
+        {Array.isArray(users) && users.length > 0 ? (
+          <ul className="space-y-2">
+            {users.map((user) => (
+              <ListItem key={user.id} itemKey={user.id}>
+                <ListDiv>
+                  <p className="">{user.name}</p>
+                  <p className="">{user.department}</p>
+                  <p className="">{user.role}</p>
+                  <Coin amount={user.coins} />
+                </ListDiv>
+                <EditarExcluirButton
+                  editar={() => handleEdit(user)}
+                  exculir={() => handleDelete(user)}
+                />
+              </ListItem>
+            ))}
+          </ul>
+        ) : (
+          <p className="text-gray-400">Nenhum usuário encontrado.</p>
+        )}
       </div>
     </>
   );

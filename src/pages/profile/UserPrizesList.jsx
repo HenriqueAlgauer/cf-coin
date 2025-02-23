@@ -1,5 +1,10 @@
 import { useEffect, useState } from "react";
 import { getUserPrizes } from "../../api/api";
+import ListItem from "../../components/tabelaExibicao/ListItem";
+import ListDiv from "../../components/tabelaExibicao/ListDiv";
+import ListItemText from "../../components/tabelaExibicao/ListItemText";
+import Coin from "../../components/Coin";
+import Status from "../../components/tabelaExibicao/Status";
 
 function UserPrizesList() {
   const [prizes, setPrizes] = useState([]);
@@ -40,26 +45,13 @@ function UserPrizesList() {
       ) : prizes.length > 0 ? (
         <ul className="space-y-2">
           {prizes.map((prize) => (
-            <li key={prize.id} className="border-b border-gray-700 pb-2">
-              <h3 className="text-green-400 font-bold">{prize.prize.name}</h3>
-              <p className="text-amber-300 font-bold">
-                Custo: {prize.prize.cost} CF Coins
-              </p>
-              <p className="text-gray-400">
-                Status:{" "}
-                <span
-                  className={
-                    prize.status === "APPROVED"
-                      ? "text-green-500"
-                      : prize.status === "REJECTED"
-                      ? "text-red-500"
-                      : "text-yellow-400"
-                  }
-                >
-                  {prize.status}
-                </span>
-              </p>
-            </li>
+            <ListItem key={prize.id}>
+              <ListDiv>
+                <ListItemText title={prize.prize.name} />
+                <Coin amount={prize.prize.cost} />
+              </ListDiv>
+              <Status entity={prize} />
+            </ListItem>
           ))}
         </ul>
       ) : (
