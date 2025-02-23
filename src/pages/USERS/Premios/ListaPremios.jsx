@@ -80,17 +80,17 @@ function ListaPremios() {
         {prizes.length > 0 ? (
           <ul className="space-y-2">
             {prizes.map((prize) => (
-              <ListItem variant="6" itemKey={prize.id} key={prize.id}>
-                <ListDiv>
+              <ListItem itemKey={prize.id} key={prize.id}>
+                <ListDiv grid={6}>
                   <ListItemText
                     title={prize.name}
                     subtitle={prize.description}
                   />
+                  <Coin amount={prize.cost} />
                 </ListDiv>
-                <Coin amount={prize.cost} />
-                <div className="flex items-center">
+                <div className="flex items-center justify-end col-span-2">
                   <button
-                    className={`px-3 py-1 rounded border-2 font-mono text-white ${
+                    className={`px-3 py-1 rounded border-2 font-mono w-full lg:w-8/12 text-white ${
                       user && user.coins >= prize.cost
                         ? "border-blue-600"
                         : "border-gray-400  cursor-not-allowed"

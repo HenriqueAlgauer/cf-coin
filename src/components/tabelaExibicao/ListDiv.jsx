@@ -1,6 +1,16 @@
-function ListDiv({ children }) {
+function ListDiv({ children, grid = 5 }) {
+  const gridCols = {
+    6: "col-span-6 lg:col-span-6",
+    7: "col-span-7 lg:col-span-7",
+    8: "col-span-8 lg:col-span-8",
+  };
+
   return (
-    <div className="w-full md:w-[60%] flex gap-4 md:gap-0 md:items-center justify-between ">
+    <div
+      className={`bg-green-950 flex gap-4 md:gap-0 md:items-center justify-between ${
+        gridCols[grid] || "col-span-6"
+      }`}
+    >
       {children}
     </div>
   );

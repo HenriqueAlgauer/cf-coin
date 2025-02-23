@@ -195,7 +195,6 @@ function UserList() {
                     <EditarExcluirButton
                       editar={() => handleEdit(user)}
                       exculir={() => handleDelete(user)}
-                      variant="fit"
                     />
                   </td>
                 </tr>

@@ -3,20 +3,26 @@ function EditarExcluirButton({
   exculir,
   editText,
   deleteText,
-  variant,
+  grid = 2,
 }) {
-  const classe =
-    variant === "fit"
-      ? "p-0 m-0 flex justify-end gap-2"
-      : "justify-between items-center mt-2 gap-8 sm:col-span-2 lg:col-span-1 flex sm:justify-end sm:gap-2";
+  const gridCols = {
+    1: "col-span-1",
+    2: "col-span-2",
+  };
+
   const baseClasseBotao =
-    "bg-gray-800 hover:bg-gray-900 ease-linear transition-all border-2 font-mono px-3 py-1 cursor-pointer rounded text-white shadow";
+    "bg-gray-800 w-full sm:w-fit hover:bg-gray-900 ease-linear transition-all border-2 font-mono px-3 py-1 cursor-pointer rounded text-white shadow";
+
   const classeBotao = `${baseClasseBotao} ${
     editText === "Aprovar" ? "border-green-400" : "border-blue-600"
   }`;
 
   return (
-    <div className={classe}>
+    <div
+      className={`flex justify-between bg-purple-900 items-center gap-4 sm:justify-end sm:gap-2 ${
+        gridCols[grid] || "col-span-1"
+      }`}
+    >
       <button className={classeBotao} onClick={editar}>
         {editText || "Editar"}
       </button>

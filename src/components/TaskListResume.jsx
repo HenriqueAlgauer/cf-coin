@@ -35,11 +35,11 @@ function TasksListResume({ variant }) {
         {tasks.length > 0 ? (
           <ul className="space-y-2">
             {tasks.map((task) => (
-              <ListItem variant="6" itemKey={task.id} key={task.id}>
-                <ListDiv>
+              <ListItem itemKey={task.id} key={task.id}>
+                <ListDiv grid={8}>
                   <ListItemText title={task.name} subtitle={task.description} />
+                  <Coin variant="end" amount={task.reward} />
                 </ListDiv>
-                <Coin variant="end" amount={task.reward} />
               </ListItem>
             ))}
           </ul>

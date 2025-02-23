@@ -6,7 +6,10 @@ import Status from "../../../components/tabelaExibicao/Status";
 import ListItemText from "../../../components/tabelaExibicao/ListItemText";
 import ListDiv from "../../../components/tabelaExibicao/ListDiv";
 
-function UserCoinsHistory({ userId }) {
+const userId =
+  localStorage.getItem("userId") || sessionStorage.getItem("userId");
+
+function HistoricoCoins() {
   const [coins, setCoins] = useState([]);
   const [userCoins, setUserCoins] = useState(0);
 
@@ -23,7 +26,7 @@ function UserCoinsHistory({ userId }) {
     }
     fetchCoins();
     fetchUser();
-  }, [userId]);
+  });
 
   return (
     <>
@@ -35,15 +38,15 @@ function UserCoinsHistory({ userId }) {
         {coins.length > 0 ? (
           <ul className="space-y-2">
             {coins.map((coin) => (
-              <ListItem variant="6" itemKey={coin.id} key={coin.id}>
-                <ListDiv>
+              <ListItem itemKey={coin.id} key={coin.id}>
+                <ListDiv grid={6}>
                   <ListItemText
                     title={coin.task?.name || "Sem Tarefa"}
                     subtitle={new Date(coin.createdAt).toLocaleDateString()}
                   />
-                  <Status entity={coin} />
+                  <Coin variant="end" amount={coin.amount} />
                 </ListDiv>
-                <Coin variant="end" amount={coin.amount} />
+                <Status entity={coin} />
               </ListItem>
             ))}
           </ul>
@@ -55,4 +58,4 @@ function UserCoinsHistory({ userId }) {
   );
 }
 
-export default UserCoinsHistory;
+export default HistoricoCoins;

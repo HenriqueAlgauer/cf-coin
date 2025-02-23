@@ -188,8 +188,8 @@ function UserRequests() {
         {requests.length > 0 ? (
           <ul className="space-y-2">
             {requests.map((request) => (
-              <ListItem variant="6" itemKey={request.id} key={request.id}>
-                <ListDiv>
+              <ListItem itemKey={request.id} key={request.id}>
+                <ListDiv grid={6}>
                   <ListItemText
                     title={request.task?.name}
                     subtitle={request.message || "Sem mensagem"}
