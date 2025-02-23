@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { useConfirm } from "../contexts/ConfirmModal";
+import { useConfirm } from "../../contexts/ConfirmModal";
 import MenuItemDesktop from "./MenuItemDesktop";
 import MenuItemMobile from "./MenuItemMobile";
 
@@ -22,7 +22,6 @@ function Menu({ items }) {
         confirmText: "Sim, sair",
         cancelText: "Cancelar",
       });
-      // Se o usuário confirmar, execute o logout
       localStorage.removeItem("isAuthenticated");
       localStorage.removeItem("userRole");
       localStorage.removeItem("userId");

@@ -1,5 +1,5 @@
-import AdminMenu from "./Admin/AdminMenu";
-import UserMenu from "./UserMenu";
+import AdminMenu from "./Menu/AdminMenu";
+import UserMenu from "./Menu/UserMenu";
 
 function Layout({ children, isAdmin, isFull = false }) {
   return (
