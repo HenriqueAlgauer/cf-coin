@@ -129,7 +129,7 @@ function Menu({ items }) {
                 to={item.to}
                 name={item.name}
                 img={item.img}
-                onClick={toggleMenu} // Adiciona o evento onClick
+                onClick={toggleMenu}
               />
             ))}
           </div>
@@ -137,7 +137,7 @@ function Menu({ items }) {
             <Link
               onClick={toggleMenu}
               to="/profile"
-              className="flex items-center gap-4 border-1 border-green-400 bg-gray-900 shadow hover:bg-gray-700 transition-all ease-in-out py-2 px-4 mr-4 rounded-full cursor-pointer"
+              className="flex items-center w-full gap-2 border-1 border-green-400 bg-gray-900 shadow hover:bg-gray-700 transition-all ease-in-out py-2 px-4 mr-4 rounded-full cursor-pointer"
             >
               <img className="w-8 inline" src={userIcon} alt="Perfil" />
               <p className="text-md text-white">
@@ -145,7 +145,7 @@ function Menu({ items }) {
               </p>
             </Link>
             <li
-              className="cursor-pointer p-2 flex items-center bg-gray-900 shadow hover:bg-gray-700 transition-all ease-in-out justify-center bg-gray-90 border-1 border-green-400 rounded-full"
+              className="cursor-pointer gap-2 px-4 py-2 flex items-center bg-gray-900 shadow hover:bg-gray-700 transition-all ease-in-out  bg-gray-90 border-1 border-green-400 rounded-full"
               onClick={() => {
                 toggleMenu();
                 handleLogout();
