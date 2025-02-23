@@ -19,7 +19,7 @@ function EditarExcluirButton({
 
   return (
     <div
-      className={`flex justify-between bg-purple-900 items-center gap-4 sm:justify-end sm:gap-2 ${
+      className={`flex justify-between items-center gap-4 sm:justify-end sm:gap-2 ${
         gridCols[grid] || "col-span-1"
       }`}
     >
