@@ -27,10 +27,10 @@ function Profile() {
 
   return (
     <div className="w-full flex flex-col text-white gap-4 lg:flex-row ">
-      <div className=" w-full ">
+      <div className=" w-full">
         <UserPrizesList />
       </div>
-      <div className="w-full lg:w-[40%] flex flex-col gap-4 items-center   ">
+      <div className="w-full lg:w-[40%] flex flex-col gap-4 items-center pb-12 lg:pt-12">
         <div className="w-full flex flex-col gap-2">
           <ProfileInput title="Nome" data={userData.name} />
           <ProfileInput title="Email" data={userData.email} />
