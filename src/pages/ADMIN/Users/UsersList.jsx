@@ -169,7 +169,7 @@ function UserList() {
           {users.map((user) => (
             <ListItem key={user.id} itemKey={user.id}>
               <ListDiv>
-                <div className="bg-violet-400 w-full grid grid-cols-4">
+                <div className="w-full grid grid-cols-4">
                   <p className="">{user.name}</p>
                   <p className="">{user.department}</p>
                   <p className="">{user.role}</p>

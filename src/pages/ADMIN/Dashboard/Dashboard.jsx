@@ -10,7 +10,7 @@ function Dashboard() {
       </div>
       <div className=" lg:w-[35%] w-full flex flex-col">
         <UsersTableListResume />
-        <div className="mb-2"></div>
+        <div className="mb-4"></div>
         <TasksListResume variant="resumo" />
       </div>
     </div>

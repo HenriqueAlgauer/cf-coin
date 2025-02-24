@@ -8,7 +8,7 @@ function TableLayout({ name, children }) {
         <h2 className="text-2xl">{name}</h2>
         {children[0] || null}
       </div>
-      <div className="p-4 bg-gray-800 rounded shadow text-white">
+      <div className=" bg-gray-800 rounded-sm border-1 border-green-400  shadow text-white">
         {childrenArray.slice(1)}
       </div>
     </>

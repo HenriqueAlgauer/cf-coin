@@ -7,7 +7,7 @@ function ListDiv({ children, grid = 5 }) {
 
   return (
     <div
-      className={`0 flex gap-4 md:gap-0 md:items-center justify-between ${
+      className={`0 flex gap-4 sm:pr-12 lg:pr-0 md:gap-0 md:items-center justify-between ${
         gridCols[grid] || "col-span-6"
       }`}
     >

@@ -44,17 +44,15 @@ function ListaPremios() {
   const handleRequest = async (prize) => {
     if (!user) return;
     try {
-      // Exibe a modal de confirmação global
       await confirm({
         title: "Confirmar Resgate",
         message: `Você deseja resgatar o prêmio "${prize.name}" por ${prize.cost} CF Coins?`,
         confirmText: "Confirmar",
         cancelText: "Cancelar",
       });
-      setLoading(true); // ativa loading e desabilita o botão
+      setLoading(true);
 
       await requestPrize(user.id, prize.id);
-      // Atualiza o saldo do usuário após a solicitação
       setUser((prevUser) => ({
         ...prevUser,
         coins: prevUser.coins - prize.cost,
@@ -84,10 +82,10 @@ function ListaPremios() {
               </ListDiv>
               <div className="flex items-center justify-end col-span-2">
                 <button
-                  className={`px-3 py-1 rounded border-2 font-mono w-full lg:w-8/12 text-white ${
+                  className={`px-3 py-1  transition-all ease-in rounded border-2 font-mono w-full lg:w-8/12 text-white ${
                     user && user.coins >= prize.cost
-                      ? "border-blue-600"
-                      : "border-gray-400  cursor-not-allowed"
+                      ? "border-blue-600 hover:bg-blue-600 cursor-pointer"
+                      : "border-gray-400  hover:bg-gray-400 cursor-not-allowed"
                   }`}
                   onClick={() =>
                     user && user.coins >= prize.cost && handleRequest(prize)

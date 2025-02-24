@@ -86,7 +86,7 @@ function PendingRequests({ variant = "default" }) {
       {requests.length > 0 ? (
         <ul className="space-y-2">
           {requests.map((request) => (
-            <li key={request.id} className="border-b border-gray-700 pb-2">
+            <li key={request.id} className="border-b p-4 border-green-400 ">
               <div className="flex flex-col gap-2">
                 <div className="flex justify-between">
                   <div className="w-full">

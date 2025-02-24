@@ -32,11 +32,11 @@ function PendingRequestsModal({
             </h2>
             <p className="text-center text-gray-300">
               {selectedRequest?.user?.name} está solicitando{" "}
-              <span className="text-green-400 font-bold">
+              <span className="text-amber-300 font-mono font-semibold">
                 {selectedRequest?.amount} CF Coins
               </span>{" "}
               pela tarefa:{" "}
-              <span className="text-yellow-300 font-bold">
+              <span className="text-green-400 font-mono font-semibold">
                 {selectedRequest?.task?.name}
               </span>
             </p>
@@ -47,14 +47,16 @@ function PendingRequestsModal({
             <div className="flex justify-between mt-4">
               <button
                 className={`px-4 py-2 rounded ${
-                  actionType === "approve" ? "bg-green-500" : "bg-red-500"
+                  actionType === "approve"
+                    ? "cursor-pointer border-1 border-green-400 hover:bg-green-400 transition-all ease-in font-mono"
+                    : "cursor-pointer border-1 border-red-500 hover:bg-red-500 transition-all ease-in font-mono"
                 }`}
                 onClick={onConfirm}
               >
                 {actionType === "approve" ? "Aprovar" : "Rejeitar"}
               </button>
               <button
-                className="bg-gray-500 px-4 py-2 rounded"
+                className="cursor-pointer border-1 border-gray-500 hover:bg-gray-500 transition-all ease-in font-mono  px-4 py-2 rounded"
                 onClick={onCancel}
               >
                 Cancelar

@@ -1,7 +1,6 @@
-// src/components/AddCoinsModal.jsx
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { getTasks, getUsers } from "../../../api/api"; // Certifique-se de que essas funções estão implementadas
+import { getTasks, getUsers } from "../../../api/api";
 
 function AddCoinsModal({ isOpen, onConfirm, onCancel }) {
   const [tasks, setTasks] = useState([]);
@@ -15,14 +14,12 @@ function AddCoinsModal({ isOpen, onConfirm, onCancel }) {
     if (isOpen) {
       async function fetchData() {
         try {
-          // Busca todas as tarefas e filtra apenas as de visibility "AMBOS" ou "ADMIN"
           const tasksData = await getTasks();
           const filteredTasks = tasksData.filter(
             (task) => task.visibility === "AMBOS" || task.visibility === "ADMIN"
           );
           setTasks(filteredTasks);
 
-          // Busca os usuários e filtra para aqueles com role "USER"
           const usersData = await getUsers();
           const filteredUsers = usersData.filter(
             (user) => user.role === "USER"
@@ -123,14 +120,14 @@ function AddCoinsModal({ isOpen, onConfirm, onCancel }) {
             </div>
             <div className="flex justify-between mt-4">
               <button
-                className="bg-green-500 px-4 py-2 rounded"
+                className="cursor-pointer border-1 border-green-400 hover:bg-green-400 transition-all ease-in font-mono px-4 py-2 rounded"
                 onClick={handleSubmit}
                 disabled={loading}
               >
                 {loading ? "Cadastrando..." : "Confirmar"}
               </button>
               <button
-                className="bg-gray-500 px-4 py-2 rounded"
+                className="cursor-pointer border-1 border-gray-500 hover:bg-gray-500 transition-all ease-in font-mono px-4 py-2 rounded"
                 onClick={onCancel}
                 disabled={loading}
               >

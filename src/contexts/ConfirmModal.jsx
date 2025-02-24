@@ -48,9 +48,11 @@ export function ConfirmModalProvider({ children }) {
     confirmState.confirmText === "Excluir" ||
     confirmState.confirmText === "Rejeitar"
   ) {
-    classe = "bg-red-500 px-4 py-2 rounded cursor-pointer";
+    classe =
+      "hover:bg-red-500 transition-all ease-in font-mono border-1 border-red-500 shadow-xl px-4 py-2 rounded cursor-pointer";
   } else {
-    classe = "bg-green-500 px-4 py-2 rounded cursor-pointer";
+    classe =
+      "hover:bg-green-400 transition-all ease-in font-mono border-1 border-green-400 shadow-xl px-4 py-2 rounded cursor-pointer";
   }
 
   return (
@@ -85,7 +87,7 @@ export function ConfirmModalProvider({ children }) {
                     {confirmState.confirmText || "Confirmar"}
                   </button>
                   <button
-                    className="bg-gray-500 px-4 py-2 rounded cursor-pointer"
+                    className="hover:bg-gray-500 border-1 border-gray-500 transition-all ease-in font-mono shadow-2xl px-4 py-2 rounded cursor-pointer"
                     onClick={handleCancel}
                   >
                     {confirmState.cancelText || "Cancelar"}
