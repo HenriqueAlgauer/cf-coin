@@ -53,13 +53,17 @@ function ListaPremios() {
       setLoading(true);
 
       await requestPrize(user.id, prize.id);
+
       setUser((prevUser) => ({
         ...prevUser,
         coins: prevUser.coins - prize.cost,
       }));
+
+      const updatedUser = await getUserProfile(userId);
+      setUserCoins(updatedUser.coins);
+
       showToast("Prêmio resgatado com sucesso!", "success");
     } catch (error) {
-      // Se o erro não for por cancelamento (neste caso, a promise pode rejeitar com "cancel")
       if (error !== "cancel") {
         console.error("Erro ao processar o pedido de resgate:", error);
         showToast("Erro ao solicitar o resgate do prêmio.", "error");
