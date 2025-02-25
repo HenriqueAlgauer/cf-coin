@@ -26,11 +26,11 @@ function Profile() {
   }, [userId]);
 
   return (
-    <div className="w-full flex flex-col text-white gap-4 lg:flex-row ">
-      <div className=" w-full">
+    <div className="w-full flex flex-col-reverse md:flex-col text-white gap-4 lg:flex-row ">
+      <div className=" w-full pb-8">
         <UserPrizesList />
       </div>
-      <div className="w-full lg:w-[40%] flex flex-col gap-4 items-center pb-12 lg:pt-12">
+      <div className="w-full lg:w-[40%] flex flex-col lg:flex-col sm:flex-row gap-4 lg:items-center pb-12 lg:pt-12">
         <div className="w-full flex flex-col gap-2">
           <ProfileInput title="Nome" data={userData.name} />
           <ProfileInput title="Email" data={userData.email} />
