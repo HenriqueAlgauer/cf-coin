@@ -7,6 +7,7 @@ import ListItemText from "../../../components/tabelaExibicao/ListItemText";
 import ListDiv from "../../../components/tabelaExibicao/ListDiv";
 // import TableHeader from "../../../components/tabelaExibicao/TableHeader";
 import TableLayout from "../../../components/tabelaExibicao/TableLayout";
+import EmptyMessage from "../../../components/EmptyMessage";
 
 const userId =
   localStorage.getItem("userId") || sessionStorage.getItem("userId");
@@ -49,7 +50,7 @@ function HistoricoCoins() {
           ))}
         </ul>
       ) : (
-        <p className="text-gray-400">Nenhuma transação encontrada.</p>
+        <EmptyMessage text="Nenhuma transação encontrada." />
       )}
     </TableLayout>
   );

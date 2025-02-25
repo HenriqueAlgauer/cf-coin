@@ -7,6 +7,7 @@ import ListItem from "../../../components/tabelaExibicao/ListItem";
 import ListDiv from "../../../components/tabelaExibicao/ListDiv";
 import ListItemText from "../../../components/tabelaExibicao/ListItemText";
 import TableLayout from "../../../components/tabelaExibicao/TableLayout";
+import EmptyMessage from "../../../components/EmptyMessage";
 
 function ListaPremios() {
   const [prizes, setPrizes] = useState([]);
@@ -103,7 +104,7 @@ function ListaPremios() {
           ))}
         </ul>
       ) : (
-        <p className="text-gray-400">Nenhum prêmio cadastrado.</p>
+        <EmptyMessage text="Nenhum prêmio cadastrado." />
       )}
       {errorMessage && <p className="text-red-500 mt-2">{errorMessage}</p>}
     </TableLayout>
