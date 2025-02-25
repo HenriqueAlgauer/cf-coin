@@ -38,8 +38,13 @@ function Menu({ items }) {
     }
   };
 
-  const userName =
-    localStorage.getItem("userName") || sessionStorage.getItem("userName");
+  const userName = (
+    localStorage.getItem("userName") ||
+    sessionStorage.getItem("userName") ||
+    ""
+  ).split(" ")[0];
+
+  console.log(userName);
 
   const toggleMenu = () => {
     setIsOpen((prev) => !prev);
