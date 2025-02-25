@@ -6,6 +6,7 @@ import ListItem from "./tabelaExibicao/ListItem";
 import ListDiv from "./tabelaExibicao/ListDiv";
 import ListItemText from "./tabelaExibicao/ListItemText";
 import TableLayout from "./tabelaExibicao/TableLayout";
+import EmptyMessage from "./EmptyMessage";
 
 function TasksListResume({ variant }) {
   const [tasks, setTasks] = useState([]);
@@ -37,7 +38,7 @@ function TasksListResume({ variant }) {
           ))}
         </ul>
       ) : (
-        <p className="text-gray-400">Nenhuma tarefa encontrada.</p>
+        <EmptyMessage text="Nenhuma tarefa encontrada." />
       )}
     </TableLayout>
   );

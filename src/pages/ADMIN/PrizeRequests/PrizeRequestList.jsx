@@ -12,6 +12,7 @@ import ListItem from "../../../components/tabelaExibicao/ListItem";
 import ListDiv from "../../../components/tabelaExibicao/ListDiv";
 import ListItemText from "../../../components/tabelaExibicao/ListItemText";
 import TableLayout from "../../../components/tabelaExibicao/TableLayout";
+import EmptyMessage from "../../../components/EmptyMessage";
 
 function PrizeRequestList() {
   const [requests, setRequests] = useState([]);
@@ -105,7 +106,7 @@ function PrizeRequestList() {
           ))}
         </ul>
       ) : (
-        <p className="text-gray-400">Nenhuma solicitação pendente.</p>
+        <EmptyMessage text="Nenhuma solicitação pendente." />
       )}
     </TableLayout>
   );

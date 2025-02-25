@@ -10,6 +10,7 @@ import ListItem from "../../../components/tabelaExibicao/ListItem";
 import ListDiv from "../../../components/tabelaExibicao/ListDiv";
 import ListItemText from "../../../components/tabelaExibicao/ListItemText";
 import TableLayout from "../../../components/tabelaExibicao/TableLayout";
+import EmptyMessage from "../../../components/EmptyMessage";
 
 function TaskList() {
   const [tasks, setTasks] = useState([]);
@@ -180,7 +181,7 @@ function TaskList() {
           ))}
         </ul>
       ) : (
-        <p className="text-gray-400">Nenhuma tarefa encontrada.</p>
+        <EmptyMessage text="Nenhuma tarefa encontrada" />
       )}
     </TableLayout>
   );

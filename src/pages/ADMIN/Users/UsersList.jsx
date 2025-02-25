@@ -9,6 +9,7 @@ import ListItem from "../../../components/tabelaExibicao/ListItem";
 import ListDiv from "../../../components/tabelaExibicao/ListDiv";
 import GreenButton from "../../../components/GreenButton";
 import TableLayout from "../../../components/tabelaExibicao/TableLayout";
+import EmptyMessage from "../../../components/EmptyMessage";
 
 function UserList() {
   const [users, setUsers] = useState([]);
@@ -184,44 +185,9 @@ function UserList() {
           ))}
         </ul>
       ) : (
-        <p className="text-gray-400">Nenhum usuário encontrado.</p>
+        <EmptyMessage text="Nenhum usuário encontrado." />
       )}
     </TableLayout>
-    // <>
-    //   <div className="flex text-white justify-between items-end mb-4">
-    //     <h2 className="text-2xl bg-red-800">
-    //       Usuários - colocar ícones no menu principal e MOBILE && colocar ícone
-    //       do TOTEM e CF para exibir departamento / menu profile
-    //     </h2>
-    //     <GreenButton
-    //       name="Criar Usuário"
-    //       onClick={handleCreate}
-    //       variant="botao"
-    //     />
-    //   </div>
-    //   <div className="p-4 bg-gray-800 text-white rounded overflow-auto min-w[400px]">
-    //     {Array.isArray(users) && users.length > 0 ? (
-    //       <ul className="space-y-2">
-    //         {users.map((user) => (
-    //           <ListItem key={user.id} itemKey={user.id}>
-    //             <ListDiv>
-    //               <p className="">{user.name}</p>
-    //               <p className="">{user.department}</p>
-    //               <p className="">{user.role}</p>
-    //               <Coin amount={user.coins} />
-    //             </ListDiv>
-    //             <EditarExcluirButton
-    //               editar={() => handleEdit(user)}
-    //               exculir={() => handleDelete(user)}
-    //             />
-    //           </ListItem>
-    //         ))}
-    //       </ul>
-    //     ) : (
-    //       <p className="text-gray-400">Nenhum usuário encontrado.</p>
-    //     )}
-    //   </div>
-    // </>
   );
 }
 

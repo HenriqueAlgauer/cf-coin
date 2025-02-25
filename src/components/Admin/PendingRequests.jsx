@@ -11,6 +11,7 @@ import Coin from "../Coin";
 import GreenButton from "../GreenButton";
 import EditarExcluirButton from "../tabelaExibicao/EditarExcluirButton";
 import TableLayout from "../tabelaExibicao/TableLayout";
+import EmptyMessage from "../EmptyMessage";
 
 function PendingRequests({ variant = "default" }) {
   const [requests, setRequests] = useState([]);
@@ -124,7 +125,7 @@ function PendingRequests({ variant = "default" }) {
           ))}
         </ul>
       ) : (
-        <p className="text-gray-400">Nenhuma solicitação pendente.</p>
+        <EmptyMessage text="Nenhuma solicitação pendente." />
       )}
       <PendingRequestsModal
         isOpen={isConfirmModalOpen}

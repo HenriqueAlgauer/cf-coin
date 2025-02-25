@@ -15,6 +15,7 @@ import ListItem from "../../../components/tabelaExibicao/ListItem";
 import ListDiv from "../../../components/tabelaExibicao/ListDiv";
 import ListItemText from "../../../components/tabelaExibicao/ListItemText";
 import TableLayout from "../../../components/tabelaExibicao/TableLayout";
+import EmptyMessage from "../../../components/EmptyMessage";
 
 function PrizeList() {
   const [prizes, setPrizes] = useState([]);
@@ -154,7 +155,7 @@ function PrizeList() {
           ))}
         </ul>
       ) : (
-        <p className="text-gray-400">Nenhum prêmio cadastrado.</p>
+        <EmptyMessage text="Nenhum prêmio cadastrado." />
       )}
     </TableLayout>
   );
