@@ -29,7 +29,7 @@ function HistoricoCoins() {
     }
     fetchCoins();
     fetchUser();
-  });
+  }, [userId]);
 
   return (
     <TableLayout name="Histórico de CF Coins">
