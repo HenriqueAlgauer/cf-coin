@@ -56,10 +56,13 @@ function SolicitacoesCoinUsuario() {
             type: "select",
             required: true,
             // Prepara as opções das tasks
-            options: tasks.map((task) => ({
-              value: task.id,
-              label: `${task.name} (Recompensa: ${task.reward} coins)`,
-            })),
+            options: [
+              { value: "", label: "-- Selecione --" }, // <-- Placeholder
+              ...tasks.map((task) => ({
+                value: task.id,
+                label: `${task.name} (Recompensa: ${task.reward} coins)`,
+              })),
+            ],
           },
           {
             name: "message",
@@ -68,7 +71,10 @@ function SolicitacoesCoinUsuario() {
             required: false,
           },
         ],
-        initialValues: {},
+        initialValues: {
+          taskId: "",
+          message: "",
+        },
       });
 
       // Ao confirmar, formData.taskId e formData.message estarão preenchidos
@@ -117,8 +123,6 @@ function SolicitacoesCoinUsuario() {
       const formData = await openFormModal({
         title: "Editar Solicitação",
         fields: [
-          // Se quiser, podemos impedir de trocar a taskId
-          // ou permitir (caso seja um select).
           { name: "id", label: "", type: "hidden" },
           {
             name: "message",
@@ -133,7 +137,6 @@ function SolicitacoesCoinUsuario() {
         },
       });
 
-      // Ao confirmar, chamamos updateCoin
       if (!formData.id) {
         console.error("Erro: ID da Coin não foi fornecido.");
         return;
@@ -147,7 +150,7 @@ function SolicitacoesCoinUsuario() {
       );
       showToast("Solicitação atualizada com sucesso!", "success");
     } catch (error) {
-      if (error === "cancel") return; // Usuário cancelou
+      if (error === "cancel") return;
       console.error("Erro ao editar solicitação:", error);
       showToast("Erro ao editar a solicitação.", "error");
     }
